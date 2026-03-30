@@ -173,21 +173,27 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSApiServiceImpl;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
-import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSGenApiService;
-import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSApiServiceImpl;
-import org.computate.site.model.switchtolinux.SwitchToLinux;
-import org.computate.site.model.deployspine.DeploySpineEnUSGenApiService;
-import org.computate.site.model.deployspine.DeploySpineEnUSApiServiceImpl;
-import org.computate.site.model.deployspine.DeploySpine;
 import org.computate.site.model.learnskills.LearnSkillsEnUSGenApiService;
 import org.computate.site.model.learnskills.LearnSkillsEnUSApiServiceImpl;
 import org.computate.site.model.learnskills.LearnSkills;
+import org.computate.site.model.deployspine.DeploySpineEnUSGenApiService;
+import org.computate.site.model.deployspine.DeploySpineEnUSApiServiceImpl;
+import org.computate.site.model.deployspine.DeploySpine;
+import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSGenApiService;
+import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSApiServiceImpl;
+import org.computate.site.model.switchtolinux.SwitchToLinux;
 import org.computate.site.model.spine.SpineProgrammingEnUSGenApiService;
 import org.computate.site.model.spine.SpineProgrammingEnUSApiServiceImpl;
 import org.computate.site.model.spine.SpineProgramming;
+import org.computate.site.model.product.CompanyProductEnUSGenApiService;
+import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSGenApiService;
 import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSApiServiceImpl;
 import org.computate.site.model.developer.dcm.DeveloperComputerMinion;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
@@ -197,9 +203,6 @@ import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloper;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSGenApiService;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.computate.ComputateDeveloper;
-import org.computate.site.model.product.CompanyProductEnUSGenApiService;
-import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
-import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAbout;
@@ -363,26 +366,34 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiSiteUser.setVertx(vertx);
       apiSiteUser.setConfig(config);
       apiSiteUser.setWebClient(webClient);
-      SwitchToLinuxEnUSApiServiceImpl apiSwitchToLinux = new SwitchToLinuxEnUSApiServiceImpl();
-      apiSwitchToLinux.setVertx(vertx);
-      apiSwitchToLinux.setConfig(config);
-      apiSwitchToLinux.setWebClient(webClient);
-      DeploySpineEnUSApiServiceImpl apiDeploySpine = new DeploySpineEnUSApiServiceImpl();
-      apiDeploySpine.setVertx(vertx);
-      apiDeploySpine.setConfig(config);
-      apiDeploySpine.setWebClient(webClient);
       LearnSkillsEnUSApiServiceImpl apiLearnSkills = new LearnSkillsEnUSApiServiceImpl();
       apiLearnSkills.setVertx(vertx);
       apiLearnSkills.setConfig(config);
       apiLearnSkills.setWebClient(webClient);
+      DeploySpineEnUSApiServiceImpl apiDeploySpine = new DeploySpineEnUSApiServiceImpl();
+      apiDeploySpine.setVertx(vertx);
+      apiDeploySpine.setConfig(config);
+      apiDeploySpine.setWebClient(webClient);
+      SwitchToLinuxEnUSApiServiceImpl apiSwitchToLinux = new SwitchToLinuxEnUSApiServiceImpl();
+      apiSwitchToLinux.setVertx(vertx);
+      apiSwitchToLinux.setConfig(config);
+      apiSwitchToLinux.setWebClient(webClient);
       SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
       apiSpineProgramming.setVertx(vertx);
       apiSpineProgramming.setConfig(config);
       apiSpineProgramming.setWebClient(webClient);
+      CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
+      apiCompanyProduct.setVertx(vertx);
+      apiCompanyProduct.setConfig(config);
+      apiCompanyProduct.setWebClient(webClient);
       DeveloperComputerMinionEnUSApiServiceImpl apiDeveloperComputerMinion = new DeveloperComputerMinionEnUSApiServiceImpl();
       apiDeveloperComputerMinion.setVertx(vertx);
       apiDeveloperComputerMinion.setConfig(config);
       apiDeveloperComputerMinion.setWebClient(webClient);
+      SmartAgricultureDeveloperEnUSApiServiceImpl apiSmartAgricultureDeveloper = new SmartAgricultureDeveloperEnUSApiServiceImpl();
+      apiSmartAgricultureDeveloper.setVertx(vertx);
+      apiSmartAgricultureDeveloper.setConfig(config);
+      apiSmartAgricultureDeveloper.setWebClient(webClient);
       SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
       apiSmartAquacultureDeveloper.setVertx(vertx);
       apiSmartAquacultureDeveloper.setConfig(config);
@@ -395,10 +406,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiComputateDeveloper.setVertx(vertx);
       apiComputateDeveloper.setConfig(config);
       apiComputateDeveloper.setWebClient(webClient);
-      CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
-      apiCompanyProduct.setVertx(vertx);
-      apiCompanyProduct.setConfig(config);
-      apiCompanyProduct.setWebClient(webClient);
       CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
       apiCompanyAbout.setVertx(vertx);
       apiCompanyAbout.setConfig(config);
@@ -436,66 +443,71 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiCompanyWebsite.setConfig(config);
       apiCompanyWebsite.setWebClient(webClient);
       apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "PATCH", "POST", "SuperAdmin", "GETManager", "PUT" }).onSuccess(authToken -> {
-          apiSwitchToLinux.authorizeGroupData(authToken, SwitchToLinux.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-              .compose(q2 -> apiSwitchToLinux.authorizeGroupData(authToken, SwitchToLinux.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+          apiLearnSkills.authorizeGroupData(authToken, LearnSkills.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+              .compose(q2 -> apiLearnSkills.authorizeGroupData(authToken, LearnSkills.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
               .onSuccess(q2 -> {
             apiDeploySpine.authorizeGroupData(authToken, DeploySpine.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
                 .compose(q3 -> apiDeploySpine.authorizeGroupData(authToken, DeploySpine.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                 .onSuccess(q3 -> {
-              apiLearnSkills.authorizeGroupData(authToken, LearnSkills.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                  .compose(q4 -> apiLearnSkills.authorizeGroupData(authToken, LearnSkills.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+              apiSwitchToLinux.authorizeGroupData(authToken, SwitchToLinux.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                  .compose(q4 -> apiSwitchToLinux.authorizeGroupData(authToken, SwitchToLinux.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                   .onSuccess(q4 -> {
                 apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
                     .compose(q5 -> apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                     .onSuccess(q5 -> {
-                  apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-dcm-GET", new String[] { "GET" })
-                      .compose(q6 -> apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
-                      .compose(q6 -> apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                  apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                      .compose(q6 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                       .onSuccess(q6 -> {
-                    apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-smart-aquaculture-developer-GET", new String[] { "GET" })
-                        .compose(q7 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
-                        .compose(q7 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                    apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-dcm-GET", new String[] { "GET" })
+                        .compose(q7 -> apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                        .compose(q7 -> apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                         .onSuccess(q7 -> {
-                      apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-ai-telemetry-developer-GET", new String[] { "GET" })
-                          .compose(q8 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
-                          .compose(q8 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                      apiSmartAgricultureDeveloper.authorizeGroupData(authToken, SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-smart-agriculture-developer-GET", new String[] { "GET" })
+                          .compose(q8 -> apiSmartAgricultureDeveloper.authorizeGroupData(authToken, SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                          .compose(q8 -> apiSmartAgricultureDeveloper.authorizeGroupData(authToken, SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                           .onSuccess(q8 -> {
-                        apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-computate-developer-GET", new String[] { "GET" })
-                            .compose(q9 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
-                            .compose(q9 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                        apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-smart-aquaculture-developer-GET", new String[] { "GET" })
+                            .compose(q9 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                            .compose(q9 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                             .onSuccess(q9 -> {
-                          apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                              .compose(q10 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                          apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-ai-telemetry-developer-GET", new String[] { "GET" })
+                              .compose(q10 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                              .compose(q10 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                               .onSuccess(q10 -> {
-                            apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                .compose(q11 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                            apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-computate-developer-GET", new String[] { "GET" })
+                                .compose(q11 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                                .compose(q11 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                 .onSuccess(q11 -> {
-                              apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                  .compose(q12 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                              apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                  .compose(q12 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                   .onSuccess(q12 -> {
-                                apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                    .compose(q13 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                    .compose(q13 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                     .onSuccess(q13 -> {
-                                  apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                      .compose(q14 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                  apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                      .compose(q14 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                       .onSuccess(q14 -> {
-                                    apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                        .compose(q15 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                    apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                        .compose(q15 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                         .onSuccess(q15 -> {
-                                      apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                          .compose(q16 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                      apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                          .compose(q16 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                           .onSuccess(q16 -> {
-                                        apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                            .compose(q17 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                        apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                            .compose(q17 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                             .onSuccess(q17 -> {
-                                          apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                              .compose(q18 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                          apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                              .compose(q18 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                               .onSuccess(q18 -> {
-                                            apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                                                .compose(q19 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                            apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                                .compose(q19 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                                 .onSuccess(q19 -> {
-                                              LOG.info("authorize data complete");
-                                              promise.complete();
+                                              apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                                                  .compose(q20 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                                  .onSuccess(q20 -> {
+                                                LOG.info("authorize data complete");
+                                                promise.complete();
+                                            }).onFailure(ex -> promise.fail(ex));
                                           }).onFailure(ex -> promise.fail(ex));
                                         }).onFailure(ex -> promise.fail(ex));
                                       }).onFailure(ex -> promise.fail(ex));
@@ -1515,34 +1527,42 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     Promise<Void> promise = Promise.promise();
     try {
       List<Future<?>> futures = new ArrayList<>();
-      List<String> authClassSimpleNames = Arrays.asList("SwitchToLinux","DeploySpine","LearnSkills","SpineProgramming","DeveloperComputerMinion","SmartAquacultureDeveloper","AiTelemetryDeveloper","ComputateDeveloper","CompanyProduct","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
-      List<String> authResources = Arrays.asList("SWITCHTOLINUX","DEPLOYSPINE","LEARNSKILLS","SPINEPROGRAMMING","DEVELOPERCOMPUTERMINION","SMARTAQUACULTUREDEVELOPER","AITELEMETRYDEVELOPER","COMPUTATEDEVELOPER","COMPANYPRODUCT","COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE");
-      List<String> publicClassSimpleNames = Arrays.asList("SwitchToLinux","DeploySpine","LearnSkills","SpineProgramming","CompanyProduct","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
+      List<String> authClassSimpleNames = Arrays.asList("LearnSkills","DeploySpine","SwitchToLinux","SpineProgramming","CompanyProduct","DeveloperComputerMinion","SmartAgricultureDeveloper","SmartAquacultureDeveloper","AiTelemetryDeveloper","ComputateDeveloper","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
+      List<String> authResources = Arrays.asList("LEARNSKILLS","DEPLOYSPINE","SWITCHTOLINUX","SPINEPROGRAMMING","COMPANYPRODUCT","DEVELOPERCOMPUTERMINION","SMARTAGRICULTUREDEVELOPER","SMARTAQUACULTUREDEVELOPER","AITELEMETRYDEVELOPER","COMPUTATEDEVELOPER","COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE");
+      List<String> publicClassSimpleNames = Arrays.asList("LearnSkills","DeploySpine","SwitchToLinux","SpineProgramming","CompanyProduct","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
       SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
       initializeApiService(apiSiteUser);
       registerApiService(SiteUserEnUSGenApiService.class, apiSiteUser, SiteUser.getClassApiAddress());
       apiSiteUser.configureUserSearchApi(config().getString(ComputateConfigKeys.USER_SEARCH_URI), router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources, authClassSimpleNames);
       apiSiteUser.configurePublicSearchApi(config().getString(ComputateConfigKeys.PUBLIC_SEARCH_URI), router, SiteRequest.class, config(), webClient, publicClassSimpleNames);
 
-      SwitchToLinuxEnUSApiServiceImpl apiSwitchToLinux = new SwitchToLinuxEnUSApiServiceImpl();
-      initializeApiService(apiSwitchToLinux);
-      registerApiService(SwitchToLinuxEnUSGenApiService.class, apiSwitchToLinux, SwitchToLinux.getClassApiAddress());
+      LearnSkillsEnUSApiServiceImpl apiLearnSkills = new LearnSkillsEnUSApiServiceImpl();
+      initializeApiService(apiLearnSkills);
+      registerApiService(LearnSkillsEnUSGenApiService.class, apiLearnSkills, LearnSkills.getClassApiAddress());
 
       DeploySpineEnUSApiServiceImpl apiDeploySpine = new DeploySpineEnUSApiServiceImpl();
       initializeApiService(apiDeploySpine);
       registerApiService(DeploySpineEnUSGenApiService.class, apiDeploySpine, DeploySpine.getClassApiAddress());
 
-      LearnSkillsEnUSApiServiceImpl apiLearnSkills = new LearnSkillsEnUSApiServiceImpl();
-      initializeApiService(apiLearnSkills);
-      registerApiService(LearnSkillsEnUSGenApiService.class, apiLearnSkills, LearnSkills.getClassApiAddress());
+      SwitchToLinuxEnUSApiServiceImpl apiSwitchToLinux = new SwitchToLinuxEnUSApiServiceImpl();
+      initializeApiService(apiSwitchToLinux);
+      registerApiService(SwitchToLinuxEnUSGenApiService.class, apiSwitchToLinux, SwitchToLinux.getClassApiAddress());
 
       SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
       initializeApiService(apiSpineProgramming);
       registerApiService(SpineProgrammingEnUSGenApiService.class, apiSpineProgramming, SpineProgramming.getClassApiAddress());
 
+      CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
+      initializeApiService(apiCompanyProduct);
+      registerApiService(CompanyProductEnUSGenApiService.class, apiCompanyProduct, CompanyProduct.getClassApiAddress());
+
       DeveloperComputerMinionEnUSApiServiceImpl apiDeveloperComputerMinion = new DeveloperComputerMinionEnUSApiServiceImpl();
       initializeApiService(apiDeveloperComputerMinion);
       registerApiService(DeveloperComputerMinionEnUSGenApiService.class, apiDeveloperComputerMinion, DeveloperComputerMinion.getClassApiAddress());
+
+      SmartAgricultureDeveloperEnUSApiServiceImpl apiSmartAgricultureDeveloper = new SmartAgricultureDeveloperEnUSApiServiceImpl();
+      initializeApiService(apiSmartAgricultureDeveloper);
+      registerApiService(SmartAgricultureDeveloperEnUSGenApiService.class, apiSmartAgricultureDeveloper, SmartAgricultureDeveloper.getClassApiAddress());
 
       SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
       initializeApiService(apiSmartAquacultureDeveloper);
@@ -1555,10 +1575,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
       initializeApiService(apiComputateDeveloper);
       registerApiService(ComputateDeveloperEnUSGenApiService.class, apiComputateDeveloper, ComputateDeveloper.getClassApiAddress());
-
-      CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
-      initializeApiService(apiCompanyProduct);
-      registerApiService(CompanyProductEnUSGenApiService.class, apiCompanyProduct, CompanyProduct.getClassApiAddress());
 
       CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
       initializeApiService(apiCompanyAbout);

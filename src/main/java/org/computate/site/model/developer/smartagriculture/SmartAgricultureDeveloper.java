@@ -1,47 +1,49 @@
-package org.computate.site.model.about;
+package org.computate.site.model.developer.smartagriculture;
 
-import org.computate.site.config.ConfigKeys;
+import org.computate.search.wrap.Wrap;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
-import org.computate.vertx.search.list.SearchList;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.math.BigDecimal;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.Normalizer;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.computate.search.tool.SearchTool;
-import org.computate.search.wrap.Wrap;
+import org.computate.site.config.ConfigKeys;
+import org.computate.site.model.BaseModel;
+import org.computate.site.request.SiteRequest;
+import org.computate.vertx.search.list.SearchList;
 
 import io.vertx.core.Promise;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.pgclient.data.Point;
 
 /**
- * MenuDetails.enUS: More info about SPINE and Computate
- * MenuDetailsOpen: true
- * Order: 12
- * Description: Learn about our team, company, culture, and values. 
- * AName: an about page
- * PluralName: about
- * Icon: <i class="fa-duotone fa-regular fa-address-card"></i>
+ * Order: 8
+ * Description: Learn how to become a Smart Agriculture platform developer — Understanding farms, crops, and weather. 
+ * AName: a Smart Agriculture Developer
+ * Icon: <i class="{{ FONTAWESOME_STYLE }} fa-building-wheat"></i>
  * Sort.asc: courseNum
  * 
- * PublicRead: true
- * SearchPageUri: /en-us/search/about
- * EditPageUri: /en-us/edit/about/{pageId}
- * DisplayPageUri: /en-us/learn/about/{pageId}
- * ApiUri: /en-us/api/about
+ * SearchPageUri: /en-us/search/smart-agriculture-developer
+ * EditPageUri: /en-us/edit/smart-agriculture-developer/{pageId}
+ * UserPageUri: /en-us/smart-agriculture-developer/learn/{pageId}
+ * ApiUri: /en-us/api/smart-agriculture-developer
  * ApiMethod:
  *   Search:
  *   GET:
@@ -51,6 +53,8 @@ import io.vertx.pgclient.data.Point;
  *   PUTImport:
  * 
  * AuthGroup:
+ *   COMPANYPRODUCT-smart-agriculture-developer-GET:
+ *     GET:
  *   Admin:
  *     POST:
  *     PATCH:
@@ -64,19 +68,27 @@ import io.vertx.pgclient.data.Point;
  *     DELETE:
  *     SuperAdmin:
  */
-public class CompanyAbout extends CompanyAboutGen<BaseResult> {
+public class SmartAgricultureDeveloper extends SmartAgricultureDeveloperGen<BaseResult> {
+
+  /**
+   * {@inheritDoc}
+   */
+  protected void _article(Wrap<Boolean> w) {
+    w.o(true);
+  }
 
   /**
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: about name
-   * Description: The about name. 
+   * DisplayName: course name
+   * Description: The course name. 
    * HtmRow: 3
+	 * HtmRowTitleOpen: course details
    * HtmCell: 1
-   * HtmColumn: 1
+   * HtmColumn: 0
    * Facet: true
-   * VarName: true
+	 * VarName: true
    */
   protected void _name(Wrap<String> w) {
   }
@@ -85,15 +97,53 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: about description
-   * Description: The about description. 
+   * DisplayName: course description
+   * Description: The course description. 
    * HtmRow: 3
    * HtmCell: 2
-   * HtmColumn: 2
+   * HtmColumn: 1
    * Facet: true
-   * VarDescription: true
+	 * VarDescription: true
    */
   protected void _description(Wrap<String> w) {
+  }
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
+	 * HtmCell: 1
+	 * Facet: true
+	 * DisplayName: page ID
+	 * Description: The ID for this page. 
+	 * VarId: true
+	 */
+	protected void _pageId(Wrap<String> w) {
+		w.o(toId(name));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: course number
+	 * Description: The course number for this page. 
+	 */
+	protected void _courseNum(Wrap<Integer> w) {
+	}
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: lesson number
+   * Description: The lesson number for this page. 
+   */
+  protected void _lessonNum(Wrap<Integer> w) {
   }
 
   /**
@@ -120,43 +170,6 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
    * Description: The author URL
    */
   protected void _authorUrl(Wrap<String> w) {
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * HtmRowTitleOpen: Useful URLs
-   * HtmRow: 99
-   * HtmCell: 1
-   * Facet: true
-   * DisplayName: Page ID
-   * Description: The ID for this page. 
-   * VarId: true
-   */
-  protected void _pageId(Wrap<String> w) {
-    w.o(toId(name));
-  }
-
-  /**
-   * {@inheritDoc}
-   * DisplayName: course page
-   * Description: Visit this course's landing page. 
-   */
-  @Override
-  protected void _displayPage(Wrap<String> w) {
-    super._displayPage(w);
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * Facet: true
-   * DisplayName: Course Number
-   * Description: The course number for this page. 
-   */
-  protected void _courseNum(Wrap<Integer> w) {
   }
 
   /**
@@ -228,11 +241,11 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
   /**
    * Ignore: true
    */
-  protected void _prerequisiteArticleSearch(Promise<SearchList<CompanyAbout>> promise) {
-    SearchList<CompanyAbout> l = new SearchList<>();
+  protected void _prerequisiteArticleSearch(Promise<SearchList<SmartAgricultureDeveloper>> promise) {
+    SearchList<SmartAgricultureDeveloper> l = new SearchList<>();
     if(prerequisiteArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(prerequisiteArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(CompanyAbout.class);
+      l.setC(SmartAgricultureDeveloper.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -253,16 +266,16 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
     JsonArray array = new JsonArray();
     prerequisiteArticleSearch.getList().stream().forEach(prerequisiteArticle -> {
         JsonObject obj = JsonObject.mapFrom(prerequisiteArticle);
-        obj.remove(CompanyAbout.VAR_prerequisiteArticles);
-        obj.remove(CompanyAbout.VAR_prerequisiteArticleIds);
+        obj.remove(SmartAgricultureDeveloper.VAR_prerequisiteArticles);
+        obj.remove(SmartAgricultureDeveloper.VAR_prerequisiteArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(CompanyAbout.VAR_pageId, obj.getString(CompanyAbout.VAR_pageId));
-        obj2.put(CompanyAbout.VAR_name, obj.getString(CompanyAbout.VAR_name));
-        obj2.put(CompanyAbout.VAR_pageImageUri, obj.getString(CompanyAbout.VAR_pageImageUri));
-        obj2.put(CompanyAbout.VAR_pageImageWidth, obj.getString(CompanyAbout.VAR_pageImageWidth));
-        obj2.put(CompanyAbout.VAR_pageImageHeight, obj.getString(CompanyAbout.VAR_pageImageHeight));
-        obj2.put(CompanyAbout.VAR_pageImageAlt, obj.getString(CompanyAbout.VAR_pageImageAlt));
-        obj2.put(CompanyAbout.VAR_displayPage, obj.getString(CompanyAbout.VAR_displayPage));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageId, obj.getString(SmartAgricultureDeveloper.VAR_pageId));
+        obj2.put(SmartAgricultureDeveloper.VAR_name, obj.getString(SmartAgricultureDeveloper.VAR_name));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageUri, obj.getString(SmartAgricultureDeveloper.VAR_pageImageUri));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAgricultureDeveloper.VAR_pageImageWidth));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAgricultureDeveloper.VAR_pageImageHeight));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAgricultureDeveloper.VAR_pageImageAlt));
+        obj2.put(SmartAgricultureDeveloper.VAR_displayPage, obj.getString(SmartAgricultureDeveloper.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);
@@ -281,11 +294,11 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
   /**
    * Ignore: true
    */
-  protected void _nextArticleSearch(Promise<SearchList<CompanyAbout>> promise) {
-    SearchList<CompanyAbout> l = new SearchList<>();
+  protected void _nextArticleSearch(Promise<SearchList<SmartAgricultureDeveloper>> promise) {
+    SearchList<SmartAgricultureDeveloper> l = new SearchList<>();
     if(nextArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(nextArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(CompanyAbout.class);
+      l.setC(SmartAgricultureDeveloper.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -306,16 +319,16 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
     JsonArray array = new JsonArray();
     nextArticleSearch.getList().stream().forEach(nextArticle -> {
         JsonObject obj = JsonObject.mapFrom(nextArticle);
-        obj.remove(CompanyAbout.VAR_nextArticles);
-        obj.remove(CompanyAbout.VAR_nextArticleIds);
+        obj.remove(SmartAgricultureDeveloper.VAR_nextArticles);
+        obj.remove(SmartAgricultureDeveloper.VAR_nextArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(CompanyAbout.VAR_pageId, obj.getString(CompanyAbout.VAR_pageId));
-        obj2.put(CompanyAbout.VAR_name, obj.getString(CompanyAbout.VAR_name));
-        obj2.put(CompanyAbout.VAR_pageImageUri, obj.getString(CompanyAbout.VAR_pageImageUri));
-        obj2.put(CompanyAbout.VAR_pageImageWidth, obj.getString(CompanyAbout.VAR_pageImageWidth));
-        obj2.put(CompanyAbout.VAR_pageImageHeight, obj.getString(CompanyAbout.VAR_pageImageHeight));
-        obj2.put(CompanyAbout.VAR_pageImageAlt, obj.getString(CompanyAbout.VAR_pageImageAlt));
-        obj2.put(CompanyAbout.VAR_displayPage, obj.getString(CompanyAbout.VAR_displayPage));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageId, obj.getString(SmartAgricultureDeveloper.VAR_pageId));
+        obj2.put(SmartAgricultureDeveloper.VAR_name, obj.getString(SmartAgricultureDeveloper.VAR_name));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageUri, obj.getString(SmartAgricultureDeveloper.VAR_pageImageUri));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAgricultureDeveloper.VAR_pageImageWidth));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAgricultureDeveloper.VAR_pageImageHeight));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAgricultureDeveloper.VAR_pageImageAlt));
+        obj2.put(SmartAgricultureDeveloper.VAR_displayPage, obj.getString(SmartAgricultureDeveloper.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);
@@ -357,11 +370,11 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
   /**
    * Ignore: true
    */
-  protected void _relatedArticleSearch(Promise<SearchList<CompanyAbout>> promise) {
-    SearchList<CompanyAbout> l = new SearchList<>();
+  protected void _relatedArticleSearch(Promise<SearchList<SmartAgricultureDeveloper>> promise) {
+    SearchList<SmartAgricultureDeveloper> l = new SearchList<>();
     if(relatedArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(CompanyAbout.class);
+      l.setC(SmartAgricultureDeveloper.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -382,19 +395,23 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
     JsonArray array = new JsonArray();
     relatedArticleSearch.getList().stream().forEach(relatedArticle -> {
         JsonObject obj = JsonObject.mapFrom(relatedArticle);
-        obj.remove(CompanyAbout.VAR_relatedArticles);
-        obj.remove(CompanyAbout.VAR_relatedArticleIds);
+        obj.remove(SmartAgricultureDeveloper.VAR_relatedArticles);
+        obj.remove(SmartAgricultureDeveloper.VAR_relatedArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(CompanyAbout.VAR_pageId, obj.getString(CompanyAbout.VAR_pageId));
-        obj2.put(CompanyAbout.VAR_name, obj.getString(CompanyAbout.VAR_name));
-        obj2.put(CompanyAbout.VAR_pageImageUri, obj.getString(CompanyAbout.VAR_pageImageUri));
-        obj2.put(CompanyAbout.VAR_pageImageWidth, obj.getString(CompanyAbout.VAR_pageImageWidth));
-        obj2.put(CompanyAbout.VAR_pageImageHeight, obj.getString(CompanyAbout.VAR_pageImageHeight));
-        obj2.put(CompanyAbout.VAR_pageImageAlt, obj.getString(CompanyAbout.VAR_pageImageAlt));
-        obj2.put(CompanyAbout.VAR_displayPage, obj.getString(CompanyAbout.VAR_displayPage));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageId, obj.getString(SmartAgricultureDeveloper.VAR_pageId));
+        obj2.put(SmartAgricultureDeveloper.VAR_name, obj.getString(SmartAgricultureDeveloper.VAR_name));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageUri, obj.getString(SmartAgricultureDeveloper.VAR_pageImageUri));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAgricultureDeveloper.VAR_pageImageWidth));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAgricultureDeveloper.VAR_pageImageHeight));
+        obj2.put(SmartAgricultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAgricultureDeveloper.VAR_pageImageAlt));
+        obj2.put(SmartAgricultureDeveloper.VAR_displayPage, obj.getString(SmartAgricultureDeveloper.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);
   }
-}
 
+  @Override
+  public String enUSStringFormatUrlDisplayPageForClass() {
+    return "%s/en-us/smart-agriculture-developer/learn/%s";
+  }
+}

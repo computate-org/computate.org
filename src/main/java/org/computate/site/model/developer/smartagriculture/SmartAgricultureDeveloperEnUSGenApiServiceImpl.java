@@ -1,4 +1,4 @@
-package org.computate.site.model.about;
+package org.computate.site.model.developer.smartagriculture;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -104,39 +104,77 @@ import java.util.Base64;
 import java.time.ZonedDateTime;
 import org.apache.commons.lang3.BooleanUtils;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.about.CompanyAboutPage;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperPage;
 
 
 /**
  * Translate: false
  * Generated: true
  **/
-public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implements CompanyAboutEnUSGenApiService {
+public class SmartAgricultureDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl implements SmartAgricultureDeveloperEnUSGenApiService {
 
-  protected static final Logger LOG = LoggerFactory.getLogger(CompanyAboutEnUSGenApiServiceImpl.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(SmartAgricultureDeveloperEnUSGenApiServiceImpl.class);
 
   // Search //
 
   @Override
-  public void searchCompanyAbout(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void searchSmartAgricultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyAboutList(siteRequest, false, true, false, "GET").onSuccess(listCompanyAbout -> {
-                response200SearchCompanyAbout(listCompanyAbout).onSuccess(response -> {
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+            , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+            )
+            .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+            .sendForm(form)
+            .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchSmartAgricultureDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listSmartAgricultureDeveloper -> {
+                response200SearchSmartAgricultureDeveloper(listSmartAgricultureDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("searchCompanyAbout succeeded. "));
+                  LOG.debug(String.format("searchSmartAgricultureDeveloper succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("searchCompanyAbout failed. "), ex);
+                  LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("searchCompanyAbout failed. "), ex);
+                LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
       } catch(Exception ex) {
-        LOG.error(String.format("searchCompanyAbout failed. "), ex);
+        LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -144,7 +182,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("searchCompanyAbout failed. ", ex2));
+          LOG.error(String.format("searchSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -159,28 +197,28 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("searchCompanyAbout failed. "), ex);
+        LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<ServiceResponse> response200SearchCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<ServiceResponse> response200SearchSmartAgricultureDeveloper(SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      List<String> fls = listCompanyAbout.getRequest().getFields();
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+      List<String> fls = listSmartAgricultureDeveloper.getRequest().getFields();
       JsonObject json = new JsonObject();
       JsonArray l = new JsonArray();
       List<String> scopes = siteRequest.getScopes();
-      listCompanyAbout.getList().stream().forEach(o -> {
+      listSmartAgricultureDeveloper.getList().stream().forEach(o -> {
         JsonObject json2 = JsonObject.mapFrom(o);
         if(fls.size() > 0) {
           Set<String> fieldNames = new HashSet<String>();
           for(String fieldName : json2.fieldNames()) {
-            String v = CompanyAbout.varIndexedCompanyAbout(fieldName);
+            String v = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(fieldName);
             if(v != null)
-              fieldNames.add(CompanyAbout.varIndexedCompanyAbout(fieldName));
+              fieldNames.add(SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(fieldName));
           }
           if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
             fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
@@ -198,15 +236,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         l.add(json2);
       });
       json.put("list", l);
-      response200Search(listCompanyAbout.getRequest(), listCompanyAbout.getResponse(), json);
+      response200Search(listSmartAgricultureDeveloper.getRequest(), listSmartAgricultureDeveloper.getResponse(), json);
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200SearchCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200SearchSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void responsePivotSearchCompanyAbout(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+  public void responsePivotSearchSmartAgricultureDeveloper(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
     if(pivots != null) {
       for(SolrResponse.Pivot pivotField : pivots) {
         String entityIndexed = pivotField.getField();
@@ -235,7 +273,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         if(pivotFields2 != null) {
           JsonArray pivotArray2 = new JsonArray();
           pivotJson.put("pivot", pivotArray2);
-          responsePivotSearchCompanyAbout(pivotFields2, pivotArray2);
+          responsePivotSearchSmartAgricultureDeveloper(pivotFields2, pivotArray2);
         }
       }
     }
@@ -244,25 +282,63 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // GET //
 
   @Override
-  public void getCompanyAbout(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void getSmartAgricultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyAboutList(siteRequest, false, true, false, "GET").onSuccess(listCompanyAbout -> {
-                response200GETCompanyAbout(listCompanyAbout).onSuccess(response -> {
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+            , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+            )
+            .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+            .sendForm(form)
+            .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchSmartAgricultureDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listSmartAgricultureDeveloper -> {
+                response200GETSmartAgricultureDeveloper(listSmartAgricultureDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("getCompanyAbout succeeded. "));
+                  LOG.debug(String.format("getSmartAgricultureDeveloper succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("getCompanyAbout failed. "), ex);
+                  LOG.error(String.format("getSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("getCompanyAbout failed. "), ex);
+                LOG.error(String.format("getSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("getSmartAgricultureDeveloper failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
       } catch(Exception ex) {
-        LOG.error(String.format("getCompanyAbout failed. "), ex);
+        LOG.error(String.format("getSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -270,7 +346,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("getCompanyAbout failed. ", ex2));
+          LOG.error(String.format("getSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -285,20 +361,20 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("getCompanyAbout failed. "), ex);
+        LOG.error(String.format("getSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<ServiceResponse> response200GETCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<ServiceResponse> response200GETSmartAgricultureDeveloper(SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      JsonObject json = JsonObject.mapFrom(listCompanyAbout.getList().stream().findFirst().orElse(null));
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+      JsonObject json = JsonObject.mapFrom(listSmartAgricultureDeveloper.getList().stream().findFirst().orElse(null));
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200GETCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200GETSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -307,27 +383,27 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // PATCH //
 
   @Override
-  public void patchCompanyAbout(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("patchCompanyAbout started. "));
-    Boolean classPublicRead = true;
+  public void patchSmartAgricultureDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("patchSmartAgricultureDeveloper started. "));
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYABOUT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYABOUT");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -341,7 +417,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYABOUT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -357,47 +433,47 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyAboutList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyAbout -> {
+              searchSmartAgricultureDeveloperList(siteRequest, true, false, true, "PATCH").onSuccess(listSmartAgricultureDeveloper -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listCompanyAbout.getRequest().getRows());
-                  apiRequest.setNumFound(listCompanyAbout.getResponse().getResponse().getNumFound());
+                  apiRequest.setRows(listSmartAgricultureDeveloper.getRequest().getRows());
+                  apiRequest.setNumFound(listSmartAgricultureDeveloper.getResponse().getResponse().getNumFound());
                   apiRequest.setNumPATCH(0L);
                   apiRequest.initDeepApiRequest(siteRequest);
                   siteRequest.setApiRequest_(apiRequest);
                   if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listCompanyAbout.first());
-                  apiRequest.setId(Optional.ofNullable(listCompanyAbout.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-                  eventBus.publish("websocketCompanyAbout", JsonObject.mapFrom(apiRequest).toString());
+                    apiRequest.setOriginal(listSmartAgricultureDeveloper.first());
+                  apiRequest.setId(Optional.ofNullable(listSmartAgricultureDeveloper.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+                  eventBus.publish("websocketSmartAgricultureDeveloper", JsonObject.mapFrom(apiRequest).toString());
 
-                  listPATCHCompanyAbout(apiRequest, listCompanyAbout).onSuccess(e -> {
-                    response200PATCHCompanyAbout(siteRequest).onSuccess(response -> {
-                      LOG.debug(String.format("patchCompanyAbout succeeded. "));
+                  listPATCHSmartAgricultureDeveloper(apiRequest, listSmartAgricultureDeveloper).onSuccess(e -> {
+                    response200PATCHSmartAgricultureDeveloper(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("patchSmartAgricultureDeveloper succeeded. "));
                       eventHandler.handle(Future.succeededFuture(response));
                     }).onFailure(ex -> {
-                      LOG.error(String.format("patchCompanyAbout failed. "), ex);
+                      LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
                       error(siteRequest, eventHandler, ex);
                     });
                   }).onFailure(ex -> {
-                    LOG.error(String.format("patchCompanyAbout failed. "), ex);
+                    LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 } catch(Exception ex) {
-                  LOG.error(String.format("patchCompanyAbout failed. "), ex);
+                  LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 }
               }).onFailure(ex -> {
-                LOG.error(String.format("patchCompanyAbout failed. "), ex);
+                LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("patchCompanyAbout failed. "), ex);
+            LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("patchCompanyAbout failed. "), ex);
+        LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -405,7 +481,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("patchCompanyAbout failed. ", ex2));
+          LOG.error(String.format("patchSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -420,59 +496,59 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("patchCompanyAbout failed. "), ex);
+        LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listPATCHCompanyAbout(ApiRequest apiRequest, SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<Void> listPATCHSmartAgricultureDeveloper(ApiRequest apiRequest, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
-    SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-    listCompanyAbout.getList().forEach(o -> {
+    SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+    listSmartAgricultureDeveloper.getList().forEach(o -> {
       SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
       siteRequest2.setScopes(siteRequest.getScopes());
       o.setSiteRequest_(siteRequest2);
       siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
       JsonObject jsonObject = JsonObject.mapFrom(o);
-      CompanyAbout o2 = jsonObject.mapTo(CompanyAbout.class);
+      SmartAgricultureDeveloper o2 = jsonObject.mapTo(SmartAgricultureDeveloper.class);
       o2.setSiteRequest_(siteRequest2);
       futures.add(Future.future(promise1 -> {
-        patchCompanyAboutFuture(o2, false).onSuccess(a -> {
+        patchSmartAgricultureDeveloperFuture(o2, false).onSuccess(a -> {
           promise1.complete();
         }).onFailure(ex -> {
-          LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
+          LOG.error(String.format("listPATCHSmartAgricultureDeveloper failed. "), ex);
           promise1.tryFail(ex);
         });
       }));
     });
     CompositeFuture.all(futures).onSuccess( a -> {
-      listCompanyAbout.next().onSuccess(next -> {
+      listSmartAgricultureDeveloper.next().onSuccess(next -> {
         if(next) {
-          listPATCHCompanyAbout(apiRequest, listCompanyAbout).onSuccess(b -> {
+          listPATCHSmartAgricultureDeveloper(apiRequest, listSmartAgricultureDeveloper).onSuccess(b -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
+            LOG.error(String.format("listPATCHSmartAgricultureDeveloper failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
+        LOG.error(String.format("listPATCHSmartAgricultureDeveloper failed. "), ex);
         promise.tryFail(ex);
       });
     }).onFailure(ex -> {
-      LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
+      LOG.error(String.format("listPATCHSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     });
     return promise.future();
   }
 
   @Override
-  public void patchCompanyAboutFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void patchSmartAgricultureDeveloperFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
@@ -483,9 +559,9 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyAboutList(siteRequest, false, true, true, "PATCH").onSuccess(listCompanyAbout -> {
+        searchSmartAgricultureDeveloperList(siteRequest, false, true, true, "PATCH").onSuccess(listSmartAgricultureDeveloper -> {
           try {
-            CompanyAbout o = listCompanyAbout.first();
+            SmartAgricultureDeveloper o = listSmartAgricultureDeveloper.first();
             ApiRequest apiRequest = new ApiRequest();
             apiRequest.setRows(1L);
             apiRequest.setNumFound(1L);
@@ -495,55 +571,55 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
               siteRequest.getRequestVars().put( "refresh", "false" );
             }
-            CompanyAbout o2;
+            SmartAgricultureDeveloper o2;
             if(o != null) {
               if(apiRequest.getNumFound() == 1L)
                 apiRequest.setOriginal(o);
-              apiRequest.setId(Optional.ofNullable(listCompanyAbout.first()).map(o3 -> o3.getPageId().toString()).orElse(null));
+              apiRequest.setId(Optional.ofNullable(listSmartAgricultureDeveloper.first()).map(o3 -> o3.getPageId().toString()).orElse(null));
               JsonObject jsonObject = JsonObject.mapFrom(o);
-              o2 = jsonObject.mapTo(CompanyAbout.class);
+              o2 = jsonObject.mapTo(SmartAgricultureDeveloper.class);
               o2.setSiteRequest_(siteRequest);
-              patchCompanyAboutFuture(o2, false).onSuccess(o3 -> {
+              patchSmartAgricultureDeveloperFuture(o2, false).onSuccess(o3 -> {
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
               }).onFailure(ex -> {
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              String m = String.format("%s %s not found", "about page", null);
+              String m = String.format("%s %s not found", "Smart Agriculture Developer", null);
               eventHandler.handle(Future.failedFuture(m));
             }
           } catch(Exception ex) {
-            LOG.error(String.format("patchCompanyAbout failed. "), ex);
+            LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
             error(siteRequest, eventHandler, ex);
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("patchCompanyAbout failed. "), ex);
+          LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
           error(siteRequest, eventHandler, ex);
         });
       } catch(Exception ex) {
-        LOG.error(String.format("patchCompanyAbout failed. "), ex);
+        LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
-      LOG.error(String.format("patchCompanyAbout failed. "), ex);
+      LOG.error(String.format("patchSmartAgricultureDeveloper failed. "), ex);
       error(null, eventHandler, ex);
     });
   }
 
-  public Future<CompanyAbout> patchCompanyAboutFuture(CompanyAbout o, Boolean inheritPrimaryKey) {
+  public Future<SmartAgricultureDeveloper> patchSmartAgricultureDeveloperFuture(SmartAgricultureDeveloper o, Boolean inheritPrimaryKey) {
     SiteRequest siteRequest = o.getSiteRequest_();
-    Promise<CompanyAbout> promise = Promise.promise();
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
 
     try {
       ApiRequest apiRequest = siteRequest.getApiRequest_();
-      persistCompanyAbout(o, true).onSuccess(c -> {
-        indexCompanyAbout(o).onSuccess(e -> {
+      persistSmartAgricultureDeveloper(o, true).onSuccess(c -> {
+        indexSmartAgricultureDeveloper(o).onSuccess(e -> {
           if(apiRequest != null) {
             apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
             if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
-              o.apiRequestCompanyAbout();
+              o.apiRequestSmartAgricultureDeveloper();
               if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(true))
-                eventBus.publish("websocketCompanyAbout", JsonObject.mapFrom(apiRequest).toString());
+                eventBus.publish("websocketSmartAgricultureDeveloper", JsonObject.mapFrom(apiRequest).toString());
             }
           }
           promise.complete(o);
@@ -554,19 +630,19 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("patchCompanyAboutFuture failed. "), ex);
+      LOG.error(String.format("patchSmartAgricultureDeveloperFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200PATCHCompanyAbout(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200PATCHSmartAgricultureDeveloper(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200PATCHCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200PATCHSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -575,27 +651,27 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // POST //
 
   @Override
-  public void postCompanyAbout(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("postCompanyAbout started. "));
-    Boolean classPublicRead = true;
+  public void postSmartAgricultureDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("postSmartAgricultureDeveloper started. "));
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYABOUT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYABOUT");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, pageId, "POST"));
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "POST"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -609,7 +685,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYABOUT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -631,7 +707,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               apiRequest.setNumPATCH(0L);
               apiRequest.initDeepApiRequest(siteRequest);
               siteRequest.setApiRequest_(apiRequest);
-              eventBus.publish("websocketCompanyAbout", JsonObject.mapFrom(apiRequest).toString());
+              eventBus.publish("websocketSmartAgricultureDeveloper", JsonObject.mapFrom(apiRequest).toString());
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
@@ -651,23 +727,23 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               params.put("query", query);
               JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
               JsonObject json = new JsonObject().put("context", context);
-              eventBus.request(CompanyAbout.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyAboutFuture")).onSuccess(a -> {
+              eventBus.request(SmartAgricultureDeveloper.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postSmartAgricultureDeveloperFuture")).onSuccess(a -> {
                 JsonObject responseMessage = (JsonObject)a.body();
                 JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
-                LOG.debug(String.format("postCompanyAbout succeeded. "));
+                LOG.debug(String.format("postSmartAgricultureDeveloper succeeded. "));
               }).onFailure(ex -> {
-                LOG.error(String.format("postCompanyAbout failed. "), ex);
+                LOG.error(String.format("postSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("postCompanyAbout failed. "), ex);
+            LOG.error(String.format("postSmartAgricultureDeveloper failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("postCompanyAbout failed. "), ex);
+        LOG.error(String.format("postSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -675,7 +751,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("postCompanyAbout failed. ", ex2));
+          LOG.error(String.format("postSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -690,15 +766,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("postCompanyAbout failed. "), ex);
+        LOG.error(String.format("postSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
   @Override
-  public void postCompanyAboutFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void postSmartAgricultureDeveloperFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
@@ -716,13 +792,13 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
           siteRequest.getRequestVars().put( "refresh", "false" );
         }
-        postCompanyAboutFuture(siteRequest, false).onSuccess(o -> {
+        postSmartAgricultureDeveloperFuture(siteRequest, false).onSuccess(o -> {
           eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(o).encodePrettily()))));
         }).onFailure(ex -> {
           eventHandler.handle(Future.failedFuture(ex));
         });
       } catch(Throwable ex) {
-        LOG.error(String.format("postCompanyAbout failed. "), ex);
+        LOG.error(String.format("postSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -730,7 +806,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("postCompanyAbout failed. ", ex2));
+          LOG.error(String.format("postSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -745,20 +821,20 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("postCompanyAbout failed. "), ex);
+        LOG.error(String.format("postSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<CompanyAbout> postCompanyAboutFuture(SiteRequest siteRequest, Boolean pageId) {
-    Promise<CompanyAbout> promise = Promise.promise();
+  public Future<SmartAgricultureDeveloper> postSmartAgricultureDeveloperFuture(SiteRequest siteRequest, Boolean pageId) {
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
 
     try {
-      createCompanyAbout(siteRequest).onSuccess(companyAbout -> {
-        persistCompanyAbout(companyAbout, false).onSuccess(c -> {
-          indexCompanyAbout(companyAbout).onSuccess(o2 -> {
-            promise.complete(companyAbout);
+      createSmartAgricultureDeveloper(siteRequest).onSuccess(smartAgricultureDeveloper -> {
+        persistSmartAgricultureDeveloper(smartAgricultureDeveloper, false).onSuccess(c -> {
+          indexSmartAgricultureDeveloper(smartAgricultureDeveloper).onSuccess(o2 -> {
+            promise.complete(smartAgricultureDeveloper);
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -769,20 +845,20 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("postCompanyAboutFuture failed. "), ex);
+      LOG.error(String.format("postSmartAgricultureDeveloperFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200POSTCompanyAbout(CompanyAbout o) {
+  public Future<ServiceResponse> response200POSTSmartAgricultureDeveloper(SmartAgricultureDeveloper o) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       JsonObject json = JsonObject.mapFrom(o);
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200POSTCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200POSTSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -791,27 +867,27 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // DELETE //
 
   @Override
-  public void deleteCompanyAbout(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("deleteCompanyAbout started. "));
-    Boolean classPublicRead = true;
+  public void deleteSmartAgricultureDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("deleteSmartAgricultureDeveloper started. "));
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYABOUT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYABOUT");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -825,7 +901,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYABOUT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -841,46 +917,46 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyAboutList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyAbout -> {
+              searchSmartAgricultureDeveloperList(siteRequest, true, false, true, "DELETE").onSuccess(listSmartAgricultureDeveloper -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listCompanyAbout.getRequest().getRows());
-                  apiRequest.setNumFound(listCompanyAbout.getResponse().getResponse().getNumFound());
+                  apiRequest.setRows(listSmartAgricultureDeveloper.getRequest().getRows());
+                  apiRequest.setNumFound(listSmartAgricultureDeveloper.getResponse().getResponse().getNumFound());
                   apiRequest.setNumPATCH(0L);
                   apiRequest.initDeepApiRequest(siteRequest);
                   siteRequest.setApiRequest_(apiRequest);
                   if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listCompanyAbout.first());
-                  eventBus.publish("websocketCompanyAbout", JsonObject.mapFrom(apiRequest).toString());
+                    apiRequest.setOriginal(listSmartAgricultureDeveloper.first());
+                  eventBus.publish("websocketSmartAgricultureDeveloper", JsonObject.mapFrom(apiRequest).toString());
 
-                  listDELETECompanyAbout(apiRequest, listCompanyAbout).onSuccess(e -> {
-                    response200DELETECompanyAbout(siteRequest).onSuccess(response -> {
-                      LOG.debug(String.format("deleteCompanyAbout succeeded. "));
+                  listDELETESmartAgricultureDeveloper(apiRequest, listSmartAgricultureDeveloper).onSuccess(e -> {
+                    response200DELETESmartAgricultureDeveloper(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("deleteSmartAgricultureDeveloper succeeded. "));
                       eventHandler.handle(Future.succeededFuture(response));
                     }).onFailure(ex -> {
-                      LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+                      LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
                       error(siteRequest, eventHandler, ex);
                     });
                   }).onFailure(ex -> {
-                    LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+                    LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 } catch(Exception ex) {
-                  LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+                  LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 }
               }).onFailure(ex -> {
-                LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+                LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+            LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+        LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -888,7 +964,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("deleteCompanyAbout failed. ", ex2));
+          LOG.error(String.format("deleteSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -903,59 +979,59 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+        LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listDELETECompanyAbout(ApiRequest apiRequest, SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<Void> listDELETESmartAgricultureDeveloper(ApiRequest apiRequest, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
-    SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-    listCompanyAbout.getList().forEach(o -> {
+    SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+    listSmartAgricultureDeveloper.getList().forEach(o -> {
       SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
       siteRequest2.setScopes(siteRequest.getScopes());
       o.setSiteRequest_(siteRequest2);
       siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
       JsonObject jsonObject = JsonObject.mapFrom(o);
-      CompanyAbout o2 = jsonObject.mapTo(CompanyAbout.class);
+      SmartAgricultureDeveloper o2 = jsonObject.mapTo(SmartAgricultureDeveloper.class);
       o2.setSiteRequest_(siteRequest2);
       futures.add(Future.future(promise1 -> {
-        deleteCompanyAboutFuture(o).onSuccess(a -> {
+        deleteSmartAgricultureDeveloperFuture(o).onSuccess(a -> {
           promise1.complete();
         }).onFailure(ex -> {
-          LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
+          LOG.error(String.format("listDELETESmartAgricultureDeveloper failed. "), ex);
           promise1.tryFail(ex);
         });
       }));
     });
     CompositeFuture.all(futures).onSuccess( a -> {
-      listCompanyAbout.next().onSuccess(next -> {
+      listSmartAgricultureDeveloper.next().onSuccess(next -> {
         if(next) {
-          listDELETECompanyAbout(apiRequest, listCompanyAbout).onSuccess(b -> {
+          listDELETESmartAgricultureDeveloper(apiRequest, listSmartAgricultureDeveloper).onSuccess(b -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
+            LOG.error(String.format("listDELETESmartAgricultureDeveloper failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
+        LOG.error(String.format("listDELETESmartAgricultureDeveloper failed. "), ex);
         promise.tryFail(ex);
       });
     }).onFailure(ex -> {
-      LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
+      LOG.error(String.format("listDELETESmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     });
     return promise.future();
   }
 
   @Override
-  public void deleteCompanyAboutFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void deleteSmartAgricultureDeveloperFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
@@ -966,10 +1042,10 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyAboutList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyAbout -> {
+        searchSmartAgricultureDeveloperList(siteRequest, false, true, true, "DELETE").onSuccess(listSmartAgricultureDeveloper -> {
           try {
-            CompanyAbout o = listCompanyAbout.first();
-            if(o != null && listCompanyAbout.getResponse().getResponse().getNumFound() == 1) {
+            SmartAgricultureDeveloper o = listSmartAgricultureDeveloper.first();
+            if(o != null && listSmartAgricultureDeveloper.getResponse().getResponse().getNumFound() == 1) {
               ApiRequest apiRequest = new ApiRequest();
               apiRequest.setRows(1L);
               apiRequest.setNumFound(1L);
@@ -981,8 +1057,8 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               }
               if(apiRequest.getNumFound() == 1L)
                 apiRequest.setOriginal(o);
-              apiRequest.setId(Optional.ofNullable(listCompanyAbout.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-              deleteCompanyAboutFuture(o).onSuccess(o2 -> {
+              apiRequest.setId(Optional.ofNullable(listSmartAgricultureDeveloper.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+              deleteSmartAgricultureDeveloperFuture(o).onSuccess(o2 -> {
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
               }).onFailure(ex -> {
                 eventHandler.handle(Future.failedFuture(ex));
@@ -991,48 +1067,48 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
             }
           } catch(Exception ex) {
-            LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+            LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
             error(siteRequest, eventHandler, ex);
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+          LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
           error(siteRequest, eventHandler, ex);
         });
       } catch(Exception ex) {
-        LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+        LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
-      LOG.error(String.format("deleteCompanyAbout failed. "), ex);
+      LOG.error(String.format("deleteSmartAgricultureDeveloper failed. "), ex);
       error(null, eventHandler, ex);
     });
   }
 
-  public Future<CompanyAbout> deleteCompanyAboutFuture(CompanyAbout o) {
+  public Future<SmartAgricultureDeveloper> deleteSmartAgricultureDeveloperFuture(SmartAgricultureDeveloper o) {
     SiteRequest siteRequest = o.getSiteRequest_();
-    Promise<CompanyAbout> promise = Promise.promise();
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
 
     try {
       ApiRequest apiRequest = siteRequest.getApiRequest_();
-      unindexCompanyAbout(o).onSuccess(e -> {
+      unindexSmartAgricultureDeveloper(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("deleteCompanyAboutFuture failed. "), ex);
+      LOG.error(String.format("deleteSmartAgricultureDeveloperFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200DELETECompanyAbout(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200DELETESmartAgricultureDeveloper(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200DELETECompanyAbout failed. "), ex);
+      LOG.error(String.format("response200DELETESmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -1041,27 +1117,27 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // PUTImport //
 
   @Override
-  public void putimportCompanyAbout(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("putimportCompanyAbout started. "));
-    Boolean classPublicRead = true;
+  public void putimportSmartAgricultureDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("putimportSmartAgricultureDeveloper started. "));
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYABOUT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYABOUT");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, pageId, "PUT"));
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "PUT"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1075,7 +1151,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYABOUT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1098,32 +1174,32 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               apiRequest.setNumPATCH(0L);
               apiRequest.initDeepApiRequest(siteRequest);
               siteRequest.setApiRequest_(apiRequest);
-              eventBus.publish("websocketCompanyAbout", JsonObject.mapFrom(apiRequest).toString());
-              varsCompanyAbout(siteRequest).onSuccess(d -> {
-                listPUTImportCompanyAbout(apiRequest, siteRequest).onSuccess(e -> {
-                  response200PUTImportCompanyAbout(siteRequest).onSuccess(response -> {
-                    LOG.debug(String.format("putimportCompanyAbout succeeded. "));
+              eventBus.publish("websocketSmartAgricultureDeveloper", JsonObject.mapFrom(apiRequest).toString());
+              varsSmartAgricultureDeveloper(siteRequest).onSuccess(d -> {
+                listPUTImportSmartAgricultureDeveloper(apiRequest, siteRequest).onSuccess(e -> {
+                  response200PUTImportSmartAgricultureDeveloper(siteRequest).onSuccess(response -> {
+                    LOG.debug(String.format("putimportSmartAgricultureDeveloper succeeded. "));
                     eventHandler.handle(Future.succeededFuture(response));
                   }).onFailure(ex -> {
-                    LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+                    LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 }).onFailure(ex -> {
-                  LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+                  LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+                LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+            LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+        LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -1131,7 +1207,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("putimportCompanyAbout failed. ", ex2));
+          LOG.error(String.format("putimportSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1146,13 +1222,13 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+        LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listPUTImportCompanyAbout(ApiRequest apiRequest, SiteRequest siteRequest) {
+  public Future<Void> listPUTImportSmartAgricultureDeveloper(ApiRequest apiRequest, SiteRequest siteRequest) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
     JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -1177,10 +1253,10 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           params.put("query", query);
           JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
           JsonObject json = new JsonObject().put("context", context);
-          eventBus.request(CompanyAbout.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportCompanyAboutFuture")).onSuccess(a -> {
+          eventBus.request(SmartAgricultureDeveloper.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportSmartAgricultureDeveloperFuture")).onSuccess(a -> {
             promise1.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listPUTImportCompanyAbout failed. "), ex);
+            LOG.error(String.format("listPUTImportSmartAgricultureDeveloper failed. "), ex);
             promise1.tryFail(ex);
           });
         }));
@@ -1189,19 +1265,19 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
         promise.complete();
       }).onFailure(ex -> {
-        LOG.error(String.format("listPUTImportCompanyAbout failed. "), ex);
+        LOG.error(String.format("listPUTImportSmartAgricultureDeveloper failed. "), ex);
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("listPUTImportCompanyAbout failed. "), ex);
+      LOG.error(String.format("listPUTImportSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public void putimportCompanyAboutFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void putimportSmartAgricultureDeveloperFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
@@ -1216,22 +1292,22 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         apiRequest.setNumPATCH(0L);
         apiRequest.initDeepApiRequest(siteRequest);
         siteRequest.setApiRequest_(apiRequest);
-        String pageId = Optional.ofNullable(body.getString(CompanyAbout.VAR_pageId)).orElse(body.getString(CompanyAbout.VAR_solrId));
+        String pageId = Optional.ofNullable(body.getString(SmartAgricultureDeveloper.VAR_pageId)).orElse(body.getString(SmartAgricultureDeveloper.VAR_solrId));
         if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
           siteRequest.getRequestVars().put( "refresh", "false" );
         }
 
-        SearchList<CompanyAbout> searchList = new SearchList<CompanyAbout>();
+        SearchList<SmartAgricultureDeveloper> searchList = new SearchList<SmartAgricultureDeveloper>();
         searchList.setStore(true);
         searchList.q("*:*");
-        searchList.setC(CompanyAbout.class);
+        searchList.setC(SmartAgricultureDeveloper.class);
         searchList.fq("archived_docvalues_boolean:false");
         searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
           try {
             if(searchList.size() >= 1) {
-              CompanyAbout o = searchList.getList().stream().findFirst().orElse(null);
-              CompanyAbout o2 = new CompanyAbout();
+              SmartAgricultureDeveloper o = searchList.getList().stream().findFirst().orElse(null);
+              SmartAgricultureDeveloper o2 = new SmartAgricultureDeveloper();
               o2.setSiteRequest_(siteRequest);
               JsonObject body2 = new JsonObject();
               for(String f : body.fieldNames()) {
@@ -1278,32 +1354,32 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
                 apiRequest.setId(Optional.ofNullable(o.getPageId()).map(v -> v.toString()).orElse(null));
               }
               siteRequest.setJsonObject(body2);
-              patchCompanyAboutFuture(o2, true).onSuccess(b -> {
-                LOG.debug("Import CompanyAbout {} succeeded, modified CompanyAbout. ", body.getValue(CompanyAbout.VAR_pageId));
+              patchSmartAgricultureDeveloperFuture(o2, true).onSuccess(b -> {
+                LOG.debug("Import SmartAgricultureDeveloper {} succeeded, modified SmartAgricultureDeveloper. ", body.getValue(SmartAgricultureDeveloper.VAR_pageId));
                 eventHandler.handle(Future.succeededFuture());
               }).onFailure(ex -> {
-                LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
+                LOG.error(String.format("putimportSmartAgricultureDeveloperFuture failed. "), ex);
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              postCompanyAboutFuture(siteRequest, true).onSuccess(b -> {
-                LOG.debug("Import CompanyAbout {} succeeded, created new CompanyAbout. ", body.getValue(CompanyAbout.VAR_pageId));
+              postSmartAgricultureDeveloperFuture(siteRequest, true).onSuccess(b -> {
+                LOG.debug("Import SmartAgricultureDeveloper {} succeeded, created new SmartAgricultureDeveloper. ", body.getValue(SmartAgricultureDeveloper.VAR_pageId));
                 eventHandler.handle(Future.succeededFuture());
               }).onFailure(ex -> {
-                LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
+                LOG.error(String.format("putimportSmartAgricultureDeveloperFuture failed. "), ex);
                 eventHandler.handle(Future.failedFuture(ex));
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
+            LOG.error(String.format("putimportSmartAgricultureDeveloperFuture failed. "), ex);
             eventHandler.handle(Future.failedFuture(ex));
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
+          LOG.error(String.format("putimportSmartAgricultureDeveloperFuture failed. "), ex);
           eventHandler.handle(Future.failedFuture(ex));
         });
       } catch(Exception ex) {
-        LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
+        LOG.error(String.format("putimportSmartAgricultureDeveloperFuture failed. "), ex);
         eventHandler.handle(Future.failedFuture(ex));
       }
     }).onFailure(ex -> {
@@ -1311,7 +1387,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("putimportCompanyAbout failed. ", ex2));
+          LOG.error(String.format("putimportSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1326,19 +1402,19 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("putimportCompanyAbout failed. "), ex);
+        LOG.error(String.format("putimportSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<ServiceResponse> response200PUTImportCompanyAbout(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200PUTImportSmartAgricultureDeveloper(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200PUTImportCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200PUTImportSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -1347,25 +1423,63 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // SearchPage //
 
   @Override
-  public void searchpageCompanyAbout(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void searchpageSmartAgricultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyAboutList(siteRequest, false, true, false, "GET").onSuccess(listCompanyAbout -> {
-                response200SearchPageCompanyAbout(listCompanyAbout).onSuccess(response -> {
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+            , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+            )
+            .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+            .sendForm(form)
+            .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchSmartAgricultureDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listSmartAgricultureDeveloper -> {
+                response200SearchPageSmartAgricultureDeveloper(listSmartAgricultureDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("searchpageCompanyAbout succeeded. "));
+                  LOG.debug(String.format("searchpageSmartAgricultureDeveloper succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("searchpageCompanyAbout failed. "), ex);
+                  LOG.error(String.format("searchpageSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("searchpageCompanyAbout failed. "), ex);
+                LOG.error(String.format("searchpageSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("searchpageSmartAgricultureDeveloper failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
       } catch(Exception ex) {
-        LOG.error(String.format("searchpageCompanyAbout failed. "), ex);
+        LOG.error(String.format("searchpageSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -1373,7 +1487,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("searchpageCompanyAbout failed. ", ex2));
+          LOG.error(String.format("searchpageSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1388,17 +1502,17 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("searchpageCompanyAbout failed. "), ex);
+        LOG.error(String.format("searchpageSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public void searchpageCompanyAboutPageInit(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<Void> promise) {
+  public void searchpageSmartAgricultureDeveloperPageInit(JsonObject ctx, SmartAgricultureDeveloperPage page, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
-    ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-agriculture-developer"));
+    ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-agriculture-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
     ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
@@ -1407,19 +1521,19 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
     promise.complete();
   }
 
-  public String templateUriSearchPageCompanyAbout(ServiceRequest serviceRequest, CompanyAbout result) {
-    return "en-us/search/about/CompanyAboutSearchPage.htm";
+  public String templateUriSearchPageSmartAgricultureDeveloper(ServiceRequest serviceRequest, SmartAgricultureDeveloper result) {
+    return "en-us/search/smart-agriculture-developer/SmartAgricultureDeveloperSearchPage.htm";
   }
-  public void templateSearchPageCompanyAbout(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<String> promise) {
+  public void templateSearchPageSmartAgricultureDeveloper(JsonObject ctx, SmartAgricultureDeveloperPage page, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper, Promise<String> promise) {
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyAbout result = listCompanyAbout.first();
-      String pageTemplateUri = templateUriSearchPageCompanyAbout(serviceRequest, result);
+      SmartAgricultureDeveloper result = listSmartAgricultureDeveloper.first();
+      String pageTemplateUri = templateUriSearchPageSmartAgricultureDeveloper(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
       if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/about/CompanyAboutSearchPage.htm"), Charset.forName("UTF-8"));
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/smart-agriculture-developer/SmartAgricultureDeveloperSearchPage.htm"), Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       } else if(pageTemplateUri.endsWith(".md")) {
@@ -1473,65 +1587,65 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.complete(renderedTemplate);
       }
     } catch(Exception ex) {
-      LOG.error(String.format("templateSearchPageCompanyAbout failed. "), ex);
+      LOG.error(String.format("templateSearchPageSmartAgricultureDeveloper failed. "), ex);
       ExceptionUtils.rethrow(ex);
     }
   }
-  public Future<ServiceResponse> response200SearchPageCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<ServiceResponse> response200SearchPageSmartAgricultureDeveloper(SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      CompanyAboutPage page = new CompanyAboutPage();
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+      SmartAgricultureDeveloperPage page = new SmartAgricultureDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
 
-      page.setSearchListCompanyAbout_(listCompanyAbout);
+      page.setSearchListSmartAgricultureDeveloper_(listSmartAgricultureDeveloper);
       page.setSiteRequest_(siteRequest);
       page.setServiceRequest(siteRequest.getServiceRequest());
       page.setWebClient(webClient);
       page.setVertx(vertx);
-      page.promiseDeepCompanyAboutPage(siteRequest).onSuccess(a -> {
+      page.promiseDeepSmartAgricultureDeveloperPage(siteRequest).onSuccess(a -> {
         try {
           JsonObject ctx = ConfigKeys.getPageContext(config);
           ctx.mergeIn(JsonObject.mapFrom(page));
           Promise<Void> promise1 = Promise.promise();
-          searchpageCompanyAboutPageInit(ctx, page, listCompanyAbout, promise1);
+          searchpageSmartAgricultureDeveloperPageInit(ctx, page, listSmartAgricultureDeveloper, promise1);
           promise1.future().onSuccess(b -> {
             try {
               Promise<String> promise2 = Promise.promise();
-              templateSearchPageCompanyAbout(ctx, page, listCompanyAbout, promise2);
+              templateSearchPageSmartAgricultureDeveloper(ctx, page, listSmartAgricultureDeveloper, promise2);
               promise2.future().onSuccess(renderedTemplate -> {
                 try {
                   Buffer buffer = Buffer.buffer(renderedTemplate);
                   promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
                 } catch(Throwable ex) {
-                  LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
+                  LOG.error(String.format("response200SearchPageSmartAgricultureDeveloper failed. "), ex);
                   promise.fail(ex);
                 }
               }).onFailure(ex -> {
                 promise.fail(ex);
               });
             } catch(Throwable ex) {
-              LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
+              LOG.error(String.format("response200SearchPageSmartAgricultureDeveloper failed. "), ex);
               promise.tryFail(ex);
             }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
         } catch(Exception ex) {
-          LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
+          LOG.error(String.format("response200SearchPageSmartAgricultureDeveloper failed. "), ex);
           promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200SearchPageSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void responsePivotSearchPageCompanyAbout(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+  public void responsePivotSearchPageSmartAgricultureDeveloper(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
     if(pivots != null) {
       for(SolrResponse.Pivot pivotField : pivots) {
         String entityIndexed = pivotField.getField();
@@ -1560,7 +1674,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         if(pivotFields2 != null) {
           JsonArray pivotArray2 = new JsonArray();
           pivotJson.put("pivot", pivotArray2);
-          responsePivotSearchPageCompanyAbout(pivotFields2, pivotArray2);
+          responsePivotSearchPageSmartAgricultureDeveloper(pivotFields2, pivotArray2);
         }
       }
     }
@@ -1569,26 +1683,26 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // EditPage //
 
   @Override
-  public void editpageCompanyAbout(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void editpageSmartAgricultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYABOUT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYABOUT");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, pageId, "GET"));
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
               , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1602,30 +1716,30 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYABOUT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyAboutList(siteRequest, false, true, false, "GET").onSuccess(listCompanyAbout -> {
-                response200EditPageCompanyAbout(listCompanyAbout).onSuccess(response -> {
+              searchSmartAgricultureDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listSmartAgricultureDeveloper -> {
+                response200EditPageSmartAgricultureDeveloper(listSmartAgricultureDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("editpageCompanyAbout succeeded. "));
+                  LOG.debug(String.format("editpageSmartAgricultureDeveloper succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("editpageCompanyAbout failed. "), ex);
+                  LOG.error(String.format("editpageSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("editpageCompanyAbout failed. "), ex);
+                LOG.error(String.format("editpageSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
             });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("editpageCompanyAbout failed. "), ex);
+            LOG.error(String.format("editpageSmartAgricultureDeveloper failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("editpageCompanyAbout failed. "), ex);
+        LOG.error(String.format("editpageSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -1633,7 +1747,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("editpageCompanyAbout failed. ", ex2));
+          LOG.error(String.format("editpageSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1648,16 +1762,16 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("editpageCompanyAbout failed. "), ex);
+        LOG.error(String.format("editpageSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public void editpageCompanyAboutPageInit(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<Void> promise) {
+  public void editpageSmartAgricultureDeveloperPageInit(JsonObject ctx, SmartAgricultureDeveloperPage page, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-agriculture-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1667,19 +1781,19 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
     promise.complete();
   }
 
-  public String templateUriEditPageCompanyAbout(ServiceRequest serviceRequest, CompanyAbout result) {
-    return "en-us/edit/about/CompanyAboutEditPage.htm";
+  public String templateUriEditPageSmartAgricultureDeveloper(ServiceRequest serviceRequest, SmartAgricultureDeveloper result) {
+    return "en-us/edit/smart-agriculture-developer/SmartAgricultureDeveloperEditPage.htm";
   }
-  public void templateEditPageCompanyAbout(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<String> promise) {
+  public void templateEditPageSmartAgricultureDeveloper(JsonObject ctx, SmartAgricultureDeveloperPage page, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper, Promise<String> promise) {
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyAbout result = listCompanyAbout.first();
-      String pageTemplateUri = templateUriEditPageCompanyAbout(serviceRequest, result);
+      SmartAgricultureDeveloper result = listSmartAgricultureDeveloper.first();
+      String pageTemplateUri = templateUriEditPageSmartAgricultureDeveloper(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
       if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/about/CompanyAboutEditPage.htm"), Charset.forName("UTF-8"));
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/smart-agriculture-developer/SmartAgricultureDeveloperEditPage.htm"), Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       } else if(pageTemplateUri.endsWith(".md")) {
@@ -1733,65 +1847,65 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.complete(renderedTemplate);
       }
     } catch(Exception ex) {
-      LOG.error(String.format("templateEditPageCompanyAbout failed. "), ex);
+      LOG.error(String.format("templateEditPageSmartAgricultureDeveloper failed. "), ex);
       ExceptionUtils.rethrow(ex);
     }
   }
-  public Future<ServiceResponse> response200EditPageCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<ServiceResponse> response200EditPageSmartAgricultureDeveloper(SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      CompanyAboutPage page = new CompanyAboutPage();
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+      SmartAgricultureDeveloperPage page = new SmartAgricultureDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
 
-      page.setSearchListCompanyAbout_(listCompanyAbout);
+      page.setSearchListSmartAgricultureDeveloper_(listSmartAgricultureDeveloper);
       page.setSiteRequest_(siteRequest);
       page.setServiceRequest(siteRequest.getServiceRequest());
       page.setWebClient(webClient);
       page.setVertx(vertx);
-      page.promiseDeepCompanyAboutPage(siteRequest).onSuccess(a -> {
+      page.promiseDeepSmartAgricultureDeveloperPage(siteRequest).onSuccess(a -> {
         try {
           JsonObject ctx = ConfigKeys.getPageContext(config);
           ctx.mergeIn(JsonObject.mapFrom(page));
           Promise<Void> promise1 = Promise.promise();
-          editpageCompanyAboutPageInit(ctx, page, listCompanyAbout, promise1);
+          editpageSmartAgricultureDeveloperPageInit(ctx, page, listSmartAgricultureDeveloper, promise1);
           promise1.future().onSuccess(b -> {
             try {
               Promise<String> promise2 = Promise.promise();
-              templateEditPageCompanyAbout(ctx, page, listCompanyAbout, promise2);
+              templateEditPageSmartAgricultureDeveloper(ctx, page, listSmartAgricultureDeveloper, promise2);
               promise2.future().onSuccess(renderedTemplate -> {
                 try {
                   Buffer buffer = Buffer.buffer(renderedTemplate);
                   promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
                 } catch(Throwable ex) {
-                  LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
+                  LOG.error(String.format("response200EditPageSmartAgricultureDeveloper failed. "), ex);
                   promise.fail(ex);
                 }
               }).onFailure(ex -> {
                 promise.fail(ex);
               });
             } catch(Throwable ex) {
-              LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
+              LOG.error(String.format("response200EditPageSmartAgricultureDeveloper failed. "), ex);
               promise.tryFail(ex);
             }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
         } catch(Exception ex) {
-          LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
+          LOG.error(String.format("response200EditPageSmartAgricultureDeveloper failed. "), ex);
           promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200EditPageSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void responsePivotEditPageCompanyAbout(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+  public void responsePivotEditPageSmartAgricultureDeveloper(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
     if(pivots != null) {
       for(SolrResponse.Pivot pivotField : pivots) {
         String entityIndexed = pivotField.getField();
@@ -1820,34 +1934,72 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         if(pivotFields2 != null) {
           JsonArray pivotArray2 = new JsonArray();
           pivotJson.put("pivot", pivotArray2);
-          responsePivotEditPageCompanyAbout(pivotFields2, pivotArray2);
+          responsePivotEditPageSmartAgricultureDeveloper(pivotFields2, pivotArray2);
         }
       }
     }
   }
 
-  // DisplayPage //
+  // UserPage //
 
   @Override
-  public void displaypageCompanyAbout(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void userpageSmartAgricultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyAboutList(siteRequest, false, true, false, "GET").onSuccess(listCompanyAbout -> {
-                response200DisplayPageCompanyAbout(listCompanyAbout).onSuccess(response -> {
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+              , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+              , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+              )
+              .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+              .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+              .sendForm(form)
+              .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchSmartAgricultureDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listSmartAgricultureDeveloper -> {
+                response200UserPageSmartAgricultureDeveloper(listSmartAgricultureDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("displaypageCompanyAbout succeeded. "));
+                  LOG.debug(String.format("userpageSmartAgricultureDeveloper succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("displaypageCompanyAbout failed. "), ex);
+                  LOG.error(String.format("userpageSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("displaypageCompanyAbout failed. "), ex);
+                LOG.error(String.format("userpageSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
             });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("userpageSmartAgricultureDeveloper failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
       } catch(Exception ex) {
-        LOG.error(String.format("displaypageCompanyAbout failed. "), ex);
+        LOG.error(String.format("userpageSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -1855,7 +2007,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("displaypageCompanyAbout failed. ", ex2));
+          LOG.error(String.format("userpageSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1870,34 +2022,34 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("displaypageCompanyAbout failed. "), ex);
+        LOG.error(String.format("userpageSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public void displaypageCompanyAboutPageInit(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<Void> promise) {
+  public void userpageSmartAgricultureDeveloperPageInit(JsonObject ctx, SmartAgricultureDeveloperPage page, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-agriculture-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
     ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
     ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
 
     promise.complete();
   }
 
-  public String templateUriDisplayPageCompanyAbout(ServiceRequest serviceRequest, CompanyAbout result) {
+  public String templateUriUserPageSmartAgricultureDeveloper(ServiceRequest serviceRequest, SmartAgricultureDeveloper result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
   }
-  public void templateDisplayPageCompanyAbout(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<String> promise) {
+  public void templateUserPageSmartAgricultureDeveloper(JsonObject ctx, SmartAgricultureDeveloperPage page, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper, Promise<String> promise) {
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyAbout result = listCompanyAbout.first();
-      String pageTemplateUri = templateUriDisplayPageCompanyAbout(serviceRequest, result);
+      SmartAgricultureDeveloper result = listSmartAgricultureDeveloper.first();
+      String pageTemplateUri = templateUriUserPageSmartAgricultureDeveloper(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
       if(result == null || !Files.exists(resourceTemplatePath)) {
@@ -1955,65 +2107,65 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.complete(renderedTemplate);
       }
     } catch(Exception ex) {
-      LOG.error(String.format("templateDisplayPageCompanyAbout failed. "), ex);
+      LOG.error(String.format("templateUserPageSmartAgricultureDeveloper failed. "), ex);
       ExceptionUtils.rethrow(ex);
     }
   }
-  public Future<ServiceResponse> response200DisplayPageCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<ServiceResponse> response200UserPageSmartAgricultureDeveloper(SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      CompanyAboutPage page = new CompanyAboutPage();
+      SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+      SmartAgricultureDeveloperPage page = new SmartAgricultureDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
 
-      page.setSearchListCompanyAbout_(listCompanyAbout);
+      page.setSearchListSmartAgricultureDeveloper_(listSmartAgricultureDeveloper);
       page.setSiteRequest_(siteRequest);
       page.setServiceRequest(siteRequest.getServiceRequest());
       page.setWebClient(webClient);
       page.setVertx(vertx);
-      page.promiseDeepCompanyAboutPage(siteRequest).onSuccess(a -> {
+      page.promiseDeepSmartAgricultureDeveloperPage(siteRequest).onSuccess(a -> {
         try {
           JsonObject ctx = ConfigKeys.getPageContext(config);
           ctx.mergeIn(JsonObject.mapFrom(page));
           Promise<Void> promise1 = Promise.promise();
-          displaypageCompanyAboutPageInit(ctx, page, listCompanyAbout, promise1);
+          userpageSmartAgricultureDeveloperPageInit(ctx, page, listSmartAgricultureDeveloper, promise1);
           promise1.future().onSuccess(b -> {
             try {
               Promise<String> promise2 = Promise.promise();
-              templateDisplayPageCompanyAbout(ctx, page, listCompanyAbout, promise2);
+              templateUserPageSmartAgricultureDeveloper(ctx, page, listSmartAgricultureDeveloper, promise2);
               promise2.future().onSuccess(renderedTemplate -> {
                 try {
                   Buffer buffer = Buffer.buffer(renderedTemplate);
                   promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
                 } catch(Throwable ex) {
-                  LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
+                  LOG.error(String.format("response200UserPageSmartAgricultureDeveloper failed. "), ex);
                   promise.fail(ex);
                 }
               }).onFailure(ex -> {
                 promise.fail(ex);
               });
             } catch(Throwable ex) {
-              LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
+              LOG.error(String.format("response200UserPageSmartAgricultureDeveloper failed. "), ex);
               promise.tryFail(ex);
             }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
         } catch(Exception ex) {
-          LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
+          LOG.error(String.format("response200UserPageSmartAgricultureDeveloper failed. "), ex);
           promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200UserPageSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void responsePivotDisplayPageCompanyAbout(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+  public void responsePivotUserPageSmartAgricultureDeveloper(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
     if(pivots != null) {
       for(SolrResponse.Pivot pivotField : pivots) {
         String entityIndexed = pivotField.getField();
@@ -2042,7 +2194,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         if(pivotFields2 != null) {
           JsonArray pivotArray2 = new JsonArray();
           pivotJson.put("pivot", pivotArray2);
-          responsePivotDisplayPageCompanyAbout(pivotFields2, pivotArray2);
+          responsePivotUserPageSmartAgricultureDeveloper(pivotFields2, pivotArray2);
         }
       }
     }
@@ -2051,27 +2203,27 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   // DELETEFilter //
 
   @Override
-  public void deletefilterCompanyAbout(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("deletefilterCompanyAbout started. "));
-    Boolean classPublicRead = true;
+  public void deletefilterSmartAgricultureDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("deletefilterSmartAgricultureDeveloper started. "));
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYABOUT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYABOUT");
+        String SMARTAGRICULTUREDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SMARTAGRICULTUREDEVELOPER");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyAbout.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -2085,7 +2237,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYABOUT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SMARTAGRICULTUREDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -2101,46 +2253,46 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyAboutList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyAbout -> {
+              searchSmartAgricultureDeveloperList(siteRequest, true, false, true, "DELETE").onSuccess(listSmartAgricultureDeveloper -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listCompanyAbout.getRequest().getRows());
-                  apiRequest.setNumFound(listCompanyAbout.getResponse().getResponse().getNumFound());
+                  apiRequest.setRows(listSmartAgricultureDeveloper.getRequest().getRows());
+                  apiRequest.setNumFound(listSmartAgricultureDeveloper.getResponse().getResponse().getNumFound());
                   apiRequest.setNumPATCH(0L);
                   apiRequest.initDeepApiRequest(siteRequest);
                   siteRequest.setApiRequest_(apiRequest);
                   if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listCompanyAbout.first());
-                  eventBus.publish("websocketCompanyAbout", JsonObject.mapFrom(apiRequest).toString());
+                    apiRequest.setOriginal(listSmartAgricultureDeveloper.first());
+                  eventBus.publish("websocketSmartAgricultureDeveloper", JsonObject.mapFrom(apiRequest).toString());
 
-                  listDELETEFilterCompanyAbout(apiRequest, listCompanyAbout).onSuccess(e -> {
-                    response200DELETEFilterCompanyAbout(siteRequest).onSuccess(response -> {
-                      LOG.debug(String.format("deletefilterCompanyAbout succeeded. "));
+                  listDELETEFilterSmartAgricultureDeveloper(apiRequest, listSmartAgricultureDeveloper).onSuccess(e -> {
+                    response200DELETEFilterSmartAgricultureDeveloper(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("deletefilterSmartAgricultureDeveloper succeeded. "));
                       eventHandler.handle(Future.succeededFuture(response));
                     }).onFailure(ex -> {
-                      LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+                      LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
                       error(siteRequest, eventHandler, ex);
                     });
                   }).onFailure(ex -> {
-                    LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+                    LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 } catch(Exception ex) {
-                  LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+                  LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 }
               }).onFailure(ex -> {
-                LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+                LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+            LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+        LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -2148,7 +2300,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("deletefilterCompanyAbout failed. ", ex2));
+          LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2163,59 +2315,59 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               )
           ));
       } else {
-        LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+        LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listDELETEFilterCompanyAbout(ApiRequest apiRequest, SearchList<CompanyAbout> listCompanyAbout) {
+  public Future<Void> listDELETEFilterSmartAgricultureDeveloper(ApiRequest apiRequest, SearchList<SmartAgricultureDeveloper> listSmartAgricultureDeveloper) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
-    SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-    listCompanyAbout.getList().forEach(o -> {
+    SiteRequest siteRequest = listSmartAgricultureDeveloper.getSiteRequest_(SiteRequest.class);
+    listSmartAgricultureDeveloper.getList().forEach(o -> {
       SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
       siteRequest2.setScopes(siteRequest.getScopes());
       o.setSiteRequest_(siteRequest2);
       siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
       JsonObject jsonObject = JsonObject.mapFrom(o);
-      CompanyAbout o2 = jsonObject.mapTo(CompanyAbout.class);
+      SmartAgricultureDeveloper o2 = jsonObject.mapTo(SmartAgricultureDeveloper.class);
       o2.setSiteRequest_(siteRequest2);
       futures.add(Future.future(promise1 -> {
-        deletefilterCompanyAboutFuture(o).onSuccess(a -> {
+        deletefilterSmartAgricultureDeveloperFuture(o).onSuccess(a -> {
           promise1.complete();
         }).onFailure(ex -> {
-          LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
+          LOG.error(String.format("listDELETEFilterSmartAgricultureDeveloper failed. "), ex);
           promise1.tryFail(ex);
         });
       }));
     });
     CompositeFuture.all(futures).onSuccess( a -> {
-      listCompanyAbout.next().onSuccess(next -> {
+      listSmartAgricultureDeveloper.next().onSuccess(next -> {
         if(next) {
-          listDELETEFilterCompanyAbout(apiRequest, listCompanyAbout).onSuccess(b -> {
+          listDELETEFilterSmartAgricultureDeveloper(apiRequest, listSmartAgricultureDeveloper).onSuccess(b -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
+            LOG.error(String.format("listDELETEFilterSmartAgricultureDeveloper failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
+        LOG.error(String.format("listDELETEFilterSmartAgricultureDeveloper failed. "), ex);
         promise.tryFail(ex);
       });
     }).onFailure(ex -> {
-      LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
+      LOG.error(String.format("listDELETEFilterSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     });
     return promise.future();
   }
 
   @Override
-  public void deletefilterCompanyAboutFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
+  public void deletefilterSmartAgricultureDeveloperFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = false;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
@@ -2226,10 +2378,10 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyAboutList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyAbout -> {
+        searchSmartAgricultureDeveloperList(siteRequest, false, true, true, "DELETE").onSuccess(listSmartAgricultureDeveloper -> {
           try {
-            CompanyAbout o = listCompanyAbout.first();
-            if(o != null && listCompanyAbout.getResponse().getResponse().getNumFound() == 1) {
+            SmartAgricultureDeveloper o = listSmartAgricultureDeveloper.first();
+            if(o != null && listSmartAgricultureDeveloper.getResponse().getResponse().getNumFound() == 1) {
               ApiRequest apiRequest = new ApiRequest();
               apiRequest.setRows(1L);
               apiRequest.setNumFound(1L);
@@ -2241,8 +2393,8 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               }
               if(apiRequest.getNumFound() == 1L)
                 apiRequest.setOriginal(o);
-              apiRequest.setId(Optional.ofNullable(listCompanyAbout.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-              deletefilterCompanyAboutFuture(o).onSuccess(o2 -> {
+              apiRequest.setId(Optional.ofNullable(listSmartAgricultureDeveloper.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+              deletefilterSmartAgricultureDeveloperFuture(o).onSuccess(o2 -> {
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
               }).onFailure(ex -> {
                 eventHandler.handle(Future.failedFuture(ex));
@@ -2251,48 +2403,48 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
             }
           } catch(Exception ex) {
-            LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+            LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
             error(siteRequest, eventHandler, ex);
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+          LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
           error(siteRequest, eventHandler, ex);
         });
       } catch(Exception ex) {
-        LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+        LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
-      LOG.error(String.format("deletefilterCompanyAbout failed. "), ex);
+      LOG.error(String.format("deletefilterSmartAgricultureDeveloper failed. "), ex);
       error(null, eventHandler, ex);
     });
   }
 
-  public Future<CompanyAbout> deletefilterCompanyAboutFuture(CompanyAbout o) {
+  public Future<SmartAgricultureDeveloper> deletefilterSmartAgricultureDeveloperFuture(SmartAgricultureDeveloper o) {
     SiteRequest siteRequest = o.getSiteRequest_();
-    Promise<CompanyAbout> promise = Promise.promise();
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
 
     try {
       ApiRequest apiRequest = siteRequest.getApiRequest_();
-      unindexCompanyAbout(o).onSuccess(e -> {
+      unindexSmartAgricultureDeveloper(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("deletefilterCompanyAboutFuture failed. "), ex);
+      LOG.error(String.format("deletefilterSmartAgricultureDeveloperFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200DELETEFilterCompanyAbout(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200DELETEFilterSmartAgricultureDeveloper(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200DELETEFilterCompanyAbout failed. "), ex);
+      LOG.error(String.format("response200DELETEFilterSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -2300,62 +2452,62 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 
   // General //
 
-  public Future<CompanyAbout> createCompanyAbout(SiteRequest siteRequest) {
-    Promise<CompanyAbout> promise = Promise.promise();
+  public Future<SmartAgricultureDeveloper> createSmartAgricultureDeveloper(SiteRequest siteRequest) {
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
     try {
-      CompanyAbout o = new CompanyAbout();
+      SmartAgricultureDeveloper o = new SmartAgricultureDeveloper();
       o.setSiteRequest_(siteRequest);
       promise.complete(o);
     } catch(Exception ex) {
-      LOG.error(String.format("createCompanyAbout failed. "), ex);
+      LOG.error(String.format("createSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public void searchCompanyAboutQ(SearchList<CompanyAbout> searchList, String entityVar, String valueIndexed, String varIndexed) {
+  public void searchSmartAgricultureDeveloperQ(SearchList<SmartAgricultureDeveloper> searchList, String entityVar, String valueIndexed, String varIndexed) {
     searchList.q(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : SearchTool.escapeQueryChars(valueIndexed)));
     if(!"*".equals(entityVar)) {
     }
   }
 
-  public String searchCompanyAboutFq(SearchList<CompanyAbout> searchList, String entityVar, String valueIndexed, String varIndexed) {
+  public String searchSmartAgricultureDeveloperFq(SearchList<SmartAgricultureDeveloper> searchList, String entityVar, String valueIndexed, String varIndexed) {
     if(varIndexed == null)
       throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
     if(StringUtils.startsWith(valueIndexed, "[")) {
       String[] fqs = StringUtils.substringAfter(StringUtils.substringBeforeLast(valueIndexed, "]"), "[").split(" TO ");
       if(fqs.length != 2)
         throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
-      String fq1 = fqs[0].equals("*") ? fqs[0] : CompanyAbout.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
-      String fq2 = fqs[1].equals("*") ? fqs[1] : CompanyAbout.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
+      String fq1 = fqs[0].equals("*") ? fqs[0] : SmartAgricultureDeveloper.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
+      String fq2 = fqs[1].equals("*") ? fqs[1] : SmartAgricultureDeveloper.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
        return varIndexed + ":[" + fq1 + " TO " + fq2 + "]";
     } else {
-      return varIndexed + ":" + SearchTool.escapeQueryChars(CompanyAbout.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
+      return varIndexed + ":" + SearchTool.escapeQueryChars(SmartAgricultureDeveloper.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
     }
   }
 
-  public void searchCompanyAboutSort(SearchList<CompanyAbout> searchList, String entityVar, String valueIndexed, String varIndexed) {
+  public void searchSmartAgricultureDeveloperSort(SearchList<SmartAgricultureDeveloper> searchList, String entityVar, String valueIndexed, String varIndexed) {
     if(varIndexed == null)
       throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
     searchList.sort(varIndexed, valueIndexed);
   }
 
-  public void searchCompanyAboutRows(SearchList<CompanyAbout> searchList, Long valueRows) {
+  public void searchSmartAgricultureDeveloperRows(SearchList<SmartAgricultureDeveloper> searchList, Long valueRows) {
       searchList.rows(valueRows != null ? valueRows : 10L);
   }
 
-  public void searchCompanyAboutStart(SearchList<CompanyAbout> searchList, Long valueStart) {
+  public void searchSmartAgricultureDeveloperStart(SearchList<SmartAgricultureDeveloper> searchList, Long valueStart) {
     searchList.start(valueStart);
   }
 
-  public void searchCompanyAboutVar(SearchList<CompanyAbout> searchList, String var, String value) {
+  public void searchSmartAgricultureDeveloperVar(SearchList<SmartAgricultureDeveloper> searchList, String var, String value) {
     searchList.getSiteRequest_(SiteRequest.class).getRequestVars().put(var, value);
   }
 
-  public void searchCompanyAboutUri(SearchList<CompanyAbout> searchList) {
+  public void searchSmartAgricultureDeveloperUri(SearchList<SmartAgricultureDeveloper> searchList) {
   }
 
-  public Future<ServiceResponse> varsCompanyAbout(SiteRequest siteRequest) {
+  public Future<ServiceResponse> varsSmartAgricultureDeveloper(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
@@ -2373,25 +2525,25 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             siteRequest.getRequestVars().put(entityVar, valueIndexed);
           }
         } catch(Exception ex) {
-          LOG.error(String.format("searchCompanyAbout failed. "), ex);
+          LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
           promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
-      LOG.error(String.format("searchCompanyAbout failed. "), ex);
+      LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<SearchList<CompanyAbout>> searchCompanyAboutList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
-    Promise<SearchList<CompanyAbout>> promise = Promise.promise();
+  public Future<SearchList<SmartAgricultureDeveloper>> searchSmartAgricultureDeveloperList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
+    Promise<SearchList<SmartAgricultureDeveloper>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-      SearchList<CompanyAbout> searchList = new SearchList<CompanyAbout>();
+      SearchList<SmartAgricultureDeveloper> searchList = new SearchList<SmartAgricultureDeveloper>();
       searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
@@ -2402,12 +2554,12 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       searchList.setPopulate(populate);
       searchList.setStore(store);
       searchList.q("*:*");
-      searchList.setC(CompanyAbout.class);
+      searchList.setC(SmartAgricultureDeveloper.class);
       searchList.setSiteRequest_(siteRequest);
       searchList.facetMinCount(1);
       if(entityList != null) {
         for(String v : entityList) {
-          searchList.fl(CompanyAbout.varIndexedCompanyAbout(v));
+          searchList.fl(SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(v));
         }
       }
 
@@ -2436,7 +2588,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               String[] varsIndexed = new String[entityVars.length];
               for(Integer i = 0; i < entityVars.length; i++) {
                 entityVar = entityVars[i];
-                varsIndexed[i] = CompanyAbout.varIndexedCompanyAbout(entityVar);
+                varsIndexed[i] = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
               }
               searchList.facetPivot((solrLocalParams == null ? "" : solrLocalParams) + StringUtils.join(varsIndexed, ","));
             }
@@ -2448,8 +2600,8 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
                 while(mQ.find()) {
                   entityVar = mQ.group(1).trim();
                   valueIndexed = mQ.group(2).trim();
-                  varIndexed = CompanyAbout.varIndexedCompanyAbout(entityVar);
-                  String entityQ = searchCompanyAboutFq(searchList, entityVar, valueIndexed, varIndexed);
+                  varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
+                  String entityQ = searchSmartAgricultureDeveloperFq(searchList, entityVar, valueIndexed, varIndexed);
                   mQ.appendReplacement(sb, entityQ);
                 }
                 if(!sb.isEmpty()) {
@@ -2462,8 +2614,8 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
                 while(mFq.find()) {
                   entityVar = mFq.group(1).trim();
                   valueIndexed = mFq.group(2).trim();
-                  varIndexed = CompanyAbout.varIndexedCompanyAbout(entityVar);
-                  String entityFq = searchCompanyAboutFq(searchList, entityVar, valueIndexed, varIndexed);
+                  varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
+                  String entityFq = searchSmartAgricultureDeveloperFq(searchList, entityVar, valueIndexed, varIndexed);
                   mFq.appendReplacement(sb, entityFq);
                 }
                 if(!sb.isEmpty()) {
@@ -2473,14 +2625,14 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               } else if(paramName.equals("sort")) {
                 entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
                 valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-                varIndexed = CompanyAbout.varIndexedCompanyAbout(entityVar);
-                searchCompanyAboutSort(searchList, entityVar, valueIndexed, varIndexed);
+                varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
+                searchSmartAgricultureDeveloperSort(searchList, entityVar, valueIndexed, varIndexed);
               } else if(paramName.equals("start")) {
                 valueStart = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-                searchCompanyAboutStart(searchList, valueStart);
+                searchSmartAgricultureDeveloperStart(searchList, valueStart);
               } else if(paramName.equals("rows")) {
                 valueRows = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-                searchCompanyAboutRows(searchList, valueRows);
+                searchSmartAgricultureDeveloperRows(searchList, valueRows);
               } else if(paramName.equals("stats")) {
                 searchList.stats((Boolean)paramObject);
               } else if(paramName.equals("stats.field")) {
@@ -2488,7 +2640,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
                 if(mStats.find()) {
                   String solrLocalParams = mStats.group(1);
                   entityVar = mStats.group(2).trim();
-                  varIndexed = CompanyAbout.varIndexedCompanyAbout(entityVar);
+                  varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
                   searchList.statsField((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
                   statsField = entityVar;
                   statsFieldIndexed = varIndexed;
@@ -2514,25 +2666,25 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
                 if(mFacetRange.find()) {
                   String solrLocalParams = mFacetRange.group(1);
                   entityVar = mFacetRange.group(2).trim();
-                  varIndexed = CompanyAbout.varIndexedCompanyAbout(entityVar);
+                  varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
                   searchList.facetRange((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
                   facetRange = entityVar;
                 }
               } else if(paramName.equals("facet.field")) {
                 entityVar = (String)paramObject;
-                varIndexed = CompanyAbout.varIndexedCompanyAbout(entityVar);
+                varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(entityVar);
                 if(varIndexed != null)
                   searchList.facetField(varIndexed);
               } else if(paramName.equals("var")) {
                 entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
                 valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-                searchCompanyAboutVar(searchList, entityVar, valueIndexed);
+                searchSmartAgricultureDeveloperVar(searchList, entityVar, valueIndexed);
               } else if(paramName.equals("cursorMark")) {
                 valueCursorMark = (String)paramObject;
                 searchList.cursorMark((String)paramObject);
               }
             }
-            searchCompanyAboutUri(searchList);
+            searchSmartAgricultureDeveloperUri(searchList);
           }
         } catch(Exception e) {
           ExceptionUtils.rethrow(e);
@@ -2548,7 +2700,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       String facetRangeGap2 = facetRangeGap;
       String statsField2 = statsField;
       String statsFieldIndexed2 = statsFieldIndexed;
-      searchCompanyAbout2(siteRequest, populate, store, modify, searchList);
+      searchSmartAgricultureDeveloper2(siteRequest, populate, store, modify, searchList);
       searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
         if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
           StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
@@ -2584,26 +2736,26 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           searchList.query().onSuccess(b -> {
             promise.complete(searchList);
           }).onFailure(ex -> {
-            LOG.error(String.format("searchCompanyAbout failed. "), ex);
+            LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("searchCompanyAbout failed. "), ex);
+        LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("searchCompanyAbout failed. "), ex);
+      LOG.error(String.format("searchSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void searchCompanyAbout2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyAbout> searchList) {
+  public void searchSmartAgricultureDeveloper2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<SmartAgricultureDeveloper> searchList) {
   }
 
-  public Future<Void> persistCompanyAbout(CompanyAbout o, Boolean patch) {
+  public Future<Void> persistSmartAgricultureDeveloper(SmartAgricultureDeveloper o, Boolean patch) {
     Promise<Void> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
@@ -2623,38 +2775,38 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
               try {
                 o.persistForClass(columnName, columnValue);
               } catch(Exception e) {
-                LOG.error(String.format("persistCompanyAbout failed. "), e);
+                LOG.error(String.format("persistSmartAgricultureDeveloper failed. "), e);
               }
             }
           });
           o.promiseDeepForClass(siteRequest).onSuccess(a -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("persistCompanyAbout failed. "), ex);
+            LOG.error(String.format("persistSmartAgricultureDeveloper failed. "), ex);
             promise.tryFail(ex);
           });
         } catch(Exception ex) {
-          LOG.error(String.format("persistCompanyAbout failed. "), ex);
+          LOG.error(String.format("persistSmartAgricultureDeveloper failed. "), ex);
           promise.tryFail(ex);
         }
     } catch(Exception ex) {
-      LOG.error(String.format("persistCompanyAbout failed. "), ex);
+      LOG.error(String.format("persistSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
   public String searchVar(String varIndexed) {
-    return CompanyAbout.searchVarCompanyAbout(varIndexed);
+    return SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(varIndexed);
   }
 
   @Override
   public String getClassApiAddress() {
-    return CompanyAbout.CLASS_API_ADDRESS_CompanyAbout;
+    return SmartAgricultureDeveloper.CLASS_API_ADDRESS_SmartAgricultureDeveloper;
   }
 
-  public Future<CompanyAbout> indexCompanyAbout(CompanyAbout o) {
-    Promise<CompanyAbout> promise = Promise.promise();
+  public Future<SmartAgricultureDeveloper> indexSmartAgricultureDeveloper(SmartAgricultureDeveloper o) {
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -2663,7 +2815,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       json.put("add", add);
       JsonObject doc = new JsonObject();
       add.put("doc", doc);
-      o.indexCompanyAbout(doc);
+      o.indexSmartAgricultureDeveloper(doc);
       String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
       String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
       String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
@@ -2680,18 +2832,18 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").sendBuffer(json.toBuffer()).expecting(HttpResponseExpectation.SC_OK).onSuccess(b -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        LOG.error(String.format("indexCompanyAbout failed. "), new RuntimeException(ex));
+        LOG.error(String.format("indexSmartAgricultureDeveloper failed. "), new RuntimeException(ex));
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("indexCompanyAbout failed. "), ex);
+      LOG.error(String.format("indexSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<CompanyAbout> unindexCompanyAbout(CompanyAbout o) {
-    Promise<CompanyAbout> promise = Promise.promise();
+  public Future<SmartAgricultureDeveloper> unindexSmartAgricultureDeveloper(SmartAgricultureDeveloper o) {
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -2699,7 +2851,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         JsonObject json = new JsonObject();
         JsonObject delete = new JsonObject();
         json.put("delete", delete);
-        String query = String.format("filter(%s:%s)", CompanyAbout.VAR_solrId, o.obtainForClass(CompanyAbout.VAR_solrId));
+        String query = String.format("filter(%s:%s)", SmartAgricultureDeveloper.VAR_solrId, o.obtainForClass(SmartAgricultureDeveloper.VAR_solrId));
         delete.put("query", query);
         String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
         String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -2717,15 +2869,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").sendBuffer(json.toBuffer()).expecting(HttpResponseExpectation.SC_OK).onSuccess(b -> {
           promise.complete(o);
         }).onFailure(ex -> {
-          LOG.error(String.format("unindexCompanyAbout failed. "), new RuntimeException(ex));
+          LOG.error(String.format("unindexSmartAgricultureDeveloper failed. "), new RuntimeException(ex));
           promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        LOG.error(String.format("unindexCompanyAbout failed. "), ex);
+        LOG.error(String.format("unindexSmartAgricultureDeveloper failed. "), ex);
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("unindexCompanyAbout failed. "), ex);
+      LOG.error(String.format("unindexSmartAgricultureDeveloper failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -2738,30 +2890,31 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      CompanyAbout o = new CompanyAbout();
+      SmartAgricultureDeveloper o = new SmartAgricultureDeveloper();
       o.setSiteRequest_((SiteRequest)siteRequest);
 
-      o.persistForClass(CompanyAbout.VAR_name, CompanyAbout.staticSetName(siteRequest2, (String)result.get(CompanyAbout.VAR_name)));
-      o.persistForClass(CompanyAbout.VAR_created, CompanyAbout.staticSetCreated(siteRequest2, (String)result.get(CompanyAbout.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      o.persistForClass(CompanyAbout.VAR_description, CompanyAbout.staticSetDescription(siteRequest2, (String)result.get(CompanyAbout.VAR_description)));
-      o.persistForClass(CompanyAbout.VAR_authorName, CompanyAbout.staticSetAuthorName(siteRequest2, (String)result.get(CompanyAbout.VAR_authorName)));
-      o.persistForClass(CompanyAbout.VAR_archived, CompanyAbout.staticSetArchived(siteRequest2, (String)result.get(CompanyAbout.VAR_archived)));
-      o.persistForClass(CompanyAbout.VAR_authorUrl, CompanyAbout.staticSetAuthorUrl(siteRequest2, (String)result.get(CompanyAbout.VAR_authorUrl)));
-      o.persistForClass(CompanyAbout.VAR_pageId, CompanyAbout.staticSetPageId(siteRequest2, (String)result.get(CompanyAbout.VAR_pageId)));
-      o.persistForClass(CompanyAbout.VAR_courseNum, CompanyAbout.staticSetCourseNum(siteRequest2, (String)result.get(CompanyAbout.VAR_courseNum)));
-      o.persistForClass(CompanyAbout.VAR_pageImageUri, CompanyAbout.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyAbout.VAR_pageImageUri)));
-      o.persistForClass(CompanyAbout.VAR_objectTitle, CompanyAbout.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyAbout.VAR_objectTitle)));
-      o.persistForClass(CompanyAbout.VAR_displayPage, CompanyAbout.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyAbout.VAR_displayPage)));
-      o.persistForClass(CompanyAbout.VAR_editPage, CompanyAbout.staticSetEditPage(siteRequest2, (String)result.get(CompanyAbout.VAR_editPage)));
-      o.persistForClass(CompanyAbout.VAR_pageImageAlt, CompanyAbout.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyAbout.VAR_pageImageAlt)));
-      o.persistForClass(CompanyAbout.VAR_userPage, CompanyAbout.staticSetUserPage(siteRequest2, (String)result.get(CompanyAbout.VAR_userPage)));
-      o.persistForClass(CompanyAbout.VAR_prerequisiteArticleIds, CompanyAbout.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(CompanyAbout.VAR_prerequisiteArticleIds)));
-      o.persistForClass(CompanyAbout.VAR_download, CompanyAbout.staticSetDownload(siteRequest2, (String)result.get(CompanyAbout.VAR_download)));
-      o.persistForClass(CompanyAbout.VAR_nextArticleIds, CompanyAbout.staticSetNextArticleIds(siteRequest2, (String)result.get(CompanyAbout.VAR_nextArticleIds)));
-      o.persistForClass(CompanyAbout.VAR_solrId, CompanyAbout.staticSetSolrId(siteRequest2, (String)result.get(CompanyAbout.VAR_solrId)));
-      o.persistForClass(CompanyAbout.VAR_labelsString, CompanyAbout.staticSetLabelsString(siteRequest2, (String)result.get(CompanyAbout.VAR_labelsString)));
-      o.persistForClass(CompanyAbout.VAR_labels, CompanyAbout.staticSetLabels(siteRequest2, (String)result.get(CompanyAbout.VAR_labels)));
-      o.persistForClass(CompanyAbout.VAR_relatedArticleIds, CompanyAbout.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyAbout.VAR_relatedArticleIds)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_created, SmartAgricultureDeveloper.staticSetCreated(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_name, SmartAgricultureDeveloper.staticSetName(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_name)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_description, SmartAgricultureDeveloper.staticSetDescription(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_description)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_archived, SmartAgricultureDeveloper.staticSetArchived(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_archived)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_pageId, SmartAgricultureDeveloper.staticSetPageId(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageId)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_courseNum, SmartAgricultureDeveloper.staticSetCourseNum(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_courseNum)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_lessonNum, SmartAgricultureDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_lessonNum)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_authorName, SmartAgricultureDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_authorName)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_authorUrl, SmartAgricultureDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_authorUrl)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_pageImageUri, SmartAgricultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageImageUri)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_objectTitle, SmartAgricultureDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_objectTitle)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_displayPage, SmartAgricultureDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_displayPage)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_editPage, SmartAgricultureDeveloper.staticSetEditPage(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_editPage)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_userPage, SmartAgricultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_userPage)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_pageImageAlt, SmartAgricultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageImageAlt)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_download, SmartAgricultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_download)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_prerequisiteArticleIds, SmartAgricultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_prerequisiteArticleIds)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_solrId, SmartAgricultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_solrId)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_nextArticleIds, SmartAgricultureDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_nextArticleIds)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_labelsString, SmartAgricultureDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_labelsString)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_labels, SmartAgricultureDeveloper.staticSetLabels(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_labels)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_relatedArticleIds, SmartAgricultureDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_relatedArticleIds)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {

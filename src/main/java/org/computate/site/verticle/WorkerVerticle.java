@@ -36,21 +36,27 @@ import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.switchtolinux.SwitchToLinux;
-import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSApiServiceImpl;
-import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSGenApiService;
-import org.computate.site.model.deployspine.DeploySpine;
-import org.computate.site.model.deployspine.DeploySpineEnUSApiServiceImpl;
-import org.computate.site.model.deployspine.DeploySpineEnUSGenApiService;
 import org.computate.site.model.learnskills.LearnSkills;
 import org.computate.site.model.learnskills.LearnSkillsEnUSApiServiceImpl;
 import org.computate.site.model.learnskills.LearnSkillsEnUSGenApiService;
+import org.computate.site.model.deployspine.DeploySpine;
+import org.computate.site.model.deployspine.DeploySpineEnUSApiServiceImpl;
+import org.computate.site.model.deployspine.DeploySpineEnUSGenApiService;
+import org.computate.site.model.switchtolinux.SwitchToLinux;
+import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSApiServiceImpl;
+import org.computate.site.model.switchtolinux.SwitchToLinuxEnUSGenApiService;
 import org.computate.site.model.spine.SpineProgramming;
 import org.computate.site.model.spine.SpineProgrammingEnUSApiServiceImpl;
 import org.computate.site.model.spine.SpineProgrammingEnUSGenApiService;
+import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.developer.dcm.DeveloperComputerMinion;
 import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSApiServiceImpl;
 import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSGenApiService;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperEnUSGenApiService;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
@@ -60,9 +66,6 @@ import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSGe
 import org.computate.site.model.developer.computate.ComputateDeveloper;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSGenApiService;
-import org.computate.site.model.product.CompanyProduct;
-import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
-import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.about.CompanyAbout;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
@@ -462,24 +465,26 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
       siteRequest.addScopes("GET");
       String templatePath = config().getString(ComputateConfigKeys.TEMPLATE_PATH);
 
-      SwitchToLinuxEnUSApiServiceImpl apiSwitchToLinux = new SwitchToLinuxEnUSApiServiceImpl();
-      initializeApiService(apiSwitchToLinux);
-      DeploySpineEnUSApiServiceImpl apiDeploySpine = new DeploySpineEnUSApiServiceImpl();
-      initializeApiService(apiDeploySpine);
       LearnSkillsEnUSApiServiceImpl apiLearnSkills = new LearnSkillsEnUSApiServiceImpl();
       initializeApiService(apiLearnSkills);
+      DeploySpineEnUSApiServiceImpl apiDeploySpine = new DeploySpineEnUSApiServiceImpl();
+      initializeApiService(apiDeploySpine);
+      SwitchToLinuxEnUSApiServiceImpl apiSwitchToLinux = new SwitchToLinuxEnUSApiServiceImpl();
+      initializeApiService(apiSwitchToLinux);
       SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
       initializeApiService(apiSpineProgramming);
+      CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
+      initializeApiService(apiCompanyProduct);
       DeveloperComputerMinionEnUSApiServiceImpl apiDeveloperComputerMinion = new DeveloperComputerMinionEnUSApiServiceImpl();
       initializeApiService(apiDeveloperComputerMinion);
+      SmartAgricultureDeveloperEnUSApiServiceImpl apiSmartAgricultureDeveloper = new SmartAgricultureDeveloperEnUSApiServiceImpl();
+      initializeApiService(apiSmartAgricultureDeveloper);
       SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
       initializeApiService(apiSmartAquacultureDeveloper);
       AiTelemetryDeveloperEnUSApiServiceImpl apiAiTelemetryDeveloper = new AiTelemetryDeveloperEnUSApiServiceImpl();
       initializeApiService(apiAiTelemetryDeveloper);
       ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
       initializeApiService(apiComputateDeveloper);
-      CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
-      initializeApiService(apiCompanyProduct);
       CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
       initializeApiService(apiCompanyAbout);
       UseCaseEnUSApiServiceImpl apiUseCase = new UseCaseEnUSApiServiceImpl();
@@ -499,26 +504,28 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
       CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
       initializeApiService(apiCompanyWebsite);
 
-      apiSwitchToLinux.importTimer(Paths.get(templatePath, "/en-us/learn/switch-to-linux"), vertx, siteRequest, SwitchToLinux.CLASS_CANONICAL_NAME, SwitchToLinux.CLASS_SIMPLE_NAME, SwitchToLinux.CLASS_API_ADDRESS_SwitchToLinux, SwitchToLinux.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
+      apiLearnSkills.importTimer(Paths.get(templatePath, "/en-us/learn/skills"), vertx, siteRequest, LearnSkills.CLASS_CANONICAL_NAME, LearnSkills.CLASS_SIMPLE_NAME, LearnSkills.CLASS_API_ADDRESS_LearnSkills, LearnSkills.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
         apiDeploySpine.importTimer(Paths.get(templatePath, "/en-us/learn/deploy-spine"), vertx, siteRequest, DeploySpine.CLASS_CANONICAL_NAME, DeploySpine.CLASS_SIMPLE_NAME, DeploySpine.CLASS_API_ADDRESS_DeploySpine, DeploySpine.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
-          apiLearnSkills.importTimer(Paths.get(templatePath, "/en-us/learn/skills"), vertx, siteRequest, LearnSkills.CLASS_CANONICAL_NAME, LearnSkills.CLASS_SIMPLE_NAME, LearnSkills.CLASS_API_ADDRESS_LearnSkills, LearnSkills.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q3 -> {
+          apiSwitchToLinux.importTimer(Paths.get(templatePath, "/en-us/learn/switch-to-linux"), vertx, siteRequest, SwitchToLinux.CLASS_CANONICAL_NAME, SwitchToLinux.CLASS_SIMPLE_NAME, SwitchToLinux.CLASS_API_ADDRESS_SwitchToLinux, SwitchToLinux.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q3 -> {
             apiSpineProgramming.importTimer(Paths.get(templatePath, "/en-us/view/spine-programming"), vertx, siteRequest, SpineProgramming.CLASS_CANONICAL_NAME, SpineProgramming.CLASS_SIMPLE_NAME, SpineProgramming.CLASS_API_ADDRESS_SpineProgramming, SpineProgramming.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q4 -> {
-              apiDeveloperComputerMinion.importTimer(Paths.get(templatePath, "/en-us/dcm-developer/learn"), vertx, siteRequest, DeveloperComputerMinion.CLASS_CANONICAL_NAME, DeveloperComputerMinion.CLASS_SIMPLE_NAME, DeveloperComputerMinion.CLASS_API_ADDRESS_DeveloperComputerMinion, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q5 -> {
-                apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q6 -> {
-                  apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q7 -> {
-                    apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
-                      apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/solution"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, CompanyProduct.CLASS_AUTH_RESOURCE, "pageId", "userPage", "downloadUrl").onSuccess(q9 -> {
-                        apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
-                          apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
-                            apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, CompanyCourse.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
-                              apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, SitePage.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
-                                apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, CompanyEvent.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q14 -> {
-                                  apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, CompanyWebinar.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q15 -> {
-                                    apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q16 -> {
-                                      apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q17 -> {
-                                        apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q18 -> {
-                                          LOG.info("data import complete");
-                                          promise.complete();
+              apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/solution"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, CompanyProduct.CLASS_AUTH_RESOURCE, "pageId", "userPage", "downloadUrl").onSuccess(q5 -> {
+                apiDeveloperComputerMinion.importTimer(Paths.get(templatePath, "/en-us/dcm-developer/learn"), vertx, siteRequest, DeveloperComputerMinion.CLASS_CANONICAL_NAME, DeveloperComputerMinion.CLASS_SIMPLE_NAME, DeveloperComputerMinion.CLASS_API_ADDRESS_DeveloperComputerMinion, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q6 -> {
+                  apiSmartAgricultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-agriculture-developer/learn"), vertx, siteRequest, SmartAgricultureDeveloper.CLASS_CANONICAL_NAME, SmartAgricultureDeveloper.CLASS_SIMPLE_NAME, SmartAgricultureDeveloper.CLASS_API_ADDRESS_SmartAgricultureDeveloper, SmartAgricultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q7 -> {
+                    apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
+                      apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
+                        apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
+                          apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
+                            apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
+                              apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, CompanyCourse.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
+                                apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, SitePage.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q14 -> {
+                                  apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, CompanyEvent.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q15 -> {
+                                    apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, CompanyWebinar.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q16 -> {
+                                      apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q17 -> {
+                                        apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q18 -> {
+                                          apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q19 -> {
+                                            LOG.info("data import complete");
+                                            promise.complete();
+                                          }).onFailure(ex -> promise.fail(ex));
                                         }).onFailure(ex -> promise.fail(ex));
                                       }).onFailure(ex -> promise.fail(ex));
                                     }).onFailure(ex -> promise.fail(ex));

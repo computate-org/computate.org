@@ -1,6 +1,7 @@
-package org.computate.site.model.learnskills;
+package org.computate.site.model.developer.smartagriculture;
 
-import org.computate.site.model.learnskills.LearnSkills;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper;
+import java.lang.Boolean;
 import java.lang.String;
 import java.lang.Integer;
 import org.computate.vertx.search.list.SearchList;
@@ -52,37 +53,37 @@ import java.util.regex.Pattern;
  * Translate: false
  * Generated: true
  **/
-public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
+public class SmartAgricultureDeveloperGenPage extends SmartAgricultureDeveloperGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
    * Ignore: true
    **/
-  protected void _searchListLearnSkills_(Wrap<SearchList<LearnSkills>> w) {
+  protected void _searchListSmartAgricultureDeveloper_(Wrap<SearchList<SmartAgricultureDeveloper>> w) {
   }
 
   @Override
   protected void _pageResponse(Wrap<String> w) {
-    if(searchListLearnSkills_ != null)
-      w.o(Optional.ofNullable(searchListLearnSkills_.getResponse()).map(response -> JsonObject.mapFrom(response).toString()).orElse(null));
+    if(searchListSmartAgricultureDeveloper_ != null)
+      w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getResponse()).map(response -> JsonObject.mapFrom(response).toString()).orElse(null));
   }
 
   @Override
   protected void _stats(Wrap<SolrResponse.Stats> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getResponse()).map(response -> response.getStats()).orElse(null));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getResponse()).map(response -> response.getStats()).orElse(null));
   }
 
   @Override
   protected void _facetCounts(Wrap<SolrResponse.FacetCounts> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getResponse()).map(response -> response.getFacetCounts()).orElse(null));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getResponse()).map(response -> response.getFacetCounts()).orElse(null));
   }
 
   @Override
   protected void _pagination(JsonObject pagination) {
     JsonArray pages = new JsonArray();
-    Long start = searchListLearnSkills_.getStart().longValue();
-    Long rows = searchListLearnSkills_.getRows().longValue();
-    Long foundNum = Optional.ofNullable(searchListLearnSkills_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListLearnSkills_.getList().size()));
+    Long start = searchListSmartAgricultureDeveloper_.getStart().longValue();
+    Long rows = searchListSmartAgricultureDeveloper_.getRows().longValue();
+    Long foundNum = Optional.ofNullable(searchListSmartAgricultureDeveloper_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListSmartAgricultureDeveloper_.getList().size()));
     Long startNum = start + 1L;
     Long endNum = start + rows;
     Long floorMod = (rows == 0L ? 0L : Math.floorMod(foundNum, rows));
@@ -124,12 +125,12 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _varsQ(JsonObject vars) {
-    LearnSkills.varsQForClass().forEach(var -> {
+    SmartAgricultureDeveloper.varsQForClass().forEach(var -> {
       JsonObject json = new JsonObject();
       json.put("var", var);
-      json.put("displayName", Optional.ofNullable(LearnSkills.displayNameLearnSkills(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(LearnSkills.classSimpleNameLearnSkills(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", Optional.ofNullable(searchListLearnSkills_.getRequest().getQuery()).filter(fq -> fq.startsWith(LearnSkills.varIndexedLearnSkills(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(SmartAgricultureDeveloper.displayNameSmartAgricultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(SmartAgricultureDeveloper.classSimpleNameSmartAgricultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", Optional.ofNullable(searchListSmartAgricultureDeveloper_.getRequest().getQuery()).filter(fq -> fq.startsWith(SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       vars.put(var, json);
     });
   }
@@ -142,22 +143,22 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
     varsFqCount = 0;
-    for(String var : LearnSkills.varsFqForClass()) {
-      String varIndexed = LearnSkills.varIndexedLearnSkills(var);
-      String varStored = LearnSkills.varStoredLearnSkills(var);
+    for(String var : SmartAgricultureDeveloper.varsFqForClass()) {
+      String varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(var);
+      String varStored = SmartAgricultureDeveloper.varStoredSmartAgricultureDeveloper(var);
       JsonObject json = new JsonObject();
       json.put("var", var);
       json.put("varStored", varStored);
       json.put("varIndexed", varIndexed);
       String type = StringUtils.substringAfterLast(varIndexed, "_");
-      json.put("displayName", Optional.ofNullable(LearnSkills.displayNameLearnSkills(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(LearnSkills.classSimpleNameLearnSkills(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      Object v = searchListLearnSkills_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(LearnSkills.varIndexedLearnSkills(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
+      json.put("displayName", Optional.ofNullable(SmartAgricultureDeveloper.displayNameSmartAgricultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(SmartAgricultureDeveloper.classSimpleNameSmartAgricultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      Object v = searchListSmartAgricultureDeveloper_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
       if(v != null) {
         Matcher mFq = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|$)))").matcher(SearchTool.unescapeQueryChars((String)v));
         StringBuffer sb = new StringBuffer();
         while(mFq.find()) {
-          String entityVar = LearnSkills.searchVarLearnSkills(varIndexed);
+          String entityVar = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(varIndexed);
           String valueIndexed = mFq.group(2).trim();
           String entityFq = entityVar + ":" + valueIndexed;
           if(var.equals(entityVar))
@@ -237,13 +238,13 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _varsRange(JsonObject vars) {
-    LearnSkills.varsRangeForClass().forEach(var -> {
-      String varIndexed = LearnSkills.varIndexedLearnSkills(var);
+    SmartAgricultureDeveloper.varsRangeForClass().forEach(var -> {
+      String varIndexed = SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(var);
       JsonObject json = new JsonObject();
       json.put("var", var);
-      json.put("displayName", Optional.ofNullable(LearnSkills.displayNameLearnSkills(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(LearnSkills.classSimpleNameLearnSkills(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListLearnSkills_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(LearnSkills.varIndexedLearnSkills(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(SmartAgricultureDeveloper.displayNameSmartAgricultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(SmartAgricultureDeveloper.classSimpleNameSmartAgricultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", searchListSmartAgricultureDeveloper_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       vars.put(var, json);
     });
   }
@@ -254,7 +255,7 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
     JsonObject params = serviceRequest.getParams();
 
     JsonObject queryParams = Optional.ofNullable(serviceRequest).map(ServiceRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
-    Long num = Optional.ofNullable(searchListLearnSkills_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListLearnSkills_.getList().size()));
+    Long num = Optional.ofNullable(searchListSmartAgricultureDeveloper_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListSmartAgricultureDeveloper_.getList().size()));
     String q = "*:*";
     String q1 = "objectText";
     String q2 = "";
@@ -282,28 +283,28 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
     }
     query.put("q", q);
 
-    Long rows1 = Optional.ofNullable(searchListLearnSkills_).map(l -> l.getRows()).orElse(10L);
-    Long start1 = Optional.ofNullable(searchListLearnSkills_).map(l -> l.getStart()).orElse(1L);
+    Long rows1 = Optional.ofNullable(searchListSmartAgricultureDeveloper_).map(l -> l.getRows()).orElse(10L);
+    Long start1 = Optional.ofNullable(searchListSmartAgricultureDeveloper_).map(l -> l.getStart()).orElse(1L);
     Long start2 = start1 - rows1;
     Long start3 = start1 + rows1;
     Long rows2 = rows1 / 2;
     Long rows3 = rows1 * 2;
     start2 = start2 < 0 ? 0 : start2;
     JsonObject fqs = new JsonObject();
-    for(String fq : Optional.ofNullable(searchListLearnSkills_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
+    for(String fq : Optional.ofNullable(searchListSmartAgricultureDeveloper_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
       if(!StringUtils.contains(fq, "(")) {
-        String fq1 = LearnSkills.searchVarLearnSkills(StringUtils.substringBefore(fq, ":"));
+        String fq1 = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(StringUtils.substringBefore(fq, ":"));
         String fq2 = StringUtils.substringAfter(fq, ":");
         if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "sessionId", "userKeys"))
-          fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", LearnSkills.displayNameForClass(fq1)));
+          fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", SmartAgricultureDeveloper.displayNameForClass(fq1)));
         }
       }
     query.put("fq", fqs);
 
     JsonArray sorts = new JsonArray();
-    for(String sort : Optional.ofNullable(searchListLearnSkills_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
-      String sort1 = LearnSkills.searchVarLearnSkills(StringUtils.substringBefore(sort, " "));
-      sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", LearnSkills.displayNameForClass(sort1)));
+    for(String sort : Optional.ofNullable(searchListSmartAgricultureDeveloper_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+      String sort1 = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(StringUtils.substringBefore(sort, " "));
+      sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", SmartAgricultureDeveloper.displayNameForClass(sort1)));
     }
     query.put("sort", sorts);
   }
@@ -337,31 +338,31 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
   @Override
   protected void _rows(Wrap<Long> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("rows", null) != null)
-      w.o(searchListLearnSkills_.getRows());
+      w.o(searchListSmartAgricultureDeveloper_.getRows());
   }
 
   @Override
   protected void _start(Wrap<Long> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("start", null) != null)
-      w.o(searchListLearnSkills_.getStart());
+      w.o(searchListSmartAgricultureDeveloper_.getStart());
   }
 
   @Override
   protected void _rangeGap(Wrap<String> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.gap", null) != null)
-      w.o(Optional.ofNullable(searchListLearnSkills_.getFacetRangeGap()).orElse(null));
+      w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetRangeGap()).orElse(null));
   }
 
   @Override
   protected void _rangeEnd(Wrap<ZonedDateTime> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.end", null) != null)
-      w.o(Optional.ofNullable(searchListLearnSkills_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+      w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
   }
 
   @Override
   protected void _rangeStart(Wrap<ZonedDateTime> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.start", null) != null)
-      w.o(Optional.ofNullable(searchListLearnSkills_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+      w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
   }
 
   @Override
@@ -381,27 +382,27 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultRangeVar(Wrap<String> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return LearnSkills.searchVarLearnSkills(v); }).orElse("created"));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(v); }).orElse("created"));
   }
 
   @Override
   protected void _defaultFacetSort(Wrap<String> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getFacetSort()).orElse("index"));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetSort()).orElse("index"));
   }
 
   @Override
   protected void _defaultFacetLimit(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getFacetLimit()).orElse(1));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetLimit()).orElse(1));
   }
 
   @Override
   protected void _defaultFacetMinCount(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getFacetMinCount()).orElse(1));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetMinCount()).orElse(1));
   }
 
   @Override
   protected void _defaultPivotMinCount(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListLearnSkills_.getFacetPivotMinCount()).orElse(0));
+    w.o(Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetPivotMinCount()).orElse(0));
   }
 
   @Override
@@ -417,10 +418,10 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    if(!searchListLearnSkills_.getDefaultSort()) {
-      Optional.ofNullable(searchListLearnSkills_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+    if(!searchListSmartAgricultureDeveloper_.getDefaultSort()) {
+      Optional.ofNullable(searchListSmartAgricultureDeveloper_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
         String varSortParts[] = varSortStr.split(" ");
-        String varSort = LearnSkills.searchVarLearnSkills(varSortParts[0]);
+        String varSort = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(varSortParts[0]);
         String varSortDirection = varSortParts[1];
         l.add(String.format("%s %s", varSort, varSortDirection));
       });
@@ -429,14 +430,14 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultFieldListVars(List<String> l) {
-    Optional.ofNullable(searchListLearnSkills_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
+    Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
       if(StringUtils.contains(varStored2, "}"))
         varStored2 = StringUtils.substringAfterLast(varStored2, "}");
       String[] parts = varStored2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = LearnSkills.searchVarLearnSkills(part);
+          String var = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -446,14 +447,14 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultStatsVars(List<String> l) {
-    Optional.ofNullable(searchListLearnSkills_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
+    Optional.ofNullable(searchListSmartAgricultureDeveloper_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
       String varIndexed2 = varIndexed;
       if(StringUtils.contains(varIndexed2, "}"))
         varIndexed2 = StringUtils.substringAfterLast(varIndexed2, "}");
       String[] parts = varIndexed2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = LearnSkills.searchVarLearnSkills(part);
+          String var = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -463,14 +464,14 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultPivotVars(List<String> l) {
-    Optional.ofNullable(searchListLearnSkills_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
+    Optional.ofNullable(searchListSmartAgricultureDeveloper_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
       String facetPivot2 = facetPivot;
       if(StringUtils.contains(facetPivot2, "}"))
         facetPivot2 = StringUtils.substringAfterLast(facetPivot2, "}");
       String[] parts = facetPivot2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = LearnSkills.searchVarLearnSkills(part);
+          String var = SmartAgricultureDeveloper.searchVarSmartAgricultureDeveloper(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -481,20 +482,20 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
   /**
    * {@inheritDoc}
    **/
-  protected void _listLearnSkills(JsonArray l) {
-    Optional.ofNullable(searchListLearnSkills_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
+  protected void _listSmartAgricultureDeveloper(JsonArray l) {
+    Optional.ofNullable(searchListSmartAgricultureDeveloper_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
   protected void _resultCount(Wrap<Integer> w) {
-    w.o(searchListLearnSkills_ == null ? 0 : searchListLearnSkills_.size());
+    w.o(searchListSmartAgricultureDeveloper_ == null ? 0 : searchListSmartAgricultureDeveloper_.size());
   }
 
   /**
    * Initialized: false
   **/
-  protected void _result(Wrap<LearnSkills> w) {
+  protected void _result(Wrap<SmartAgricultureDeveloper> w) {
     if(resultCount >= 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
-      w.o(searchListLearnSkills_.get(0));
+      w.o(searchListSmartAgricultureDeveloper_.get(0));
   }
 
   protected void _solrId(Wrap<String> w) {
@@ -509,7 +510,7 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _classSimpleName(Wrap<String> w) {
-    w.o("LearnSkills");
+    w.o("SmartAgricultureDeveloper");
   }
 
   @Override
@@ -517,27 +518,27 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("Learn cloud developer skills");
-    else if(searchListLearnSkills_ == null || resultCount == 0)
-      c.o("no Learn cloud developer skills found");
+      c.o("Smart Agriculture Developers");
+    else if(searchListSmartAgricultureDeveloper_ == null || resultCount == 0)
+      c.o("no Smart Agriculture Developer found");
     else
-      c.o("Learn cloud developer skills");
+      c.o("Smart Agriculture Developers");
   }
 
   @Override
   protected void _classAllName(Wrap<String> w) {
-    w.o("all Learn cloud developer skills");
+    w.o("all Smart Agriculture Developers");
   }
 
   @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
-      w.o("/en-us/search/skills");
+      w.o("/en-us/search/smart-agriculture-developer");
   }
 
   @Override
   protected void _apiUri(Wrap<String> w) {
-    w.o("/en-us/api/learn-skills");
+    w.o("/en-us/api/smart-agriculture-developer");
   }
 
   @Override
@@ -547,20 +548,20 @@ public class LearnSkillsGenPage extends LearnSkillsGenPageGen<PageLayout> {
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("Learn how to manage SPINE apps in OpenShift Local to manage cloud secrets, pods, GitOps, and more. ");
+      c.o("Learn how to become a Smart Agriculture platform developer — Understanding farms, crops, and weather. ");
   }
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/en-us/search/skills-999.png");
+      c.o("/png/en-us/search/smart-agriculture-developer-999.png");
   }
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-kit fa-computate-c-key\"></i>");
+      c.o("<i class=\"{{ FONTAWESOME_STYLE }} fa-building-wheat\"></i>");
   }
 
-  protected void _pageUriLearnSkills(Wrap<String> c) {
-      c.o("/en-us/search/skills");
+  protected void _pageUriSmartAgricultureDeveloper(Wrap<String> c) {
+      c.o("/en-us/search/smart-agriculture-developer");
   }
 }

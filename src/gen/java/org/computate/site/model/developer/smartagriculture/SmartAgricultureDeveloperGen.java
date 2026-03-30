@@ -1,4 +1,4 @@
-package org.computate.site.model.about;
+package org.computate.site.model.developer.smartagriculture;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.result.BaseResult;
@@ -34,10 +34,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
+import java.lang.Boolean;
 import java.lang.String;
 import java.lang.Integer;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.about.CompanyAbout;
+import org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper;
 import io.vertx.core.json.JsonArray;
 import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
@@ -51,37 +52,37 @@ import io.vertx.core.json.JsonObject;
 /**
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
- * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyAboutGen into the class CompanyAbout. 
- * </li><li>You can add a class comment "Rows: 100" if you wish the CompanyAbout API to return more or less than 10 records by default. 
+ * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class SmartAgricultureDeveloperGen into the class SmartAgricultureDeveloper. 
+ * </li><li>You can add a class comment "Rows: 100" if you wish the SmartAgricultureDeveloper API to return more or less than 10 records by default. 
  * In this case, the API will return 100 records from the API instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
- * </li><li>You can add a class comment "Model: true" if you wish to persist these CompanyAbout objects in a relational PostgreSQL database transactionally in the RESTful API. 
- * The code to persist and query the CompanyAboutGen data in the database will then be automatically generated. 
+ * </li><li>You can add a class comment "Model: true" if you wish to persist these SmartAgricultureDeveloper objects in a relational PostgreSQL database transactionally in the RESTful API. 
+ * The code to persist and query the SmartAgricultureDeveloperGen data in the database will then be automatically generated. 
  * </li>
- * <h3>About the CompanyAbout class and it's generated class CompanyAboutGen&lt;BaseResult&gt;: </h3>extends CompanyAboutGen
+ * <h3>About the SmartAgricultureDeveloper class and it's generated class SmartAgricultureDeveloperGen&lt;BaseResult&gt;: </h3>extends SmartAgricultureDeveloperGen
  * <p>
- * This Java class extends a generated Java class CompanyAboutGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
+ * This Java class extends a generated Java class SmartAgricultureDeveloperGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout">Find the class CompanyAbout in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper">Find the class SmartAgricultureDeveloper in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyAboutGen<BaseResult>
- * <p>This <code>class CompanyAbout extends CompanyAboutGen&lt;BaseResult&gt;</code>, which means it extends a newly generated CompanyAboutGen. 
- * The generated <code>class CompanyAboutGen extends BaseResult</code> which means that CompanyAbout extends CompanyAboutGen which extends BaseResult. 
+ * extends SmartAgricultureDeveloperGen<BaseResult>
+ * <p>This <code>class SmartAgricultureDeveloper extends SmartAgricultureDeveloperGen&lt;BaseResult&gt;</code>, which means it extends a newly generated SmartAgricultureDeveloperGen. 
+ * The generated <code>class SmartAgricultureDeveloperGen extends BaseResult</code> which means that SmartAgricultureDeveloper extends SmartAgricultureDeveloperGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: about"</b>, which groups all of the OpenAPIs for CompanyAbout objects under the tag "about". 
+ * <p>This class contains a comment <b>"ApiTag: Smart Agriculture Developers"</b>, which groups all of the OpenAPIs for SmartAgricultureDeveloper objects under the tag "Smart Agriculture Developers". 
  * </p>
- * <h2>ApiUri.enUS: /en-us/api/about</h2>
- * <p>This class contains a comment <b>"ApiUri: /en-us/api/about"</b>, which defines the base API URI for CompanyAbout objects as "/en-us/api/about" in the OpenAPI spec. 
+ * <h2>ApiUri.enUS: /en-us/api/smart-agriculture-developer</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/smart-agriculture-developer"</b>, which defines the base API URI for SmartAgricultureDeveloper objects as "/en-us/api/smart-agriculture-developer" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -89,30 +90,30 @@ import io.vertx.core.json.JsonObject;
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
  * </p>
  * <h2>{@inheritDoc}</h2>
- * <p>By adding a class comment "{@inheritDoc}", the CompanyAbout class will inherit the helpful inherited class comments from the super class CompanyAboutGen. 
+ * <p>By adding a class comment "{@inheritDoc}", the SmartAgricultureDeveloper class will inherit the helpful inherited class comments from the super class SmartAgricultureDeveloperGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 12</h2>
- * <p>This class contains a comment <b>"Order: 12"</b>, which means this class will be sorted by the given number 12 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 8</h2>
+ * <p>This class contains a comment <b>"Order: 8"</b>, which means this class will be sorted by the given number 8 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
- * <h2>SqlOrder: 12</h2>
- * <p>This class contains a comment <b>"SqlOrder: 12"</b>, which means this class will be sorted by the given number 12 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>SqlOrder: 8</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 8"</b>, which means this class will be sorted by the given number 8 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
- * This creates a new Java class org.computate.site.model.about.CompanyAboutPage. 
+ * This creates a new Java class org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperPage. 
  * </p>
  * <h2>SuperPage.enUS: PageLayout</h2>
  * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
- * This means that the newly created class org.computate.site.model.about.CompanyAboutPage extends org.computate.site.page.PageLayout. 
+ * This means that the newly created class org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloperPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
  *   This class contains a comment <b>"Promise: true"</b>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
- *   This means that the CompanyAbout Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
+ *   This means that the SmartAgricultureDeveloper Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
  * <p>
  *   Adding protected void methods beginning with an underscore with a Promise as the only parameter will automatically set `Promise: true`. 
@@ -131,19 +132,19 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>AName.enUS: an about page</h2>
- * <p>This class contains a comment <b>"AName.enUS: an about page"</b>, which identifies the language context to describe a CompanyAbout as "an about page". 
+ * <h2>AName.enUS: a Smart Agriculture Developer</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a Smart Agriculture Developer"</b>, which identifies the language context to describe a SmartAgricultureDeveloper as "a Smart Agriculture Developer". 
  * </p>
  * <p>
- * Delete the class CompanyAbout in Solr: 
+ * Delete the class SmartAgricultureDeveloper in Solr: 
  * <pre>
- * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&lt;/query&gt;&lt;/delete&gt;'
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&lt;/query&gt;&lt;/delete&gt;'
  * </pre>
  * </p>
  * <p>
- * Delete  the package org.computate.site.model.about in Solr: 
+ * Delete  the package org.computate.site.model.developer.smartagriculture in Solr: 
  * <pre>
- * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.about&lt;/query&gt;&lt;/delete&gt;'
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.developer.smartagriculture&lt;/query&gt;&lt;/delete&gt;'
  * </pre>
  * </p>
  * <p>
@@ -154,63 +155,122 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyAboutGen<DEV> extends BaseResult {
-  protected static final Logger LOG = LoggerFactory.getLogger(CompanyAbout.class);
+public abstract class SmartAgricultureDeveloperGen<DEV> extends BaseResult {
+  protected static final Logger LOG = LoggerFactory.getLogger(SmartAgricultureDeveloper.class);
 
-  public static final String Description_enUS = "Learn about our team, company, culture, and values. ";
-  public static final String AName_enUS = "an about page";
+  public static final String Description_enUS = "Learn how to become a Smart Agriculture platform developer — Understanding farms, crops, and weather. ";
+  public static final String AName_enUS = "a Smart Agriculture Developer";
   public static final String This_enUS = "this ";
-  public static final String ThisName_enUS = "this about page";
+  public static final String ThisName_enUS = "this Smart Agriculture Developer";
   public static final String A_enUS = "a ";
-  public static final String TheName_enUS = "theabout page";
-  public static final String SingularName_enUS = "about page";
-  public static final String PluralName_enUS = "about";
-  public static final String NameActual_enUS = "current about page";
-  public static final String AllName_enUS = "all about";
-  public static final String SearchAllNameBy_enUS = "search about by ";
-  public static final String SearchAllName_enUS = "search about";
-  public static final String Title_enUS = "about";
-  public static final String ThePluralName_enUS = "the about";
-  public static final String NoNameFound_enUS = "no about page found";
-  public static final String ApiUri_enUS = "/en-us/api/about";
-  public static final String ApiUriSearchPage_enUS = "/en-us/search/about";
-  public static final String ApiUriEditPage_enUS = "/en-us/edit/about/{pageId}";
-  public static final String OfName_enUS = "of about page";
-  public static final String ANameAdjective_enUS = "an about page";
-  public static final String NameAdjectiveSingular_enUS = "about page";
-  public static final String NameAdjectivePlural_enUS = "about";
-  public static final String Search_enUS_OpenApiUri = "/en-us/api/about";
-  public static final String Search_enUS_StringFormatUri = "/en-us/api/about";
-  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/about";
-  public static final String GET_enUS_OpenApiUri = "/en-us/api/about/{pageId}";
-  public static final String GET_enUS_StringFormatUri = "/en-us/api/about/%s";
-  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/about/%s";
-  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/about";
-  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/about";
-  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/about";
-  public static final String POST_enUS_OpenApiUri = "/en-us/api/about";
-  public static final String POST_enUS_StringFormatUri = "/en-us/api/about";
-  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/about";
-  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/about/{pageId}";
-  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/about/%s";
-  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/about/%s";
-  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/about-import";
-  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/about-import";
-  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/about-import";
-  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/about";
-  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/about";
-  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/about";
-  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/about/{pageId}";
-  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/about/%s";
-  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/about/%s";
-  public static final String DisplayPage_enUS_OpenApiUri = "/en-us/learn/about/{pageId}";
-  public static final String DisplayPage_enUS_StringFormatUri = "/en-us/learn/about/%s";
-  public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/learn/about/%s";
-  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/about";
-  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/about";
-  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/about";
+  public static final String TheName_enUS = "the Smart Agriculture Developer";
+  public static final String SingularName_enUS = "Smart Agriculture Developer";
+  public static final String PluralName_enUS = "Smart Agriculture Developers";
+  public static final String NameActual_enUS = "current Smart Agriculture Developer";
+  public static final String AllName_enUS = "all Smart Agriculture Developers";
+  public static final String SearchAllNameBy_enUS = "search Smart Agriculture Developers by ";
+  public static final String SearchAllName_enUS = "search Smart Agriculture Developers";
+  public static final String Title_enUS = "Smart Agriculture Developers";
+  public static final String ThePluralName_enUS = "the Smart Agriculture Developers";
+  public static final String NoNameFound_enUS = "no Smart Agriculture Developer found";
+  public static final String ApiUri_enUS = "/en-us/api/smart-agriculture-developer";
+  public static final String ApiUriSearchPage_enUS = "/en-us/search/smart-agriculture-developer";
+  public static final String ApiUriEditPage_enUS = "/en-us/edit/smart-agriculture-developer/{pageId}";
+  public static final String OfName_enUS = "of Smart Agriculture Developer";
+  public static final String ANameAdjective_enUS = "a Smart Agriculture Developer";
+  public static final String NameAdjectiveSingular_enUS = "Smart Agriculture Developer";
+  public static final String NameAdjectivePlural_enUS = "Smart Agriculture Developers";
+  public static final String Search_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer";
+  public static final String Search_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer";
+  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer";
+  public static final String GET_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer/{pageId}";
+  public static final String GET_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer/%s";
+  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer/%s";
+  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer";
+  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer";
+  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer";
+  public static final String POST_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer";
+  public static final String POST_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer";
+  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer";
+  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer/{pageId}";
+  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer/%s";
+  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer/%s";
+  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer-import";
+  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer-import";
+  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer-import";
+  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/smart-agriculture-developer";
+  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/smart-agriculture-developer";
+  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/smart-agriculture-developer";
+  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/smart-agriculture-developer/{pageId}";
+  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/smart-agriculture-developer/%s";
+  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/smart-agriculture-developer/%s";
+  public static final String UserPage_enUS_OpenApiUri = "/en-us/smart-agriculture-developer/learn/{pageId}";
+  public static final String UserPage_enUS_StringFormatUri = "/en-us/smart-agriculture-developer/learn/%s";
+  public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/smart-agriculture-developer/learn/%s";
+  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/smart-agriculture-developer";
+  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/smart-agriculture-developer";
+  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/smart-agriculture-developer";
 
-  public static final String Icon = "<i class=\"fa-duotone fa-regular fa-address-card\"></i>";
+  public static final String Icon = "<i class=\"{{ FONTAWESOME_STYLE }} fa-building-wheat\"></i>";
+
+	/////////////
+  // article //
+	/////////////
+
+
+  /**
+   *  The entity article
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected Boolean article;
+
+  /**
+   * <br> The entity article
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:article">Find the entity article in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _article(Wrap<Boolean> w);
+
+  public Boolean getArticle() {
+    return article;
+  }
+
+  public void setArticle(Boolean article) {
+    this.article = article;
+  }
+  @JsonIgnore
+  public void setArticle(String o) {
+    this.article = SmartAgricultureDeveloper.staticSetArticle(siteRequest_, o);
+  }
+  public static Boolean staticSetArticle(SiteRequest siteRequest_, String o) {
+    return Boolean.parseBoolean(o);
+  }
+  protected SmartAgricultureDeveloper articleInit() {
+    Wrap<Boolean> articleWrap = new Wrap<Boolean>().var("article");
+    if(article == null) {
+      _article(articleWrap);
+      Optional.ofNullable(articleWrap.getO()).ifPresent(o -> {
+        setArticle(o);
+      });
+    }
+    return (SmartAgricultureDeveloper)this;
+  }
+
+  public static Boolean staticSearchArticle(SiteRequest siteRequest_, Boolean o) {
+    return o;
+  }
+
+  public static String staticSearchStrArticle(SiteRequest siteRequest_, Boolean o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqArticle(SiteRequest siteRequest_, String o) {
+    return SmartAgricultureDeveloper.staticSearchArticle(siteRequest_, SmartAgricultureDeveloper.staticSetArticle(siteRequest_, o)).toString();
+  }
 
 	//////////
   // name //
@@ -228,7 +288,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity name
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -238,12 +298,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return name;
   }
   public void setName(String o) {
-    this.name = CompanyAbout.staticSetName(siteRequest_, o);
+    this.name = SmartAgricultureDeveloper.staticSetName(siteRequest_, o);
   }
   public static String staticSetName(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout nameInit() {
+  protected SmartAgricultureDeveloper nameInit() {
     Wrap<String> nameWrap = new Wrap<String>().var("name");
     if(name == null) {
       _name(nameWrap);
@@ -251,7 +311,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setName(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchName(SiteRequest siteRequest_, String o) {
@@ -263,7 +323,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchName(siteRequest_, CompanyAbout.staticSetName(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchName(siteRequest_, SmartAgricultureDeveloper.staticSetName(siteRequest_, o)).toString();
   }
 
   public String sqlName() {
@@ -290,7 +350,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity description
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -300,12 +360,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return description;
   }
   public void setDescription(String o) {
-    this.description = CompanyAbout.staticSetDescription(siteRequest_, o);
+    this.description = SmartAgricultureDeveloper.staticSetDescription(siteRequest_, o);
   }
   public static String staticSetDescription(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout descriptionInit() {
+  protected SmartAgricultureDeveloper descriptionInit() {
     Wrap<String> descriptionWrap = new Wrap<String>().var("description");
     if(description == null) {
       _description(descriptionWrap);
@@ -313,7 +373,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setDescription(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
@@ -325,7 +385,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchDescription(siteRequest_, CompanyAbout.staticSetDescription(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchDescription(siteRequest_, SmartAgricultureDeveloper.staticSetDescription(siteRequest_, o)).toString();
   }
 
   public String sqlDescription() {
@@ -334,130 +394,6 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 
   public static String staticJsonDescription(String description) {
     return description;
-  }
-
-	////////////////
-  // authorName //
-	////////////////
-
-
-  /**
-   *  The entity authorName
-   *	 is defined as null before being initialized. 
-   */
-  @JsonProperty
-  @JsonInclude(Include.NON_NULL)
-  protected String authorName;
-
-  /**
-   * <br> The entity authorName
-   *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:authorName">Find the entity authorName in Solr</a>
-   * <br>
-   * @param w is for wrapping a value to assign to this entity during initialization. 
-   **/
-  protected abstract void _authorName(Wrap<String> w);
-
-  public String getAuthorName() {
-    return authorName;
-  }
-  public void setAuthorName(String o) {
-    this.authorName = CompanyAbout.staticSetAuthorName(siteRequest_, o);
-  }
-  public static String staticSetAuthorName(SiteRequest siteRequest_, String o) {
-    return o;
-  }
-  protected CompanyAbout authorNameInit() {
-    Wrap<String> authorNameWrap = new Wrap<String>().var("authorName");
-    if(authorName == null) {
-      _authorName(authorNameWrap);
-      Optional.ofNullable(authorNameWrap.getO()).ifPresent(o -> {
-        setAuthorName(o);
-      });
-    }
-    return (CompanyAbout)this;
-  }
-
-  public static String staticSearchAuthorName(SiteRequest siteRequest_, String o) {
-    return o;
-  }
-
-  public static String staticSearchStrAuthorName(SiteRequest siteRequest_, String o) {
-    return o == null ? null : o.toString();
-  }
-
-  public static String staticSearchFqAuthorName(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchAuthorName(siteRequest_, CompanyAbout.staticSetAuthorName(siteRequest_, o)).toString();
-  }
-
-  public String sqlAuthorName() {
-    return authorName;
-  }
-
-  public static String staticJsonAuthorName(String authorName) {
-    return authorName;
-  }
-
-	///////////////
-  // authorUrl //
-	///////////////
-
-
-  /**
-   *  The entity authorUrl
-   *	 is defined as null before being initialized. 
-   */
-  @JsonProperty
-  @JsonInclude(Include.NON_NULL)
-  protected String authorUrl;
-
-  /**
-   * <br> The entity authorUrl
-   *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:authorUrl">Find the entity authorUrl in Solr</a>
-   * <br>
-   * @param w is for wrapping a value to assign to this entity during initialization. 
-   **/
-  protected abstract void _authorUrl(Wrap<String> w);
-
-  public String getAuthorUrl() {
-    return authorUrl;
-  }
-  public void setAuthorUrl(String o) {
-    this.authorUrl = CompanyAbout.staticSetAuthorUrl(siteRequest_, o);
-  }
-  public static String staticSetAuthorUrl(SiteRequest siteRequest_, String o) {
-    return o;
-  }
-  protected CompanyAbout authorUrlInit() {
-    Wrap<String> authorUrlWrap = new Wrap<String>().var("authorUrl");
-    if(authorUrl == null) {
-      _authorUrl(authorUrlWrap);
-      Optional.ofNullable(authorUrlWrap.getO()).ifPresent(o -> {
-        setAuthorUrl(o);
-      });
-    }
-    return (CompanyAbout)this;
-  }
-
-  public static String staticSearchAuthorUrl(SiteRequest siteRequest_, String o) {
-    return o;
-  }
-
-  public static String staticSearchStrAuthorUrl(SiteRequest siteRequest_, String o) {
-    return o == null ? null : o.toString();
-  }
-
-  public static String staticSearchFqAuthorUrl(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchAuthorUrl(siteRequest_, CompanyAbout.staticSetAuthorUrl(siteRequest_, o)).toString();
-  }
-
-  public String sqlAuthorUrl() {
-    return authorUrl;
-  }
-
-  public static String staticJsonAuthorUrl(String authorUrl) {
-    return authorUrl;
   }
 
 	////////////
@@ -476,7 +412,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageId
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -486,12 +422,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return pageId;
   }
   public void setPageId(String o) {
-    this.pageId = CompanyAbout.staticSetPageId(siteRequest_, o);
+    this.pageId = SmartAgricultureDeveloper.staticSetPageId(siteRequest_, o);
   }
   public static String staticSetPageId(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout pageIdInit() {
+  protected SmartAgricultureDeveloper pageIdInit() {
     Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
     if(pageId == null) {
       _pageId(pageIdWrap);
@@ -499,7 +435,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPageId(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
@@ -511,7 +447,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPageId(siteRequest_, CompanyAbout.staticSetPageId(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPageId(siteRequest_, SmartAgricultureDeveloper.staticSetPageId(siteRequest_, o)).toString();
   }
 
   public String sqlPageId() {
@@ -539,7 +475,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity courseNum
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:courseNum">Find the entity courseNum in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:courseNum">Find the entity courseNum in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -554,14 +490,14 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setCourseNum(String o) {
-    this.courseNum = CompanyAbout.staticSetCourseNum(siteRequest_, o);
+    this.courseNum = SmartAgricultureDeveloper.staticSetCourseNum(siteRequest_, o);
   }
   public static Integer staticSetCourseNum(SiteRequest siteRequest_, String o) {
     if(NumberUtils.isParsable(o))
       return Integer.parseInt(o);
     return null;
   }
-  protected CompanyAbout courseNumInit() {
+  protected SmartAgricultureDeveloper courseNumInit() {
     Wrap<Integer> courseNumWrap = new Wrap<Integer>().var("courseNum");
     if(courseNum == null) {
       _courseNum(courseNumWrap);
@@ -569,7 +505,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setCourseNum(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static Integer staticSearchCourseNum(SiteRequest siteRequest_, Integer o) {
@@ -581,7 +517,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqCourseNum(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchCourseNum(siteRequest_, CompanyAbout.staticSetCourseNum(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchCourseNum(siteRequest_, SmartAgricultureDeveloper.staticSetCourseNum(siteRequest_, o)).toString();
   }
 
   public Integer sqlCourseNum() {
@@ -590,6 +526,200 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 
   public static String staticJsonCourseNum(Integer courseNum) {
     return Optional.ofNullable(courseNum).map(v -> v.toString()).orElse(null);
+  }
+
+	///////////////
+  // lessonNum //
+	///////////////
+
+
+  /**
+   *  The entity lessonNum
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer lessonNum;
+
+  /**
+   * <br> The entity lessonNum
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:lessonNum">Find the entity lessonNum in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _lessonNum(Wrap<Integer> w);
+
+  public Integer getLessonNum() {
+    return lessonNum;
+  }
+
+  public void setLessonNum(Integer lessonNum) {
+    this.lessonNum = lessonNum;
+  }
+  @JsonIgnore
+  public void setLessonNum(String o) {
+    this.lessonNum = SmartAgricultureDeveloper.staticSetLessonNum(siteRequest_, o);
+  }
+  public static Integer staticSetLessonNum(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected SmartAgricultureDeveloper lessonNumInit() {
+    Wrap<Integer> lessonNumWrap = new Wrap<Integer>().var("lessonNum");
+    if(lessonNum == null) {
+      _lessonNum(lessonNumWrap);
+      Optional.ofNullable(lessonNumWrap.getO()).ifPresent(o -> {
+        setLessonNum(o);
+      });
+    }
+    return (SmartAgricultureDeveloper)this;
+  }
+
+  public static Integer staticSearchLessonNum(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
+
+  public static String staticSearchStrLessonNum(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqLessonNum(SiteRequest siteRequest_, String o) {
+    return SmartAgricultureDeveloper.staticSearchLessonNum(siteRequest_, SmartAgricultureDeveloper.staticSetLessonNum(siteRequest_, o)).toString();
+  }
+
+  public Integer sqlLessonNum() {
+    return lessonNum;
+  }
+
+  public static String staticJsonLessonNum(Integer lessonNum) {
+    return Optional.ofNullable(lessonNum).map(v -> v.toString()).orElse(null);
+  }
+
+	////////////////
+  // authorName //
+	////////////////
+
+
+  /**
+   *  The entity authorName
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String authorName;
+
+  /**
+   * <br> The entity authorName
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:authorName">Find the entity authorName in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _authorName(Wrap<String> w);
+
+  public String getAuthorName() {
+    return authorName;
+  }
+  public void setAuthorName(String o) {
+    this.authorName = SmartAgricultureDeveloper.staticSetAuthorName(siteRequest_, o);
+  }
+  public static String staticSetAuthorName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SmartAgricultureDeveloper authorNameInit() {
+    Wrap<String> authorNameWrap = new Wrap<String>().var("authorName");
+    if(authorName == null) {
+      _authorName(authorNameWrap);
+      Optional.ofNullable(authorNameWrap.getO()).ifPresent(o -> {
+        setAuthorName(o);
+      });
+    }
+    return (SmartAgricultureDeveloper)this;
+  }
+
+  public static String staticSearchAuthorName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrAuthorName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqAuthorName(SiteRequest siteRequest_, String o) {
+    return SmartAgricultureDeveloper.staticSearchAuthorName(siteRequest_, SmartAgricultureDeveloper.staticSetAuthorName(siteRequest_, o)).toString();
+  }
+
+  public String sqlAuthorName() {
+    return authorName;
+  }
+
+  public static String staticJsonAuthorName(String authorName) {
+    return authorName;
+  }
+
+	///////////////
+  // authorUrl //
+	///////////////
+
+
+  /**
+   *  The entity authorUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String authorUrl;
+
+  /**
+   * <br> The entity authorUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:authorUrl">Find the entity authorUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _authorUrl(Wrap<String> w);
+
+  public String getAuthorUrl() {
+    return authorUrl;
+  }
+  public void setAuthorUrl(String o) {
+    this.authorUrl = SmartAgricultureDeveloper.staticSetAuthorUrl(siteRequest_, o);
+  }
+  public static String staticSetAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SmartAgricultureDeveloper authorUrlInit() {
+    Wrap<String> authorUrlWrap = new Wrap<String>().var("authorUrl");
+    if(authorUrl == null) {
+      _authorUrl(authorUrlWrap);
+      Optional.ofNullable(authorUrlWrap.getO()).ifPresent(o -> {
+        setAuthorUrl(o);
+      });
+    }
+    return (SmartAgricultureDeveloper)this;
+  }
+
+  public static String staticSearchAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqAuthorUrl(SiteRequest siteRequest_, String o) {
+    return SmartAgricultureDeveloper.staticSearchAuthorUrl(siteRequest_, SmartAgricultureDeveloper.staticSetAuthorUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlAuthorUrl() {
+    return authorUrl;
+  }
+
+  public static String staticJsonAuthorUrl(String authorUrl) {
+    return authorUrl;
   }
 
 	//////////////////
@@ -608,7 +738,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageUri
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -618,12 +748,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return pageImageUri;
   }
   public void setPageImageUri(String o) {
-    this.pageImageUri = CompanyAbout.staticSetPageImageUri(siteRequest_, o);
+    this.pageImageUri = SmartAgricultureDeveloper.staticSetPageImageUri(siteRequest_, o);
   }
   public static String staticSetPageImageUri(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout pageImageUriInit() {
+  protected SmartAgricultureDeveloper pageImageUriInit() {
     Wrap<String> pageImageUriWrap = new Wrap<String>().var("pageImageUri");
     if(pageImageUri == null) {
       _pageImageUri(pageImageUriWrap);
@@ -631,7 +761,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPageImageUri(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchPageImageUri(SiteRequest siteRequest_, String o) {
@@ -643,7 +773,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageUri(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPageImageUri(siteRequest_, CompanyAbout.staticSetPageImageUri(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPageImageUri(siteRequest_, SmartAgricultureDeveloper.staticSetPageImageUri(siteRequest_, o)).toString();
   }
 
   public String sqlPageImageUri() {
@@ -671,7 +801,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageWidth
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -686,14 +816,14 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setPageImageWidth(String o) {
-    this.pageImageWidth = CompanyAbout.staticSetPageImageWidth(siteRequest_, o);
+    this.pageImageWidth = SmartAgricultureDeveloper.staticSetPageImageWidth(siteRequest_, o);
   }
   public static Integer staticSetPageImageWidth(SiteRequest siteRequest_, String o) {
     if(NumberUtils.isParsable(o))
       return Integer.parseInt(o);
     return null;
   }
-  protected CompanyAbout pageImageWidthInit() {
+  protected SmartAgricultureDeveloper pageImageWidthInit() {
     Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().var("pageImageWidth");
     if(pageImageWidth == null) {
       _pageImageWidth(pageImageWidthWrap);
@@ -701,7 +831,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPageImageWidth(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static Integer staticSearchPageImageWidth(SiteRequest siteRequest_, Integer o) {
@@ -713,7 +843,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageWidth(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPageImageWidth(siteRequest_, CompanyAbout.staticSetPageImageWidth(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPageImageWidth(siteRequest_, SmartAgricultureDeveloper.staticSetPageImageWidth(siteRequest_, o)).toString();
   }
 
 	/////////////////////
@@ -733,7 +863,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageHeight
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
    * <br>
    * @param c is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -748,14 +878,14 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setPageImageHeight(String o) {
-    this.pageImageHeight = CompanyAbout.staticSetPageImageHeight(siteRequest_, o);
+    this.pageImageHeight = SmartAgricultureDeveloper.staticSetPageImageHeight(siteRequest_, o);
   }
   public static Integer staticSetPageImageHeight(SiteRequest siteRequest_, String o) {
     if(NumberUtils.isParsable(o))
       return Integer.parseInt(o);
     return null;
   }
-  protected CompanyAbout pageImageHeightInit() {
+  protected SmartAgricultureDeveloper pageImageHeightInit() {
     Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().var("pageImageHeight");
     if(pageImageHeight == null) {
       _pageImageHeight(pageImageHeightWrap);
@@ -763,7 +893,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPageImageHeight(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static Integer staticSearchPageImageHeight(SiteRequest siteRequest_, Integer o) {
@@ -775,7 +905,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageHeight(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPageImageHeight(siteRequest_, CompanyAbout.staticSetPageImageHeight(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPageImageHeight(siteRequest_, SmartAgricultureDeveloper.staticSetPageImageHeight(siteRequest_, o)).toString();
   }
 
 	///////////////////
@@ -794,7 +924,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageType
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
    * <br>
    * @param c is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -804,12 +934,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return pageImageType;
   }
   public void setPageImageType(String o) {
-    this.pageImageType = CompanyAbout.staticSetPageImageType(siteRequest_, o);
+    this.pageImageType = SmartAgricultureDeveloper.staticSetPageImageType(siteRequest_, o);
   }
   public static String staticSetPageImageType(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout pageImageTypeInit() {
+  protected SmartAgricultureDeveloper pageImageTypeInit() {
     Wrap<String> pageImageTypeWrap = new Wrap<String>().var("pageImageType");
     if(pageImageType == null) {
       _pageImageType(pageImageTypeWrap);
@@ -817,7 +947,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPageImageType(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchPageImageType(SiteRequest siteRequest_, String o) {
@@ -829,7 +959,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageType(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPageImageType(siteRequest_, CompanyAbout.staticSetPageImageType(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPageImageType(siteRequest_, SmartAgricultureDeveloper.staticSetPageImageType(siteRequest_, o)).toString();
   }
 
 	//////////////////
@@ -848,7 +978,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageAlt
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
    * <br>
    * @param c is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -858,12 +988,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return pageImageAlt;
   }
   public void setPageImageAlt(String o) {
-    this.pageImageAlt = CompanyAbout.staticSetPageImageAlt(siteRequest_, o);
+    this.pageImageAlt = SmartAgricultureDeveloper.staticSetPageImageAlt(siteRequest_, o);
   }
   public static String staticSetPageImageAlt(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout pageImageAltInit() {
+  protected SmartAgricultureDeveloper pageImageAltInit() {
     Wrap<String> pageImageAltWrap = new Wrap<String>().var("pageImageAlt");
     if(pageImageAlt == null) {
       _pageImageAlt(pageImageAltWrap);
@@ -871,7 +1001,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPageImageAlt(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchPageImageAlt(SiteRequest siteRequest_, String o) {
@@ -883,7 +1013,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageAlt(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPageImageAlt(siteRequest_, CompanyAbout.staticSetPageImageAlt(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPageImageAlt(siteRequest_, SmartAgricultureDeveloper.staticSetPageImageAlt(siteRequest_, o)).toString();
   }
 
   public String sqlPageImageAlt() {
@@ -910,7 +1040,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity prerequisiteArticleIds
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:prerequisiteArticleIds">Find the entity prerequisiteArticleIds in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:prerequisiteArticleIds">Find the entity prerequisiteArticleIds in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -920,12 +1050,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return prerequisiteArticleIds;
   }
   public void setPrerequisiteArticleIds(String o) {
-    this.prerequisiteArticleIds = CompanyAbout.staticSetPrerequisiteArticleIds(siteRequest_, o);
+    this.prerequisiteArticleIds = SmartAgricultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest_, o);
   }
   public static String staticSetPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout prerequisiteArticleIdsInit() {
+  protected SmartAgricultureDeveloper prerequisiteArticleIdsInit() {
     Wrap<String> prerequisiteArticleIdsWrap = new Wrap<String>().var("prerequisiteArticleIds");
     if(prerequisiteArticleIds == null) {
       _prerequisiteArticleIds(prerequisiteArticleIdsWrap);
@@ -933,7 +1063,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPrerequisiteArticleIds(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
@@ -945,7 +1075,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPrerequisiteArticleIds(siteRequest_, CompanyAbout.staticSetPrerequisiteArticleIds(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPrerequisiteArticleIds(siteRequest_, SmartAgricultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest_, o)).toString();
   }
 
   public String sqlPrerequisiteArticleIds() {
@@ -967,30 +1097,30 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<CompanyAbout> prerequisiteArticleSearch;
+  protected SearchList<SmartAgricultureDeveloper> prerequisiteArticleSearch;
 
   /**
    * <br> The entity prerequisiteArticleSearch
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:prerequisiteArticleSearch">Find the entity prerequisiteArticleSearch in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:prerequisiteArticleSearch">Find the entity prerequisiteArticleSearch in Solr</a>
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _prerequisiteArticleSearch(Promise<SearchList<CompanyAbout>> promise);
+  protected abstract void _prerequisiteArticleSearch(Promise<SearchList<SmartAgricultureDeveloper>> promise);
 
-  public SearchList<CompanyAbout> getPrerequisiteArticleSearch() {
+  public SearchList<SmartAgricultureDeveloper> getPrerequisiteArticleSearch() {
     return prerequisiteArticleSearch;
   }
 
-  public void setPrerequisiteArticleSearch(SearchList<CompanyAbout> prerequisiteArticleSearch) {
+  public void setPrerequisiteArticleSearch(SearchList<SmartAgricultureDeveloper> prerequisiteArticleSearch) {
     this.prerequisiteArticleSearch = prerequisiteArticleSearch;
   }
-  public static SearchList<CompanyAbout> staticSetPrerequisiteArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<SmartAgricultureDeveloper> staticSetPrerequisiteArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<CompanyAbout>> prerequisiteArticleSearchPromise() {
-    Promise<SearchList<CompanyAbout>> promise = Promise.promise();
-    Promise<SearchList<CompanyAbout>> promise2 = Promise.promise();
+  protected Future<SearchList<SmartAgricultureDeveloper>> prerequisiteArticleSearchPromise() {
+    Promise<SearchList<SmartAgricultureDeveloper>> promise = Promise.promise();
+    Promise<SearchList<SmartAgricultureDeveloper>> promise2 = Promise.promise();
     _prerequisiteArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && prerequisiteArticleSearch == null) {
@@ -1026,7 +1156,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity prerequisiteArticles
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:prerequisiteArticles">Find the entity prerequisiteArticles in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:prerequisiteArticles">Find the entity prerequisiteArticles in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1041,7 +1171,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setPrerequisiteArticles(String o) {
-    this.prerequisiteArticles = CompanyAbout.staticSetPrerequisiteArticles(siteRequest_, o);
+    this.prerequisiteArticles = SmartAgricultureDeveloper.staticSetPrerequisiteArticles(siteRequest_, o);
   }
   public static JsonArray staticSetPrerequisiteArticles(SiteRequest siteRequest_, String o) {
     if(o != null) {
@@ -1049,7 +1179,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
     return null;
   }
-  protected CompanyAbout prerequisiteArticlesInit() {
+  protected SmartAgricultureDeveloper prerequisiteArticlesInit() {
     Wrap<JsonArray> prerequisiteArticlesWrap = new Wrap<JsonArray>().var("prerequisiteArticles");
     if(prerequisiteArticles == null) {
       _prerequisiteArticles(prerequisiteArticlesWrap);
@@ -1057,7 +1187,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setPrerequisiteArticles(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchPrerequisiteArticles(SiteRequest siteRequest_, JsonArray o) {
@@ -1069,7 +1199,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPrerequisiteArticles(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchPrerequisiteArticles(siteRequest_, CompanyAbout.staticSetPrerequisiteArticles(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchPrerequisiteArticles(siteRequest_, SmartAgricultureDeveloper.staticSetPrerequisiteArticles(siteRequest_, o)).toString();
   }
 
 	////////////////////
@@ -1088,7 +1218,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity nextArticleIds
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:nextArticleIds">Find the entity nextArticleIds in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:nextArticleIds">Find the entity nextArticleIds in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1098,12 +1228,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return nextArticleIds;
   }
   public void setNextArticleIds(String o) {
-    this.nextArticleIds = CompanyAbout.staticSetNextArticleIds(siteRequest_, o);
+    this.nextArticleIds = SmartAgricultureDeveloper.staticSetNextArticleIds(siteRequest_, o);
   }
   public static String staticSetNextArticleIds(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout nextArticleIdsInit() {
+  protected SmartAgricultureDeveloper nextArticleIdsInit() {
     Wrap<String> nextArticleIdsWrap = new Wrap<String>().var("nextArticleIds");
     if(nextArticleIds == null) {
       _nextArticleIds(nextArticleIdsWrap);
@@ -1111,7 +1241,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setNextArticleIds(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchNextArticleIds(SiteRequest siteRequest_, String o) {
@@ -1123,7 +1253,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqNextArticleIds(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchNextArticleIds(siteRequest_, CompanyAbout.staticSetNextArticleIds(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchNextArticleIds(siteRequest_, SmartAgricultureDeveloper.staticSetNextArticleIds(siteRequest_, o)).toString();
   }
 
   public String sqlNextArticleIds() {
@@ -1145,30 +1275,30 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<CompanyAbout> nextArticleSearch;
+  protected SearchList<SmartAgricultureDeveloper> nextArticleSearch;
 
   /**
    * <br> The entity nextArticleSearch
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:nextArticleSearch">Find the entity nextArticleSearch in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:nextArticleSearch">Find the entity nextArticleSearch in Solr</a>
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _nextArticleSearch(Promise<SearchList<CompanyAbout>> promise);
+  protected abstract void _nextArticleSearch(Promise<SearchList<SmartAgricultureDeveloper>> promise);
 
-  public SearchList<CompanyAbout> getNextArticleSearch() {
+  public SearchList<SmartAgricultureDeveloper> getNextArticleSearch() {
     return nextArticleSearch;
   }
 
-  public void setNextArticleSearch(SearchList<CompanyAbout> nextArticleSearch) {
+  public void setNextArticleSearch(SearchList<SmartAgricultureDeveloper> nextArticleSearch) {
     this.nextArticleSearch = nextArticleSearch;
   }
-  public static SearchList<CompanyAbout> staticSetNextArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<SmartAgricultureDeveloper> staticSetNextArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<CompanyAbout>> nextArticleSearchPromise() {
-    Promise<SearchList<CompanyAbout>> promise = Promise.promise();
-    Promise<SearchList<CompanyAbout>> promise2 = Promise.promise();
+  protected Future<SearchList<SmartAgricultureDeveloper>> nextArticleSearchPromise() {
+    Promise<SearchList<SmartAgricultureDeveloper>> promise = Promise.promise();
+    Promise<SearchList<SmartAgricultureDeveloper>> promise2 = Promise.promise();
     _nextArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && nextArticleSearch == null) {
@@ -1204,7 +1334,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity nextArticles
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:nextArticles">Find the entity nextArticles in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:nextArticles">Find the entity nextArticles in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1219,7 +1349,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setNextArticles(String o) {
-    this.nextArticles = CompanyAbout.staticSetNextArticles(siteRequest_, o);
+    this.nextArticles = SmartAgricultureDeveloper.staticSetNextArticles(siteRequest_, o);
   }
   public static JsonArray staticSetNextArticles(SiteRequest siteRequest_, String o) {
     if(o != null) {
@@ -1227,7 +1357,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
     return null;
   }
-  protected CompanyAbout nextArticlesInit() {
+  protected SmartAgricultureDeveloper nextArticlesInit() {
     Wrap<JsonArray> nextArticlesWrap = new Wrap<JsonArray>().var("nextArticles");
     if(nextArticles == null) {
       _nextArticles(nextArticlesWrap);
@@ -1235,7 +1365,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setNextArticles(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchNextArticles(SiteRequest siteRequest_, JsonArray o) {
@@ -1247,7 +1377,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqNextArticles(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchNextArticles(siteRequest_, CompanyAbout.staticSetNextArticles(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchNextArticles(siteRequest_, SmartAgricultureDeveloper.staticSetNextArticles(siteRequest_, o)).toString();
   }
 
 	//////////////////
@@ -1266,7 +1396,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity labelsString
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1276,12 +1406,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return labelsString;
   }
   public void setLabelsString(String o) {
-    this.labelsString = CompanyAbout.staticSetLabelsString(siteRequest_, o);
+    this.labelsString = SmartAgricultureDeveloper.staticSetLabelsString(siteRequest_, o);
   }
   public static String staticSetLabelsString(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout labelsStringInit() {
+  protected SmartAgricultureDeveloper labelsStringInit() {
     Wrap<String> labelsStringWrap = new Wrap<String>().var("labelsString");
     if(labelsString == null) {
       _labelsString(labelsStringWrap);
@@ -1289,7 +1419,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setLabelsString(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchLabelsString(SiteRequest siteRequest_, String o) {
@@ -1301,7 +1431,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqLabelsString(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchLabelsString(siteRequest_, CompanyAbout.staticSetLabelsString(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchLabelsString(siteRequest_, SmartAgricultureDeveloper.staticSetLabelsString(siteRequest_, o)).toString();
   }
 
   public String sqlLabelsString() {
@@ -1329,7 +1459,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity labels
    *  It is constructed before being initialized with the constructor by default. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
    * <br>
    * @param l is the entity already constructed. 
    **/
@@ -1344,23 +1474,23 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setLabels(String o) {
-    String l = CompanyAbout.staticSetLabels(siteRequest_, o);
+    String l = SmartAgricultureDeveloper.staticSetLabels(siteRequest_, o);
     if(l != null)
       addLabels(l);
   }
   public static String staticSetLabels(SiteRequest siteRequest_, String o) {
     return o;
   }
-  public CompanyAbout addLabels(String...objects) {
+  public SmartAgricultureDeveloper addLabels(String...objects) {
     for(String o : objects) {
       addLabels(o);
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
-  public CompanyAbout addLabels(String o) {
+  public SmartAgricultureDeveloper addLabels(String o) {
     if(o != null)
       this.labels.add(o);
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
   @JsonIgnore
   public void setLabels(JsonArray objects) {
@@ -1372,9 +1502,9 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
       addLabels(o);
     }
   }
-  protected CompanyAbout labelsInit() {
+  protected SmartAgricultureDeveloper labelsInit() {
     _labels(labels);
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchLabels(SiteRequest siteRequest_, String o) {
@@ -1386,7 +1516,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqLabels(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchLabels(siteRequest_, CompanyAbout.staticSetLabels(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchLabels(siteRequest_, SmartAgricultureDeveloper.staticSetLabels(siteRequest_, o)).toString();
   }
 
   public String[] sqlLabels() {
@@ -1415,7 +1545,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity relatedArticleIds
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:relatedArticleIds">Find the entity relatedArticleIds in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:relatedArticleIds">Find the entity relatedArticleIds in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1425,12 +1555,12 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return relatedArticleIds;
   }
   public void setRelatedArticleIds(String o) {
-    this.relatedArticleIds = CompanyAbout.staticSetRelatedArticleIds(siteRequest_, o);
+    this.relatedArticleIds = SmartAgricultureDeveloper.staticSetRelatedArticleIds(siteRequest_, o);
   }
   public static String staticSetRelatedArticleIds(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyAbout relatedArticleIdsInit() {
+  protected SmartAgricultureDeveloper relatedArticleIdsInit() {
     Wrap<String> relatedArticleIdsWrap = new Wrap<String>().var("relatedArticleIds");
     if(relatedArticleIds == null) {
       _relatedArticleIds(relatedArticleIdsWrap);
@@ -1438,7 +1568,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setRelatedArticleIds(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchRelatedArticleIds(SiteRequest siteRequest_, String o) {
@@ -1450,7 +1580,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqRelatedArticleIds(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchRelatedArticleIds(siteRequest_, CompanyAbout.staticSetRelatedArticleIds(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchRelatedArticleIds(siteRequest_, SmartAgricultureDeveloper.staticSetRelatedArticleIds(siteRequest_, o)).toString();
   }
 
   public String sqlRelatedArticleIds() {
@@ -1472,30 +1602,30 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<CompanyAbout> relatedArticleSearch;
+  protected SearchList<SmartAgricultureDeveloper> relatedArticleSearch;
 
   /**
    * <br> The entity relatedArticleSearch
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:relatedArticleSearch">Find the entity relatedArticleSearch in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:relatedArticleSearch">Find the entity relatedArticleSearch in Solr</a>
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _relatedArticleSearch(Promise<SearchList<CompanyAbout>> promise);
+  protected abstract void _relatedArticleSearch(Promise<SearchList<SmartAgricultureDeveloper>> promise);
 
-  public SearchList<CompanyAbout> getRelatedArticleSearch() {
+  public SearchList<SmartAgricultureDeveloper> getRelatedArticleSearch() {
     return relatedArticleSearch;
   }
 
-  public void setRelatedArticleSearch(SearchList<CompanyAbout> relatedArticleSearch) {
+  public void setRelatedArticleSearch(SearchList<SmartAgricultureDeveloper> relatedArticleSearch) {
     this.relatedArticleSearch = relatedArticleSearch;
   }
-  public static SearchList<CompanyAbout> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<SmartAgricultureDeveloper> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<CompanyAbout>> relatedArticleSearchPromise() {
-    Promise<SearchList<CompanyAbout>> promise = Promise.promise();
-    Promise<SearchList<CompanyAbout>> promise2 = Promise.promise();
+  protected Future<SearchList<SmartAgricultureDeveloper>> relatedArticleSearchPromise() {
+    Promise<SearchList<SmartAgricultureDeveloper>> promise = Promise.promise();
+    Promise<SearchList<SmartAgricultureDeveloper>> promise2 = Promise.promise();
     _relatedArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && relatedArticleSearch == null) {
@@ -1531,7 +1661,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /**
    * <br> The entity relatedArticles
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAbout&fq=entiteVar_enUS_indexed_string:relatedArticles">Find the entity relatedArticles in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper&fq=entiteVar_enUS_indexed_string:relatedArticles">Find the entity relatedArticles in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1546,7 +1676,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setRelatedArticles(String o) {
-    this.relatedArticles = CompanyAbout.staticSetRelatedArticles(siteRequest_, o);
+    this.relatedArticles = SmartAgricultureDeveloper.staticSetRelatedArticles(siteRequest_, o);
   }
   public static JsonArray staticSetRelatedArticles(SiteRequest siteRequest_, String o) {
     if(o != null) {
@@ -1554,7 +1684,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
     return null;
   }
-  protected CompanyAbout relatedArticlesInit() {
+  protected SmartAgricultureDeveloper relatedArticlesInit() {
     Wrap<JsonArray> relatedArticlesWrap = new Wrap<JsonArray>().var("relatedArticles");
     if(relatedArticles == null) {
       _relatedArticles(relatedArticlesWrap);
@@ -1562,7 +1692,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
         setRelatedArticles(o);
       });
     }
-    return (CompanyAbout)this;
+    return (SmartAgricultureDeveloper)this;
   }
 
   public static String staticSearchRelatedArticles(SiteRequest siteRequest_, JsonArray o) {
@@ -1574,22 +1704,22 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqRelatedArticles(SiteRequest siteRequest_, String o) {
-    return CompanyAbout.staticSearchRelatedArticles(siteRequest_, CompanyAbout.staticSetRelatedArticles(siteRequest_, o)).toString();
+    return SmartAgricultureDeveloper.staticSearchRelatedArticles(siteRequest_, SmartAgricultureDeveloper.staticSetRelatedArticles(siteRequest_, o)).toString();
   }
 
   //////////////
   // initDeep //
   //////////////
 
-  public Future<CompanyAboutGen<DEV>> promiseDeepCompanyAbout(SiteRequest siteRequest_) {
+  public Future<SmartAgricultureDeveloperGen<DEV>> promiseDeepSmartAgricultureDeveloper(SiteRequest siteRequest_) {
     setSiteRequest_(siteRequest_);
-    return promiseDeepCompanyAbout();
+    return promiseDeepSmartAgricultureDeveloper();
   }
 
-  public Future<CompanyAboutGen<DEV>> promiseDeepCompanyAbout() {
-    Promise<CompanyAboutGen<DEV>> promise = Promise.promise();
+  public Future<SmartAgricultureDeveloperGen<DEV>> promiseDeepSmartAgricultureDeveloper() {
+    Promise<SmartAgricultureDeveloperGen<DEV>> promise = Promise.promise();
     Promise<Void> promise2 = Promise.promise();
-    promiseCompanyAbout(promise2);
+    promiseSmartAgricultureDeveloper(promise2);
     promise2.future().onSuccess(a -> {
       super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
         promise.complete(this);
@@ -1602,16 +1732,18 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return promise.future();
   }
 
-  public Future<Void> promiseCompanyAbout(Promise<Void> promise) {
+  public Future<Void> promiseSmartAgricultureDeveloper(Promise<Void> promise) {
     Future.future(a -> a.complete()).compose(a -> {
       Promise<Void> promise2 = Promise.promise();
       try {
+        articleInit();
         nameInit();
         descriptionInit();
-        authorNameInit();
-        authorUrlInit();
         pageIdInit();
         courseNumInit();
+        lessonNumInit();
+        authorNameInit();
+        authorUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -1686,15 +1818,15 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return promise.future();
   }
 
-  @Override public Future<? extends CompanyAboutGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-    return promiseDeepCompanyAbout(siteRequest_);
+  @Override public Future<? extends SmartAgricultureDeveloperGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepSmartAgricultureDeveloper(siteRequest_);
   }
 
   /////////////////
   // siteRequest //
   /////////////////
 
-  public void siteRequestCompanyAbout(SiteRequest siteRequest_) {
+  public void siteRequestSmartAgricultureDeveloper(SiteRequest siteRequest_) {
       super.siteRequestBaseResult(siteRequest_);
     if(prerequisiteArticleSearch != null)
       prerequisiteArticleSearch.setSiteRequest_(siteRequest_);
@@ -1705,7 +1837,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public void siteRequestForClass(SiteRequest siteRequest_) {
-    siteRequestCompanyAbout(siteRequest_);
+    siteRequestSmartAgricultureDeveloper(siteRequest_);
   }
 
   /////////////
@@ -1717,7 +1849,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     Object o = null;
     for(String v : vars) {
       if(o == null)
-        o = obtainCompanyAbout(v);
+        o = obtainSmartAgricultureDeveloper(v);
       else if(o instanceof BaseModel) {
         BaseModel baseModel = (BaseModel)o;
         o = baseModel.obtainForClass(v);
@@ -1729,53 +1861,57 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
     return o;
   }
-  public Object obtainCompanyAbout(String var) {
-    CompanyAbout oCompanyAbout = (CompanyAbout)this;
+  public Object obtainSmartAgricultureDeveloper(String var) {
+    SmartAgricultureDeveloper oSmartAgricultureDeveloper = (SmartAgricultureDeveloper)this;
     switch(var) {
+      case "article":
+        return oSmartAgricultureDeveloper.article;
       case "name":
-        return oCompanyAbout.name;
+        return oSmartAgricultureDeveloper.name;
       case "description":
-        return oCompanyAbout.description;
-      case "authorName":
-        return oCompanyAbout.authorName;
-      case "authorUrl":
-        return oCompanyAbout.authorUrl;
+        return oSmartAgricultureDeveloper.description;
       case "pageId":
-        return oCompanyAbout.pageId;
+        return oSmartAgricultureDeveloper.pageId;
       case "courseNum":
-        return oCompanyAbout.courseNum;
+        return oSmartAgricultureDeveloper.courseNum;
+      case "lessonNum":
+        return oSmartAgricultureDeveloper.lessonNum;
+      case "authorName":
+        return oSmartAgricultureDeveloper.authorName;
+      case "authorUrl":
+        return oSmartAgricultureDeveloper.authorUrl;
       case "pageImageUri":
-        return oCompanyAbout.pageImageUri;
+        return oSmartAgricultureDeveloper.pageImageUri;
       case "pageImageWidth":
-        return oCompanyAbout.pageImageWidth;
+        return oSmartAgricultureDeveloper.pageImageWidth;
       case "pageImageHeight":
-        return oCompanyAbout.pageImageHeight;
+        return oSmartAgricultureDeveloper.pageImageHeight;
       case "pageImageType":
-        return oCompanyAbout.pageImageType;
+        return oSmartAgricultureDeveloper.pageImageType;
       case "pageImageAlt":
-        return oCompanyAbout.pageImageAlt;
+        return oSmartAgricultureDeveloper.pageImageAlt;
       case "prerequisiteArticleIds":
-        return oCompanyAbout.prerequisiteArticleIds;
+        return oSmartAgricultureDeveloper.prerequisiteArticleIds;
       case "prerequisiteArticleSearch":
-        return oCompanyAbout.prerequisiteArticleSearch;
+        return oSmartAgricultureDeveloper.prerequisiteArticleSearch;
       case "prerequisiteArticles":
-        return oCompanyAbout.prerequisiteArticles;
+        return oSmartAgricultureDeveloper.prerequisiteArticles;
       case "nextArticleIds":
-        return oCompanyAbout.nextArticleIds;
+        return oSmartAgricultureDeveloper.nextArticleIds;
       case "nextArticleSearch":
-        return oCompanyAbout.nextArticleSearch;
+        return oSmartAgricultureDeveloper.nextArticleSearch;
       case "nextArticles":
-        return oCompanyAbout.nextArticles;
+        return oSmartAgricultureDeveloper.nextArticles;
       case "labelsString":
-        return oCompanyAbout.labelsString;
+        return oSmartAgricultureDeveloper.labelsString;
       case "labels":
-        return oCompanyAbout.labels;
+        return oSmartAgricultureDeveloper.labels;
       case "relatedArticleIds":
-        return oCompanyAbout.relatedArticleIds;
+        return oSmartAgricultureDeveloper.relatedArticleIds;
       case "relatedArticleSearch":
-        return oCompanyAbout.relatedArticleSearch;
+        return oSmartAgricultureDeveloper.relatedArticleSearch;
       case "relatedArticles":
-        return oCompanyAbout.relatedArticles;
+        return oSmartAgricultureDeveloper.relatedArticles;
       default:
         return super.obtainBaseResult(var);
     }
@@ -1790,7 +1926,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     Object o = null;
     for(String v : vars) {
       if(o == null)
-        o = relateCompanyAbout(v, val);
+        o = relateSmartAgricultureDeveloper(v, val);
       else if(o instanceof BaseModel) {
         BaseModel baseModel = (BaseModel)o;
         o = baseModel.relateForClass(v, val);
@@ -1798,8 +1934,8 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
     return o != null;
   }
-  public Object relateCompanyAbout(String var, Object val) {
-    CompanyAbout oCompanyAbout = (CompanyAbout)this;
+  public Object relateSmartAgricultureDeveloper(String var, Object val) {
+    SmartAgricultureDeveloper oSmartAgricultureDeveloper = (SmartAgricultureDeveloper)this;
     switch(var) {
       default:
         return super.relateBaseResult(var, val);
@@ -1810,49 +1946,53 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   // staticSet //
   ///////////////
 
-  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAbout o) {
-    return staticSetCompanyAbout(entityVar,  siteRequest_, v, o);
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SmartAgricultureDeveloper o) {
+    return staticSetSmartAgricultureDeveloper(entityVar,  siteRequest_, v, o);
   }
-  public static Object staticSetCompanyAbout(String entityVar, SiteRequest siteRequest_, String v, CompanyAbout o) {
+  public static Object staticSetSmartAgricultureDeveloper(String entityVar, SiteRequest siteRequest_, String v, SmartAgricultureDeveloper o) {
     switch(entityVar) {
+    case "article":
+      return SmartAgricultureDeveloper.staticSetArticle(siteRequest_, v);
     case "name":
-      return CompanyAbout.staticSetName(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetName(siteRequest_, v);
     case "description":
-      return CompanyAbout.staticSetDescription(siteRequest_, v);
-    case "authorName":
-      return CompanyAbout.staticSetAuthorName(siteRequest_, v);
-    case "authorUrl":
-      return CompanyAbout.staticSetAuthorUrl(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetDescription(siteRequest_, v);
     case "pageId":
-      return CompanyAbout.staticSetPageId(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPageId(siteRequest_, v);
     case "courseNum":
-      return CompanyAbout.staticSetCourseNum(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetCourseNum(siteRequest_, v);
+    case "lessonNum":
+      return SmartAgricultureDeveloper.staticSetLessonNum(siteRequest_, v);
+    case "authorName":
+      return SmartAgricultureDeveloper.staticSetAuthorName(siteRequest_, v);
+    case "authorUrl":
+      return SmartAgricultureDeveloper.staticSetAuthorUrl(siteRequest_, v);
     case "pageImageUri":
-      return CompanyAbout.staticSetPageImageUri(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
-      return CompanyAbout.staticSetPageImageWidth(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPageImageWidth(siteRequest_, v);
     case "pageImageHeight":
-      return CompanyAbout.staticSetPageImageHeight(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPageImageHeight(siteRequest_, v);
     case "pageImageType":
-      return CompanyAbout.staticSetPageImageType(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPageImageType(siteRequest_, v);
     case "pageImageAlt":
-      return CompanyAbout.staticSetPageImageAlt(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPageImageAlt(siteRequest_, v);
     case "prerequisiteArticleIds":
-      return CompanyAbout.staticSetPrerequisiteArticleIds(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest_, v);
     case "prerequisiteArticles":
-      return CompanyAbout.staticSetPrerequisiteArticles(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetPrerequisiteArticles(siteRequest_, v);
     case "nextArticleIds":
-      return CompanyAbout.staticSetNextArticleIds(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetNextArticleIds(siteRequest_, v);
     case "nextArticles":
-      return CompanyAbout.staticSetNextArticles(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetNextArticles(siteRequest_, v);
     case "labelsString":
-      return CompanyAbout.staticSetLabelsString(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetLabelsString(siteRequest_, v);
     case "labels":
-      return CompanyAbout.staticSetLabels(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetLabels(siteRequest_, v);
     case "relatedArticleIds":
-      return CompanyAbout.staticSetRelatedArticleIds(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetRelatedArticleIds(siteRequest_, v);
     case "relatedArticles":
-      return CompanyAbout.staticSetRelatedArticles(siteRequest_, v);
+      return SmartAgricultureDeveloper.staticSetRelatedArticles(siteRequest_, v);
       default:
         return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
     }
@@ -1862,79 +2002,83 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   // staticSearch //
   //////////////////
 
-  public static Future<CompanyAbout> fqCompanyAbout(SiteRequest siteRequest, String var, Object val) {
-    Promise<CompanyAbout> promise = Promise.promise();
+  public static Future<SmartAgricultureDeveloper> fqSmartAgricultureDeveloper(SiteRequest siteRequest, String var, Object val) {
+    Promise<SmartAgricultureDeveloper> promise = Promise.promise();
     try {
       if(val == null) {
         promise.complete();
       } else {
-        SearchList<CompanyAbout> searchList = new SearchList<CompanyAbout>();
+        SearchList<SmartAgricultureDeveloper> searchList = new SearchList<SmartAgricultureDeveloper>();
         searchList.setStore(true);
         searchList.q("*:*");
-        searchList.setC(CompanyAbout.class);
-        searchList.fq(String.format("%s:", CompanyAbout.varIndexedCompanyAbout(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.setC(SmartAgricultureDeveloper.class);
+        searchList.fq(String.format("%s:", SmartAgricultureDeveloper.varIndexedSmartAgricultureDeveloper(var)) + SearchTool.escapeQueryChars(val.toString()));
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
           try {
             promise.complete(searchList.getList().stream().findFirst().orElse(null));
           } catch(Throwable ex) {
-            LOG.error("Error while querying theabout page", ex);
+            LOG.error("Error while querying the Smart Agriculture Developer", ex);
             promise.fail(ex);
           }
         }).onFailure(ex -> {
-          LOG.error("Error while querying theabout page", ex);
+          LOG.error("Error while querying the Smart Agriculture Developer", ex);
           promise.fail(ex);
         });
       }
     } catch(Throwable ex) {
-      LOG.error("Error while querying theabout page", ex);
+      LOG.error("Error while querying the Smart Agriculture Developer", ex);
       promise.fail(ex);
     }
     return promise.future();
   }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-    return staticSearchCompanyAbout(entityVar,  siteRequest_, o);
+    return staticSearchSmartAgricultureDeveloper(entityVar,  siteRequest_, o);
   }
-  public static Object staticSearchCompanyAbout(String entityVar, SiteRequest siteRequest_, Object o) {
+  public static Object staticSearchSmartAgricultureDeveloper(String entityVar, SiteRequest siteRequest_, Object o) {
     switch(entityVar) {
+    case "article":
+      return SmartAgricultureDeveloper.staticSearchArticle(siteRequest_, (Boolean)o);
     case "name":
-      return CompanyAbout.staticSearchName(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchName(siteRequest_, (String)o);
     case "description":
-      return CompanyAbout.staticSearchDescription(siteRequest_, (String)o);
-    case "authorName":
-      return CompanyAbout.staticSearchAuthorName(siteRequest_, (String)o);
-    case "authorUrl":
-      return CompanyAbout.staticSearchAuthorUrl(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchDescription(siteRequest_, (String)o);
     case "pageId":
-      return CompanyAbout.staticSearchPageId(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchPageId(siteRequest_, (String)o);
     case "courseNum":
-      return CompanyAbout.staticSearchCourseNum(siteRequest_, (Integer)o);
+      return SmartAgricultureDeveloper.staticSearchCourseNum(siteRequest_, (Integer)o);
+    case "lessonNum":
+      return SmartAgricultureDeveloper.staticSearchLessonNum(siteRequest_, (Integer)o);
+    case "authorName":
+      return SmartAgricultureDeveloper.staticSearchAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return SmartAgricultureDeveloper.staticSearchAuthorUrl(siteRequest_, (String)o);
     case "pageImageUri":
-      return CompanyAbout.staticSearchPageImageUri(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
-      return CompanyAbout.staticSearchPageImageWidth(siteRequest_, (Integer)o);
+      return SmartAgricultureDeveloper.staticSearchPageImageWidth(siteRequest_, (Integer)o);
     case "pageImageHeight":
-      return CompanyAbout.staticSearchPageImageHeight(siteRequest_, (Integer)o);
+      return SmartAgricultureDeveloper.staticSearchPageImageHeight(siteRequest_, (Integer)o);
     case "pageImageType":
-      return CompanyAbout.staticSearchPageImageType(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchPageImageType(siteRequest_, (String)o);
     case "pageImageAlt":
-      return CompanyAbout.staticSearchPageImageAlt(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchPageImageAlt(siteRequest_, (String)o);
     case "prerequisiteArticleIds":
-      return CompanyAbout.staticSearchPrerequisiteArticleIds(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchPrerequisiteArticleIds(siteRequest_, (String)o);
     case "prerequisiteArticles":
-      return CompanyAbout.staticSearchPrerequisiteArticles(siteRequest_, (JsonArray)o);
+      return SmartAgricultureDeveloper.staticSearchPrerequisiteArticles(siteRequest_, (JsonArray)o);
     case "nextArticleIds":
-      return CompanyAbout.staticSearchNextArticleIds(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchNextArticleIds(siteRequest_, (String)o);
     case "nextArticles":
-      return CompanyAbout.staticSearchNextArticles(siteRequest_, (JsonArray)o);
+      return SmartAgricultureDeveloper.staticSearchNextArticles(siteRequest_, (JsonArray)o);
     case "labelsString":
-      return CompanyAbout.staticSearchLabelsString(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchLabelsString(siteRequest_, (String)o);
     case "labels":
-      return CompanyAbout.staticSearchLabels(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchLabels(siteRequest_, (String)o);
     case "relatedArticleIds":
-      return CompanyAbout.staticSearchRelatedArticleIds(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchRelatedArticleIds(siteRequest_, (String)o);
     case "relatedArticles":
-      return CompanyAbout.staticSearchRelatedArticles(siteRequest_, (JsonArray)o);
+      return SmartAgricultureDeveloper.staticSearchRelatedArticles(siteRequest_, (JsonArray)o);
       default:
         return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
     }
@@ -1945,48 +2089,52 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   ///////////////////
 
   public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-    return staticSearchStrCompanyAbout(entityVar,  siteRequest_, o);
+    return staticSearchStrSmartAgricultureDeveloper(entityVar,  siteRequest_, o);
   }
-  public static String staticSearchStrCompanyAbout(String entityVar, SiteRequest siteRequest_, Object o) {
+  public static String staticSearchStrSmartAgricultureDeveloper(String entityVar, SiteRequest siteRequest_, Object o) {
     switch(entityVar) {
+    case "article":
+      return SmartAgricultureDeveloper.staticSearchStrArticle(siteRequest_, (Boolean)o);
     case "name":
-      return CompanyAbout.staticSearchStrName(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrName(siteRequest_, (String)o);
     case "description":
-      return CompanyAbout.staticSearchStrDescription(siteRequest_, (String)o);
-    case "authorName":
-      return CompanyAbout.staticSearchStrAuthorName(siteRequest_, (String)o);
-    case "authorUrl":
-      return CompanyAbout.staticSearchStrAuthorUrl(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrDescription(siteRequest_, (String)o);
     case "pageId":
-      return CompanyAbout.staticSearchStrPageId(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrPageId(siteRequest_, (String)o);
     case "courseNum":
-      return CompanyAbout.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+      return SmartAgricultureDeveloper.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+    case "lessonNum":
+      return SmartAgricultureDeveloper.staticSearchStrLessonNum(siteRequest_, (Integer)o);
+    case "authorName":
+      return SmartAgricultureDeveloper.staticSearchStrAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return SmartAgricultureDeveloper.staticSearchStrAuthorUrl(siteRequest_, (String)o);
     case "pageImageUri":
-      return CompanyAbout.staticSearchStrPageImageUri(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
-      return CompanyAbout.staticSearchStrPageImageWidth(siteRequest_, (Integer)o);
+      return SmartAgricultureDeveloper.staticSearchStrPageImageWidth(siteRequest_, (Integer)o);
     case "pageImageHeight":
-      return CompanyAbout.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
+      return SmartAgricultureDeveloper.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
     case "pageImageType":
-      return CompanyAbout.staticSearchStrPageImageType(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrPageImageType(siteRequest_, (String)o);
     case "pageImageAlt":
-      return CompanyAbout.staticSearchStrPageImageAlt(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrPageImageAlt(siteRequest_, (String)o);
     case "prerequisiteArticleIds":
-      return CompanyAbout.staticSearchStrPrerequisiteArticleIds(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrPrerequisiteArticleIds(siteRequest_, (String)o);
     case "prerequisiteArticles":
-      return CompanyAbout.staticSearchStrPrerequisiteArticles(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrPrerequisiteArticles(siteRequest_, (String)o);
     case "nextArticleIds":
-      return CompanyAbout.staticSearchStrNextArticleIds(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrNextArticleIds(siteRequest_, (String)o);
     case "nextArticles":
-      return CompanyAbout.staticSearchStrNextArticles(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrNextArticles(siteRequest_, (String)o);
     case "labelsString":
-      return CompanyAbout.staticSearchStrLabelsString(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrLabelsString(siteRequest_, (String)o);
     case "labels":
-      return CompanyAbout.staticSearchStrLabels(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrLabels(siteRequest_, (String)o);
     case "relatedArticleIds":
-      return CompanyAbout.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
     case "relatedArticles":
-      return CompanyAbout.staticSearchStrRelatedArticles(siteRequest_, (String)o);
+      return SmartAgricultureDeveloper.staticSearchStrRelatedArticles(siteRequest_, (String)o);
       default:
         return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
     }
@@ -1997,48 +2145,52 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   //////////////////
 
   public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-    return staticSearchFqCompanyAbout(entityVar,  siteRequest_, o);
+    return staticSearchFqSmartAgricultureDeveloper(entityVar,  siteRequest_, o);
   }
-  public static String staticSearchFqCompanyAbout(String entityVar, SiteRequest siteRequest_, String o) {
+  public static String staticSearchFqSmartAgricultureDeveloper(String entityVar, SiteRequest siteRequest_, String o) {
     switch(entityVar) {
+    case "article":
+      return SmartAgricultureDeveloper.staticSearchFqArticle(siteRequest_, o);
     case "name":
-      return CompanyAbout.staticSearchFqName(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqName(siteRequest_, o);
     case "description":
-      return CompanyAbout.staticSearchFqDescription(siteRequest_, o);
-    case "authorName":
-      return CompanyAbout.staticSearchFqAuthorName(siteRequest_, o);
-    case "authorUrl":
-      return CompanyAbout.staticSearchFqAuthorUrl(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqDescription(siteRequest_, o);
     case "pageId":
-      return CompanyAbout.staticSearchFqPageId(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPageId(siteRequest_, o);
     case "courseNum":
-      return CompanyAbout.staticSearchFqCourseNum(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqCourseNum(siteRequest_, o);
+    case "lessonNum":
+      return SmartAgricultureDeveloper.staticSearchFqLessonNum(siteRequest_, o);
+    case "authorName":
+      return SmartAgricultureDeveloper.staticSearchFqAuthorName(siteRequest_, o);
+    case "authorUrl":
+      return SmartAgricultureDeveloper.staticSearchFqAuthorUrl(siteRequest_, o);
     case "pageImageUri":
-      return CompanyAbout.staticSearchFqPageImageUri(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
-      return CompanyAbout.staticSearchFqPageImageWidth(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPageImageWidth(siteRequest_, o);
     case "pageImageHeight":
-      return CompanyAbout.staticSearchFqPageImageHeight(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPageImageHeight(siteRequest_, o);
     case "pageImageType":
-      return CompanyAbout.staticSearchFqPageImageType(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPageImageType(siteRequest_, o);
     case "pageImageAlt":
-      return CompanyAbout.staticSearchFqPageImageAlt(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPageImageAlt(siteRequest_, o);
     case "prerequisiteArticleIds":
-      return CompanyAbout.staticSearchFqPrerequisiteArticleIds(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPrerequisiteArticleIds(siteRequest_, o);
     case "prerequisiteArticles":
-      return CompanyAbout.staticSearchFqPrerequisiteArticles(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqPrerequisiteArticles(siteRequest_, o);
     case "nextArticleIds":
-      return CompanyAbout.staticSearchFqNextArticleIds(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqNextArticleIds(siteRequest_, o);
     case "nextArticles":
-      return CompanyAbout.staticSearchFqNextArticles(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqNextArticles(siteRequest_, o);
     case "labelsString":
-      return CompanyAbout.staticSearchFqLabelsString(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqLabelsString(siteRequest_, o);
     case "labels":
-      return CompanyAbout.staticSearchFqLabels(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqLabels(siteRequest_, o);
     case "relatedArticleIds":
-      return CompanyAbout.staticSearchFqRelatedArticleIds(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqRelatedArticleIds(siteRequest_, o);
     case "relatedArticles":
-      return CompanyAbout.staticSearchFqRelatedArticles(siteRequest_, o);
+      return SmartAgricultureDeveloper.staticSearchFqRelatedArticles(siteRequest_, o);
       default:
         return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
     }
@@ -2054,7 +2206,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     if(val != null) {
       for(String v : vars) {
         if(o == null)
-          o = persistCompanyAbout(v, val);
+          o = persistSmartAgricultureDeveloper(v, val);
         else if(o instanceof BaseModel) {
           BaseModel oBaseModel = (BaseModel)o;
           o = oBaseModel.persistForClass(v, val);
@@ -2063,7 +2215,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
     return o != null;
   }
-  public Object persistCompanyAbout(String var, Object val) {
+  public Object persistSmartAgricultureDeveloper(String var, Object val) {
     String varLower = var.toLowerCase();
       if("name".equals(varLower)) {
         if(val instanceof String) {
@@ -2076,18 +2228,6 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
           setDescription((String)val);
         }
         saves.add("description");
-        return val;
-      } else if("authorname".equals(varLower)) {
-        if(val instanceof String) {
-          setAuthorName((String)val);
-        }
-        saves.add("authorName");
-        return val;
-      } else if("authorurl".equals(varLower)) {
-        if(val instanceof String) {
-          setAuthorUrl((String)val);
-        }
-        saves.add("authorUrl");
         return val;
       } else if("pageid".equals(varLower)) {
         if(val instanceof String) {
@@ -2102,6 +2242,26 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
           setCourseNum(val == null ? null : val.toString());
         }
         saves.add("courseNum");
+        return val;
+      } else if("lessonnum".equals(varLower)) {
+        if(val instanceof Integer) {
+          setLessonNum((Integer)val);
+        } else {
+          setLessonNum(val == null ? null : val.toString());
+        }
+        saves.add("lessonNum");
+        return val;
+      } else if("authorname".equals(varLower)) {
+        if(val instanceof String) {
+          setAuthorName((String)val);
+        }
+        saves.add("authorName");
+        return val;
+      } else if("authorurl".equals(varLower)) {
+        if(val instanceof String) {
+          setAuthorUrl((String)val);
+        }
+        saves.add("authorUrl");
         return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
@@ -2161,114 +2321,120 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /////////////
 
   @Override public void populateForClass(SolrResponse.Doc doc) {
-    populateCompanyAbout(doc);
+    populateSmartAgricultureDeveloper(doc);
   }
-  public void populateCompanyAbout(SolrResponse.Doc doc) {
-    CompanyAbout oCompanyAbout = (CompanyAbout)this;
+  public void populateSmartAgricultureDeveloper(SolrResponse.Doc doc) {
+    SmartAgricultureDeveloper oSmartAgricultureDeveloper = (SmartAgricultureDeveloper)this;
     saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
     if(saves != null) {
 
       if(saves.contains("name")) {
         String name = (String)doc.get("name_docvalues_string");
         if(name != null)
-          oCompanyAbout.setName(name);
+          oSmartAgricultureDeveloper.setName(name);
       }
 
       if(saves.contains("description")) {
         String description = (String)doc.get("description_docvalues_string");
         if(description != null)
-          oCompanyAbout.setDescription(description);
-      }
-
-      if(saves.contains("authorName")) {
-        String authorName = (String)doc.get("authorName_docvalues_string");
-        if(authorName != null)
-          oCompanyAbout.setAuthorName(authorName);
-      }
-
-      if(saves.contains("authorUrl")) {
-        String authorUrl = (String)doc.get("authorUrl_docvalues_string");
-        if(authorUrl != null)
-          oCompanyAbout.setAuthorUrl(authorUrl);
+          oSmartAgricultureDeveloper.setDescription(description);
       }
 
       if(saves.contains("pageId")) {
         String pageId = (String)doc.get("pageId_docvalues_string");
         if(pageId != null)
-          oCompanyAbout.setPageId(pageId);
+          oSmartAgricultureDeveloper.setPageId(pageId);
       }
 
       if(saves.contains("courseNum")) {
         Integer courseNum = (Integer)doc.get("courseNum_docvalues_int");
         if(courseNum != null)
-          oCompanyAbout.setCourseNum(courseNum);
+          oSmartAgricultureDeveloper.setCourseNum(courseNum);
+      }
+
+      if(saves.contains("lessonNum")) {
+        Integer lessonNum = (Integer)doc.get("lessonNum_docvalues_int");
+        if(lessonNum != null)
+          oSmartAgricultureDeveloper.setLessonNum(lessonNum);
+      }
+
+      if(saves.contains("authorName")) {
+        String authorName = (String)doc.get("authorName_docvalues_string");
+        if(authorName != null)
+          oSmartAgricultureDeveloper.setAuthorName(authorName);
+      }
+
+      if(saves.contains("authorUrl")) {
+        String authorUrl = (String)doc.get("authorUrl_docvalues_string");
+        if(authorUrl != null)
+          oSmartAgricultureDeveloper.setAuthorUrl(authorUrl);
       }
 
       if(saves.contains("pageImageUri")) {
         String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
         if(pageImageUri != null)
-          oCompanyAbout.setPageImageUri(pageImageUri);
+          oSmartAgricultureDeveloper.setPageImageUri(pageImageUri);
       }
 
       if(saves.contains("pageImageWidth")) {
         Integer pageImageWidth = (Integer)doc.get("pageImageWidth_docvalues_int");
         if(pageImageWidth != null)
-          oCompanyAbout.setPageImageWidth(pageImageWidth);
+          oSmartAgricultureDeveloper.setPageImageWidth(pageImageWidth);
       }
 
       if(saves.contains("pageImageHeight")) {
         Integer pageImageHeight = (Integer)doc.get("pageImageHeight_docvalues_int");
         if(pageImageHeight != null)
-          oCompanyAbout.setPageImageHeight(pageImageHeight);
+          oSmartAgricultureDeveloper.setPageImageHeight(pageImageHeight);
       }
 
       if(saves.contains("pageImageType")) {
         String pageImageType = (String)doc.get("pageImageType_docvalues_string");
         if(pageImageType != null)
-          oCompanyAbout.setPageImageType(pageImageType);
+          oSmartAgricultureDeveloper.setPageImageType(pageImageType);
       }
 
       if(saves.contains("pageImageAlt")) {
         String pageImageAlt = (String)doc.get("pageImageAlt_docvalues_string");
         if(pageImageAlt != null)
-          oCompanyAbout.setPageImageAlt(pageImageAlt);
+          oSmartAgricultureDeveloper.setPageImageAlt(pageImageAlt);
       }
 
       if(saves.contains("prerequisiteArticleIds")) {
         String prerequisiteArticleIds = (String)doc.get("prerequisiteArticleIds_docvalues_string");
         if(prerequisiteArticleIds != null)
-          oCompanyAbout.setPrerequisiteArticleIds(prerequisiteArticleIds);
+          oSmartAgricultureDeveloper.setPrerequisiteArticleIds(prerequisiteArticleIds);
       }
 
       if(saves.contains("prerequisiteArticles")) {
         String prerequisiteArticles = (String)doc.get("prerequisiteArticles_stored_string");
         if(prerequisiteArticles != null)
-          oCompanyAbout.setPrerequisiteArticles(prerequisiteArticles);
+          oSmartAgricultureDeveloper.setPrerequisiteArticles(prerequisiteArticles);
       }
 
       if(saves.contains("nextArticleIds")) {
         String nextArticleIds = (String)doc.get("nextArticleIds_docvalues_string");
         if(nextArticleIds != null)
-          oCompanyAbout.setNextArticleIds(nextArticleIds);
+          oSmartAgricultureDeveloper.setNextArticleIds(nextArticleIds);
       }
 
       if(saves.contains("nextArticles")) {
         String nextArticles = (String)doc.get("nextArticles_stored_string");
         if(nextArticles != null)
-          oCompanyAbout.setNextArticles(nextArticles);
+          oSmartAgricultureDeveloper.setNextArticles(nextArticles);
       }
 
       if(saves.contains("labelsString")) {
         String labelsString = (String)doc.get("labelsString_docvalues_string");
         if(labelsString != null)
-          oCompanyAbout.setLabelsString(labelsString);
+          oSmartAgricultureDeveloper.setLabelsString(labelsString);
       }
 
       if(saves.contains("labels")) {
         List<String> labels = (List<String>)doc.get("labels_docvalues_strings");
         if(labels != null) {
           labels.stream().forEach( v -> {
-            oCompanyAbout.labels.add(CompanyAbout.staticSetLabels(siteRequest_, v));
+            oSmartAgricultureDeveloper.labels.add(SmartAgricultureDeveloper.staticSetLabels(siteRequest_, v));
           });
         }
       }
@@ -2276,37 +2442,40 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
       if(saves.contains("relatedArticleIds")) {
         String relatedArticleIds = (String)doc.get("relatedArticleIds_docvalues_string");
         if(relatedArticleIds != null)
-          oCompanyAbout.setRelatedArticleIds(relatedArticleIds);
+          oSmartAgricultureDeveloper.setRelatedArticleIds(relatedArticleIds);
       }
 
       if(saves.contains("relatedArticles")) {
         String relatedArticles = (String)doc.get("relatedArticles_stored_string");
         if(relatedArticles != null)
-          oCompanyAbout.setRelatedArticles(relatedArticles);
+          oSmartAgricultureDeveloper.setRelatedArticles(relatedArticles);
       }
     }
 
     super.populateBaseResult(doc);
   }
 
-  public void indexCompanyAbout(JsonObject doc) {
+  public void indexSmartAgricultureDeveloper(JsonObject doc) {
     if(name != null) {
       doc.put("name_docvalues_string", name);
     }
     if(description != null) {
       doc.put("description_docvalues_string", description);
     }
-    if(authorName != null) {
-      doc.put("authorName_docvalues_string", authorName);
-    }
-    if(authorUrl != null) {
-      doc.put("authorUrl_docvalues_string", authorUrl);
-    }
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);
     }
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);
+    }
+    if(lessonNum != null) {
+      doc.put("lessonNum_docvalues_int", lessonNum);
+    }
+    if(authorName != null) {
+      doc.put("authorName_docvalues_string", authorName);
+    }
+    if(authorUrl != null) {
+      doc.put("authorUrl_docvalues_string", authorUrl);
     }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
@@ -2342,7 +2511,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
       JsonArray l = new JsonArray();
       doc.put("labels_docvalues_strings", l);
       for(String o : labels) {
-        l.add(CompanyAbout.staticSearchLabels(siteRequest_, o));
+        l.add(SmartAgricultureDeveloper.staticSearchLabels(siteRequest_, o));
       }
     }
     if(relatedArticleIds != null) {
@@ -2355,20 +2524,22 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 
 	}
 
-  public static String varStoredCompanyAbout(String entityVar) {
+  public static String varStoredSmartAgricultureDeveloper(String entityVar) {
     switch(entityVar) {
       case "name":
         return "name_docvalues_string";
       case "description":
         return "description_docvalues_string";
-      case "authorName":
-        return "authorName_docvalues_string";
-      case "authorUrl":
-        return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
+      case "lessonNum":
+        return "lessonNum_docvalues_int";
+      case "authorName":
+        return "authorName_docvalues_string";
+      case "authorUrl":
+        return "authorUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2400,20 +2571,22 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static String varIndexedCompanyAbout(String entityVar) {
+  public static String varIndexedSmartAgricultureDeveloper(String entityVar) {
     switch(entityVar) {
       case "name":
         return "name_docvalues_string";
       case "description":
         return "description_docvalues_string";
-      case "authorName":
-        return "authorName_docvalues_string";
-      case "authorUrl":
-        return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
+      case "lessonNum":
+        return "lessonNum_docvalues_int";
+      case "authorName":
+        return "authorName_docvalues_string";
+      case "authorUrl":
+        return "authorUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2439,20 +2612,22 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static String searchVarCompanyAbout(String searchVar) {
+  public static String searchVarSmartAgricultureDeveloper(String searchVar) {
     switch(searchVar) {
       case "name_docvalues_string":
         return "name";
       case "description_docvalues_string":
         return "description";
-      case "authorName_docvalues_string":
-        return "authorName";
-      case "authorUrl_docvalues_string":
-        return "authorUrl";
       case "pageId_docvalues_string":
         return "pageId";
       case "courseNum_docvalues_int":
         return "courseNum";
+      case "lessonNum_docvalues_int":
+        return "lessonNum";
+      case "authorName_docvalues_string":
+        return "authorName";
+      case "authorUrl_docvalues_string":
+        return "authorUrl";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -2478,14 +2653,14 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static String varSearchCompanyAbout(String entityVar) {
+  public static String varSearchSmartAgricultureDeveloper(String entityVar) {
     switch(entityVar) {
       default:
         return BaseResult.varSearchBaseResult(entityVar);
     }
   }
 
-  public static String varSuggestedCompanyAbout(String entityVar) {
+  public static String varSuggestedSmartAgricultureDeveloper(String entityVar) {
     switch(entityVar) {
       default:
         return BaseResult.varSuggestedBaseResult(entityVar);
@@ -2497,33 +2672,34 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   /////////////
 
   @Override public void storeForClass(SolrResponse.Doc doc) {
-    storeCompanyAbout(doc);
+    storeSmartAgricultureDeveloper(doc);
   }
-  public void storeCompanyAbout(SolrResponse.Doc doc) {
-    CompanyAbout oCompanyAbout = (CompanyAbout)this;
-    SiteRequest siteRequest = oCompanyAbout.getSiteRequest_();
+  public void storeSmartAgricultureDeveloper(SolrResponse.Doc doc) {
+    SmartAgricultureDeveloper oSmartAgricultureDeveloper = (SmartAgricultureDeveloper)this;
+    SiteRequest siteRequest = oSmartAgricultureDeveloper.getSiteRequest_();
 
-    oCompanyAbout.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPrerequisiteArticleIds(Optional.ofNullable(doc.get("prerequisiteArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setPrerequisiteArticles(Optional.ofNullable(doc.get("prerequisiteArticles_stored_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setNextArticleIds(Optional.ofNullable(doc.get("nextArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setNextArticles(Optional.ofNullable(doc.get("nextArticles_stored_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setLessonNum(Optional.ofNullable(doc.get("lessonNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPrerequisiteArticleIds(Optional.ofNullable(doc.get("prerequisiteArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setPrerequisiteArticles(Optional.ofNullable(doc.get("prerequisiteArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setNextArticleIds(Optional.ofNullable(doc.get("nextArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setNextArticles(Optional.ofNullable(doc.get("nextArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
     Optional.ofNullable((List<?>)doc.get("labels_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
-      oCompanyAbout.addLabels(CompanyAbout.staticSetLabels(siteRequest, v.toString()));
+      oSmartAgricultureDeveloper.addLabels(SmartAgricultureDeveloper.staticSetLabels(siteRequest, v.toString()));
     });
-    oCompanyAbout.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyAbout.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSmartAgricultureDeveloper.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
 
     super.storeBaseResult(doc);
   }
@@ -2532,23 +2708,25 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   // apiRequest //
   //////////////////
 
-  public void apiRequestCompanyAbout() {
+  public void apiRequestSmartAgricultureDeveloper() {
     ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
     Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-    if(o != null && o instanceof CompanyAbout) {
-      CompanyAbout original = (CompanyAbout)o;
+    if(o != null && o instanceof SmartAgricultureDeveloper) {
+      SmartAgricultureDeveloper original = (SmartAgricultureDeveloper)o;
       if(!Objects.equals(name, original.getName()))
         apiRequest.addVars("name");
       if(!Objects.equals(description, original.getDescription()))
         apiRequest.addVars("description");
-      if(!Objects.equals(authorName, original.getAuthorName()))
-        apiRequest.addVars("authorName");
-      if(!Objects.equals(authorUrl, original.getAuthorUrl()))
-        apiRequest.addVars("authorUrl");
       if(!Objects.equals(pageId, original.getPageId()))
         apiRequest.addVars("pageId");
       if(!Objects.equals(courseNum, original.getCourseNum()))
         apiRequest.addVars("courseNum");
+      if(!Objects.equals(lessonNum, original.getLessonNum()))
+        apiRequest.addVars("lessonNum");
+      if(!Objects.equals(authorName, original.getAuthorName()))
+        apiRequest.addVars("authorName");
+      if(!Objects.equals(authorUrl, original.getAuthorUrl()))
+        apiRequest.addVars("authorUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -2588,10 +2766,11 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     sb.append(super.toString());
     sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
-    sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
-    sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(lessonNum).map(v -> "lessonNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -2608,25 +2787,29 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     return sb.toString();
   }
 
-  public static final String CLASS_SIMPLE_NAME = "CompanyAbout";
-  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.about.CompanyAbout";
-  public static final String CLASS_AUTH_RESOURCE = "COMPANYABOUT";
-  public static final String CLASS_API_ADDRESS_CompanyAbout = "computate.org-enUS-CompanyAbout";
+  public static final String CLASS_SIMPLE_NAME = "SmartAgricultureDeveloper";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.developer.smartagriculture.SmartAgricultureDeveloper";
+  public static final String CLASS_AUTH_RESOURCE = "SMARTAGRICULTUREDEVELOPER";
+  public static final String CLASS_API_ADDRESS_SmartAgricultureDeveloper = "computate.org-enUS-SmartAgricultureDeveloper";
   public static String getClassApiAddress() {
-    return CLASS_API_ADDRESS_CompanyAbout;
+    return CLASS_API_ADDRESS_SmartAgricultureDeveloper;
   }
+  public static final String VAR_article = "article";
+  public static final String SET_article = "setArticle";
   public static final String VAR_name = "name";
   public static final String SET_name = "setName";
   public static final String VAR_description = "description";
   public static final String SET_description = "setDescription";
-  public static final String VAR_authorName = "authorName";
-  public static final String SET_authorName = "setAuthorName";
-  public static final String VAR_authorUrl = "authorUrl";
-  public static final String SET_authorUrl = "setAuthorUrl";
   public static final String VAR_pageId = "pageId";
   public static final String SET_pageId = "setPageId";
   public static final String VAR_courseNum = "courseNum";
   public static final String SET_courseNum = "setCourseNum";
+  public static final String VAR_lessonNum = "lessonNum";
+  public static final String SET_lessonNum = "setLessonNum";
+  public static final String VAR_authorName = "authorName";
+  public static final String SET_authorName = "setAuthorName";
+  public static final String VAR_authorUrl = "authorUrl";
+  public static final String SET_authorUrl = "setAuthorUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -2661,43 +2844,47 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   public static final String SET_relatedArticles = "setRelatedArticles";
 
   public static List<String> varsQForClass() {
-    return CompanyAbout.varsQCompanyAbout(new ArrayList<String>());
+    return SmartAgricultureDeveloper.varsQSmartAgricultureDeveloper(new ArrayList<String>());
   }
-  public static List<String> varsQCompanyAbout(List<String> vars) {
+  public static List<String> varsQSmartAgricultureDeveloper(List<String> vars) {
     BaseResult.varsQBaseResult(vars);
     return vars;
   }
 
   public static List<String> varsFqForClass() {
-    return CompanyAbout.varsFqCompanyAbout(new ArrayList<String>());
+    return SmartAgricultureDeveloper.varsFqSmartAgricultureDeveloper(new ArrayList<String>());
   }
-  public static List<String> varsFqCompanyAbout(List<String> vars) {
+  public static List<String> varsFqSmartAgricultureDeveloper(List<String> vars) {
     vars.add(VAR_name);
     vars.add(VAR_description);
-    vars.add(VAR_authorName);
-    vars.add(VAR_authorUrl);
     vars.add(VAR_pageId);
     vars.add(VAR_courseNum);
+    vars.add(VAR_lessonNum);
+    vars.add(VAR_authorName);
+    vars.add(VAR_authorUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
   }
 
   public static List<String> varsRangeForClass() {
-    return CompanyAbout.varsRangeCompanyAbout(new ArrayList<String>());
+    return SmartAgricultureDeveloper.varsRangeSmartAgricultureDeveloper(new ArrayList<String>());
   }
-  public static List<String> varsRangeCompanyAbout(List<String> vars) {
+  public static List<String> varsRangeSmartAgricultureDeveloper(List<String> vars) {
     vars.add(VAR_courseNum);
+    vars.add(VAR_lessonNum);
     BaseResult.varsRangeBaseResult(vars);
     return vars;
   }
 
-  public static final String DISPLAY_NAME_name = "about name";
-  public static final String DISPLAY_NAME_description = "about description";
+  public static final String DISPLAY_NAME_article = "";
+  public static final String DISPLAY_NAME_name = "course name";
+  public static final String DISPLAY_NAME_description = "course description";
+  public static final String DISPLAY_NAME_pageId = "page ID";
+  public static final String DISPLAY_NAME_courseNum = "course number";
+  public static final String DISPLAY_NAME_lessonNum = "lesson number";
   public static final String DISPLAY_NAME_authorName = "author name";
   public static final String DISPLAY_NAME_authorUrl = "author URL";
-  public static final String DISPLAY_NAME_pageId = "Page ID";
-  public static final String DISPLAY_NAME_courseNum = "Course Number";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -2732,7 +2919,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 
   @Override
   public String classNameAdjectiveSingularForClass() {
-    return CompanyAbout.NameAdjectiveSingular_enUS;
+    return SmartAgricultureDeveloper.NameAdjectiveSingular_enUS;
   }
 
   @Override
@@ -2742,31 +2929,35 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 
   @Override
   public String enUSStringFormatUrlEditPageForClass() {
-    return "%s/en-us/edit/about/%s";
+    return "%s/en-us/edit/smart-agriculture-developer/%s";
   }
 
   @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return "%s/en-us/learn/about/%s";
+  public String enUSStringFormatUrlUserPageForClass() {
+    return "%s/en-us/smart-agriculture-developer/learn/%s";
   }
 
   public static String varJsonForClass(String var, Boolean patch) {
-    return CompanyAbout.varJsonCompanyAbout(var, patch);
+    return SmartAgricultureDeveloper.varJsonSmartAgricultureDeveloper(var, patch);
   }
-  public static String varJsonCompanyAbout(String var, Boolean patch) {
+  public static String varJsonSmartAgricultureDeveloper(String var, Boolean patch) {
     switch(var) {
+    case VAR_article:
+      return patch ? SET_article : VAR_article;
     case VAR_name:
       return patch ? SET_name : VAR_name;
     case VAR_description:
       return patch ? SET_description : VAR_description;
-    case VAR_authorName:
-      return patch ? SET_authorName : VAR_authorName;
-    case VAR_authorUrl:
-      return patch ? SET_authorUrl : VAR_authorUrl;
     case VAR_pageId:
       return patch ? SET_pageId : VAR_pageId;
     case VAR_courseNum:
       return patch ? SET_courseNum : VAR_courseNum;
+    case VAR_lessonNum:
+      return patch ? SET_lessonNum : VAR_lessonNum;
+    case VAR_authorName:
+      return patch ? SET_authorName : VAR_authorName;
+    case VAR_authorUrl:
+      return patch ? SET_authorUrl : VAR_authorUrl;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -2805,22 +2996,26 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
   }
 
   public static String displayNameForClass(String var) {
-    return CompanyAbout.displayNameCompanyAbout(var);
+    return SmartAgricultureDeveloper.displayNameSmartAgricultureDeveloper(var);
   }
-  public static String displayNameCompanyAbout(String var) {
+  public static String displayNameSmartAgricultureDeveloper(String var) {
     switch(var) {
+    case VAR_article:
+      return DISPLAY_NAME_article;
     case VAR_name:
       return DISPLAY_NAME_name;
     case VAR_description:
       return DISPLAY_NAME_description;
-    case VAR_authorName:
-      return DISPLAY_NAME_authorName;
-    case VAR_authorUrl:
-      return DISPLAY_NAME_authorUrl;
     case VAR_pageId:
       return DISPLAY_NAME_pageId;
     case VAR_courseNum:
       return DISPLAY_NAME_courseNum;
+    case VAR_lessonNum:
+      return DISPLAY_NAME_lessonNum;
+    case VAR_authorName:
+      return DISPLAY_NAME_authorName;
+    case VAR_authorUrl:
+      return DISPLAY_NAME_authorUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -2858,22 +3053,24 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static String descriptionCompanyAbout(String var) {
+  public static String descriptionSmartAgricultureDeveloper(String var) {
     if(var == null)
       return null;
     switch(var) {
     case VAR_name:
-      return "The about name. ";
+      return "The course name. ";
     case VAR_description:
-      return "The about description. ";
-    case VAR_authorName:
-      return "The author name";
-    case VAR_authorUrl:
-      return "The author URL";
+      return "The course description. ";
     case VAR_pageId:
       return "The ID for this page. ";
     case VAR_courseNum:
       return "The course number for this page. ";
+    case VAR_lessonNum:
+      return "The lesson number for this page. ";
+    case VAR_authorName:
+      return "The author name";
+    case VAR_authorUrl:
+      return "The author URL";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -2905,20 +3102,24 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static String classSimpleNameCompanyAbout(String var) {
+  public static String classSimpleNameSmartAgricultureDeveloper(String var) {
     switch(var) {
+    case VAR_article:
+      return "Boolean";
     case VAR_name:
       return "String";
     case VAR_description:
-      return "String";
-    case VAR_authorName:
-      return "String";
-    case VAR_authorUrl:
       return "String";
     case VAR_pageId:
       return "String";
     case VAR_courseNum:
       return "Integer";
+    case VAR_lessonNum:
+      return "Integer";
+    case VAR_authorName:
+      return "String";
+    case VAR_authorUrl:
+      return "String";
     case VAR_pageImageUri:
       return "String";
     case VAR_pageImageWidth:
@@ -2956,29 +3157,29 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer htmColumnCompanyAbout(String var) {
+  public static Integer htmColumnSmartAgricultureDeveloper(String var) {
     switch(var) {
     case VAR_name:
-      return 1;
+      return 0;
     case VAR_description:
-      return 2;
+      return 1;
       default:
         return BaseResult.htmColumnBaseResult(var);
     }
   }
 
-  public static Integer htmRowCompanyAbout(String var) {
+  public static Integer htmRowSmartAgricultureDeveloper(String var) {
     switch(var) {
     case VAR_name:
       return 3;
     case VAR_description:
       return 3;
+    case VAR_pageId:
+      return 99;
     case VAR_authorName:
       return 3;
     case VAR_authorUrl:
       return 3;
-    case VAR_pageId:
-      return 99;
     case VAR_pageImageUri:
       return 4;
       default:
@@ -2986,18 +3187,18 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer htmCellCompanyAbout(String var) {
+  public static Integer htmCellSmartAgricultureDeveloper(String var) {
     switch(var) {
     case VAR_name:
       return 1;
     case VAR_description:
       return 2;
+    case VAR_pageId:
+      return 1;
     case VAR_authorName:
       return 3;
     case VAR_authorUrl:
       return 3;
-    case VAR_pageId:
-      return 1;
     case VAR_pageImageUri:
       return 1;
       default:
@@ -3005,28 +3206,28 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer lengthMinCompanyAbout(String var) {
+  public static Integer lengthMinSmartAgricultureDeveloper(String var) {
     switch(var) {
       default:
         return BaseResult.lengthMinBaseResult(var);
     }
   }
 
-  public static Integer lengthMaxCompanyAbout(String var) {
+  public static Integer lengthMaxSmartAgricultureDeveloper(String var) {
     switch(var) {
       default:
         return BaseResult.lengthMaxBaseResult(var);
     }
   }
 
-  public static Integer maxCompanyAbout(String var) {
+  public static Integer maxSmartAgricultureDeveloper(String var) {
     switch(var) {
       default:
         return BaseResult.maxBaseResult(var);
     }
   }
 
-  public static Integer minCompanyAbout(String var) {
+  public static Integer minSmartAgricultureDeveloper(String var) {
     switch(var) {
       default:
         return BaseResult.minBaseResult(var);

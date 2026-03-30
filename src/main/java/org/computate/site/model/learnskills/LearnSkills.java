@@ -1,7 +1,6 @@
 package org.computate.site.model.learnskills;
 
 import org.computate.site.config.ConfigKeys;
-import org.computate.site.page.SitePage;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.search.list.SearchList;
 
@@ -356,11 +355,11 @@ public class LearnSkills extends LearnSkillsGen<BaseResult> {
   /**
    * Ignore: true
    */
-  protected void _relatedArticleSearch(Promise<SearchList<SitePage>> promise) {
-    SearchList<SitePage> l = new SearchList<>();
+  protected void _relatedArticleSearch(Promise<SearchList<LearnSkills>> promise) {
+    SearchList<LearnSkills> l = new SearchList<>();
     if(relatedArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(SitePage.class);
+      l.setC(LearnSkills.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -381,16 +380,16 @@ public class LearnSkills extends LearnSkillsGen<BaseResult> {
     JsonArray array = new JsonArray();
     relatedArticleSearch.getList().stream().forEach(relatedArticle -> {
         JsonObject obj = JsonObject.mapFrom(relatedArticle);
-        obj.remove(SitePage.VAR_relatedArticles);
-        obj.remove(SitePage.VAR_relatedArticleIds);
+        obj.remove(LearnSkills.VAR_relatedArticles);
+        obj.remove(LearnSkills.VAR_relatedArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(SitePage.VAR_pageId, obj.getString(SitePage.VAR_pageId));
-        obj2.put(SitePage.VAR_name, obj.getString(SitePage.VAR_name));
-        obj2.put(SitePage.VAR_pageImageUri, obj.getString(SitePage.VAR_pageImageUri));
-        obj2.put(SitePage.VAR_pageImageWidth, obj.getString(SitePage.VAR_pageImageWidth));
-        obj2.put(SitePage.VAR_pageImageHeight, obj.getString(SitePage.VAR_pageImageHeight));
-        obj2.put(SitePage.VAR_pageImageAlt, obj.getString(SitePage.VAR_pageImageAlt));
-        obj2.put(SitePage.VAR_displayPage, obj.getString(SitePage.VAR_displayPage));
+        obj2.put(LearnSkills.VAR_pageId, obj.getString(LearnSkills.VAR_pageId));
+        obj2.put(LearnSkills.VAR_name, obj.getString(LearnSkills.VAR_name));
+        obj2.put(LearnSkills.VAR_pageImageUri, obj.getString(LearnSkills.VAR_pageImageUri));
+        obj2.put(LearnSkills.VAR_pageImageWidth, obj.getString(LearnSkills.VAR_pageImageWidth));
+        obj2.put(LearnSkills.VAR_pageImageHeight, obj.getString(LearnSkills.VAR_pageImageHeight));
+        obj2.put(LearnSkills.VAR_pageImageAlt, obj.getString(LearnSkills.VAR_pageImageAlt));
+        obj2.put(LearnSkills.VAR_displayPage, obj.getString(LearnSkills.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);

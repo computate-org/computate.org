@@ -40,7 +40,6 @@ import org.computate.vertx.search.list.SearchList;
 import org.computate.site.model.learnskills.LearnSkills;
 import io.vertx.core.json.JsonArray;
 import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
-import org.computate.site.page.SitePage;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -1473,7 +1472,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<SitePage> relatedArticleSearch;
+  protected SearchList<LearnSkills> relatedArticleSearch;
 
   /**
    * <br> The entity relatedArticleSearch
@@ -1482,21 +1481,21 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _relatedArticleSearch(Promise<SearchList<SitePage>> promise);
+  protected abstract void _relatedArticleSearch(Promise<SearchList<LearnSkills>> promise);
 
-  public SearchList<SitePage> getRelatedArticleSearch() {
+  public SearchList<LearnSkills> getRelatedArticleSearch() {
     return relatedArticleSearch;
   }
 
-  public void setRelatedArticleSearch(SearchList<SitePage> relatedArticleSearch) {
+  public void setRelatedArticleSearch(SearchList<LearnSkills> relatedArticleSearch) {
     this.relatedArticleSearch = relatedArticleSearch;
   }
-  public static SearchList<SitePage> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<LearnSkills> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<SitePage>> relatedArticleSearchPromise() {
-    Promise<SearchList<SitePage>> promise = Promise.promise();
-    Promise<SearchList<SitePage>> promise2 = Promise.promise();
+  protected Future<SearchList<LearnSkills>> relatedArticleSearchPromise() {
+    Promise<SearchList<LearnSkills>> promise = Promise.promise();
+    Promise<SearchList<LearnSkills>> promise2 = Promise.promise();
     _relatedArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && relatedArticleSearch == null) {
