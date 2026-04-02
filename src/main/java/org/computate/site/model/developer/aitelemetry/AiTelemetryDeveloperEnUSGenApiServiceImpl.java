@@ -1511,11 +1511,6 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
   public void searchpageAiTelemetryDeveloperPageInit(JsonObject ctx, AiTelemetryDeveloperPage page, SearchList<AiTelemetryDeveloper> listAiTelemetryDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/ai-telemetry-developer"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/ai-telemetry-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1616,19 +1611,24 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
           Promise<Void> promise1 = Promise.promise();
           searchpageAiTelemetryDeveloperPageInit(ctx, page, listAiTelemetryDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageAiTelemetryDeveloper(ctx, page, listAiTelemetryDeveloper, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageAiTelemetryDeveloper failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageAiTelemetryDeveloper(ctx, page, listAiTelemetryDeveloper, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageAiTelemetryDeveloper failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageAiTelemetryDeveloper failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1771,12 +1771,6 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
   public void editpageAiTelemetryDeveloperPageInit(JsonObject ctx, AiTelemetryDeveloperPage page, SearchList<AiTelemetryDeveloper> listAiTelemetryDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/ai-telemetry-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1877,19 +1871,24 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
           Promise<Void> promise1 = Promise.promise();
           editpageAiTelemetryDeveloperPageInit(ctx, page, listAiTelemetryDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageAiTelemetryDeveloper(ctx, page, listAiTelemetryDeveloper, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageAiTelemetryDeveloper failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageAiTelemetryDeveloper(ctx, page, listAiTelemetryDeveloper, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageAiTelemetryDeveloper failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageAiTelemetryDeveloper failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2032,12 +2031,6 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
   public void userpageAiTelemetryDeveloperPageInit(JsonObject ctx, AiTelemetryDeveloperPage page, SearchList<AiTelemetryDeveloper> listAiTelemetryDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/ai-telemetry-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -2138,19 +2131,24 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
           Promise<Void> promise1 = Promise.promise();
           userpageAiTelemetryDeveloperPageInit(ctx, page, listAiTelemetryDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateUserPageAiTelemetryDeveloper(ctx, page, listAiTelemetryDeveloper, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200UserPageAiTelemetryDeveloper failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateUserPageAiTelemetryDeveloper(ctx, page, listAiTelemetryDeveloper, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200UserPageAiTelemetryDeveloper failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200UserPageAiTelemetryDeveloper failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2904,13 +2902,14 @@ public class AiTelemetryDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImp
       o.persistForClass(AiTelemetryDeveloper.VAR_lessonNum, AiTelemetryDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_lessonNum)));
       o.persistForClass(AiTelemetryDeveloper.VAR_authorName, AiTelemetryDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_authorName)));
       o.persistForClass(AiTelemetryDeveloper.VAR_authorUrl, AiTelemetryDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_authorUrl)));
-      o.persistForClass(AiTelemetryDeveloper.VAR_pageImageUri, AiTelemetryDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_pageImageUri)));
+      o.persistForClass(AiTelemetryDeveloper.VAR_pageVideoUrl, AiTelemetryDeveloper.staticSetPageVideoUrl(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_pageVideoUrl)));
       o.persistForClass(AiTelemetryDeveloper.VAR_objectTitle, AiTelemetryDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_objectTitle)));
+      o.persistForClass(AiTelemetryDeveloper.VAR_pageImageUri, AiTelemetryDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_pageImageUri)));
       o.persistForClass(AiTelemetryDeveloper.VAR_displayPage, AiTelemetryDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_displayPage)));
       o.persistForClass(AiTelemetryDeveloper.VAR_editPage, AiTelemetryDeveloper.staticSetEditPage(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_editPage)));
       o.persistForClass(AiTelemetryDeveloper.VAR_userPage, AiTelemetryDeveloper.staticSetUserPage(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_userPage)));
-      o.persistForClass(AiTelemetryDeveloper.VAR_pageImageAlt, AiTelemetryDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_pageImageAlt)));
       o.persistForClass(AiTelemetryDeveloper.VAR_download, AiTelemetryDeveloper.staticSetDownload(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_download)));
+      o.persistForClass(AiTelemetryDeveloper.VAR_pageImageAlt, AiTelemetryDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_pageImageAlt)));
       o.persistForClass(AiTelemetryDeveloper.VAR_prerequisiteArticleIds, AiTelemetryDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_prerequisiteArticleIds)));
       o.persistForClass(AiTelemetryDeveloper.VAR_solrId, AiTelemetryDeveloper.staticSetSolrId(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_solrId)));
       o.persistForClass(AiTelemetryDeveloper.VAR_nextArticleIds, AiTelemetryDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(AiTelemetryDeveloper.VAR_nextArticleIds)));

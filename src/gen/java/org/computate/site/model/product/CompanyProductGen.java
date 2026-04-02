@@ -158,15 +158,6 @@ import io.vertx.core.json.JsonObject;
 public abstract class CompanyProductGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(CompanyProduct.class);
 
-  public static final String Description_frFR = "See the computate solutions that will help you build your own data-driven platforms";
-  public static final String AName_frFR = "a solution";
-  public static final String SingularName_frFR = "solution";
-  public static final String PluralName_frFR = "solutions";
-  public static final String Title_frFR = "solutions";
-  public static final String ThePluralName_frFR = "les solutions";
-  public static final String NameAdjectiveSingular_frFR = "solution";
-  public static final String NameAdjectivePlural_frFR = "solutions";
-
   public static final String Description_enUS = "See the computate solutions that will help you build your own data-driven platforms";
   public static final String AName_enUS = "a solution";
   public static final String This_enUS = "this ";
@@ -816,6 +807,68 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
   public static String staticJsonSolutionNum(Integer solutionNum) {
     return Optional.ofNullable(solutionNum).map(v -> v.toString()).orElse(null);
+  }
+
+	//////////////////
+  // pageVideoUrl //
+	//////////////////
+
+
+  /**
+   *  The entity pageVideoUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageVideoUrl;
+
+  /**
+   * <br> The entity pageVideoUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageVideoUrl(Wrap<String> w);
+
+  public String getPageVideoUrl() {
+    return pageVideoUrl;
+  }
+  public void setPageVideoUrl(String o) {
+    this.pageVideoUrl = CompanyProduct.staticSetPageVideoUrl(siteRequest_, o);
+  }
+  public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyProduct pageVideoUrlInit() {
+    Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
+    if(pageVideoUrl == null) {
+      _pageVideoUrl(pageVideoUrlWrap);
+      Optional.ofNullable(pageVideoUrlWrap.getO()).ifPresent(o -> {
+        setPageVideoUrl(o);
+      });
+    }
+    return (CompanyProduct)this;
+  }
+
+  public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return CompanyProduct.staticSearchPageVideoUrl(siteRequest_, CompanyProduct.staticSetPageVideoUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageVideoUrl() {
+    return pageVideoUrl;
+  }
+
+  public static String staticJsonPageVideoUrl(String pageVideoUrl) {
+    return pageVideoUrl;
   }
 
 	//////////////////
@@ -1547,6 +1600,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         storeUrlInit();
         downloadUrlInit();
         solutionNumInit();
+        pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -1646,6 +1700,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return oCompanyProduct.downloadUrl;
       case "solutionNum":
         return oCompanyProduct.solutionNum;
+      case "pageVideoUrl":
+        return oCompanyProduct.pageVideoUrl;
       case "pageImageUri":
         return oCompanyProduct.pageImageUri;
       case "pageImageWidth":
@@ -1725,6 +1781,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSetDownloadUrl(siteRequest_, v);
     case "solutionNum":
       return CompanyProduct.staticSetSolutionNum(siteRequest_, v);
+    case "pageVideoUrl":
+      return CompanyProduct.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
       return CompanyProduct.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -1807,6 +1865,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSearchDownloadUrl(siteRequest_, (String)o);
     case "solutionNum":
       return CompanyProduct.staticSearchSolutionNum(siteRequest_, (Integer)o);
+    case "pageVideoUrl":
+      return CompanyProduct.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return CompanyProduct.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1859,6 +1919,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSearchStrDownloadUrl(siteRequest_, (String)o);
     case "solutionNum":
       return CompanyProduct.staticSearchStrSolutionNum(siteRequest_, (Integer)o);
+    case "pageVideoUrl":
+      return CompanyProduct.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return CompanyProduct.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1911,6 +1973,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSearchFqDownloadUrl(siteRequest_, o);
     case "solutionNum":
       return CompanyProduct.staticSearchFqSolutionNum(siteRequest_, o);
+    case "pageVideoUrl":
+      return CompanyProduct.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
       return CompanyProduct.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -2016,6 +2080,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
           setSolutionNum(val == null ? null : val.toString());
         }
         saves.add("solutionNum");
+        return val;
+      } else if("pagevideourl".equals(varLower)) {
+        if(val instanceof String) {
+          setPageVideoUrl((String)val);
+        }
+        saves.add("pageVideoUrl");
         return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
@@ -2130,6 +2200,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
           oCompanyProduct.setSolutionNum(solutionNum);
       }
 
+      if(saves.contains("pageVideoUrl")) {
+        String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
+        if(pageVideoUrl != null)
+          oCompanyProduct.setPageVideoUrl(pageVideoUrl);
+      }
+
       if(saves.contains("pageImageUri")) {
         String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
         if(pageImageUri != null)
@@ -2226,6 +2302,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     if(solutionNum != null) {
       doc.put("solutionNum_docvalues_int", solutionNum);
     }
+    if(pageVideoUrl != null) {
+      doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
+    }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
     }
@@ -2284,6 +2363,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return "downloadUrl_docvalues_string";
       case "solutionNum":
         return "solutionNum_docvalues_int";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2329,6 +2410,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return "downloadUrl_docvalues_string";
       case "solutionNum":
         return "solutionNum_docvalues_int";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2372,6 +2455,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return "downloadUrl";
       case "solutionNum_docvalues_int":
         return "solutionNum";
+      case "pageVideoUrl_docvalues_string":
+        return "pageVideoUrl";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -2429,6 +2514,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     oCompanyProduct.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setDownloadUrl(Optional.ofNullable(doc.get("downloadUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setSolutionNum(Optional.ofNullable(doc.get("solutionNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oCompanyProduct.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -2472,6 +2558,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         apiRequest.addVars("downloadUrl");
       if(!Objects.equals(solutionNum, original.getSolutionNum()))
         apiRequest.addVars("solutionNum");
+      if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+        apiRequest.addVars("pageVideoUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -2512,6 +2600,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(downloadUrl).map(v -> "downloadUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(solutionNum).map(v -> "solutionNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -2550,6 +2639,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   public static final String SET_downloadUrl = "setDownloadUrl";
   public static final String VAR_solutionNum = "solutionNum";
   public static final String SET_solutionNum = "setSolutionNum";
+  public static final String VAR_pageVideoUrl = "pageVideoUrl";
+  public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -2594,6 +2685,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     vars.add(VAR_storeUrl);
     vars.add(VAR_downloadUrl);
     vars.add(VAR_solutionNum);
+    vars.add(VAR_pageVideoUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
@@ -2618,6 +2710,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_storeUrl = "store URL";
   public static final String DISPLAY_NAME_downloadUrl = "download URL";
   public static final String DISPLAY_NAME_solutionNum = "Product Number";
+  public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -2688,6 +2781,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return patch ? SET_downloadUrl : VAR_downloadUrl;
     case VAR_solutionNum:
       return patch ? SET_solutionNum : VAR_solutionNum;
+    case VAR_pageVideoUrl:
+      return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -2738,6 +2833,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return DISPLAY_NAME_downloadUrl;
     case VAR_solutionNum:
       return DISPLAY_NAME_solutionNum;
+    case VAR_pageVideoUrl:
+      return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -2787,6 +2884,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return "The download URL for this page. ";
     case VAR_solutionNum:
       return "The solution number for this page. ";
+    case VAR_pageVideoUrl:
+      return "The video URL for this page. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -2832,6 +2931,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return "String";
     case VAR_solutionNum:
       return "Integer";
+    case VAR_pageVideoUrl:
+      return "String";
     case VAR_pageImageUri:
       return "String";
     case VAR_pageImageWidth:

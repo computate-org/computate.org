@@ -594,6 +594,68 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
   }
 
 	//////////////////
+  // pageVideoUrl //
+	//////////////////
+
+
+  /**
+   *  The entity pageVideoUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageVideoUrl;
+
+  /**
+   * <br> The entity pageVideoUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.switchtolinux.SwitchToLinux&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageVideoUrl(Wrap<String> w);
+
+  public String getPageVideoUrl() {
+    return pageVideoUrl;
+  }
+  public void setPageVideoUrl(String o) {
+    this.pageVideoUrl = SwitchToLinux.staticSetPageVideoUrl(siteRequest_, o);
+  }
+  public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SwitchToLinux pageVideoUrlInit() {
+    Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
+    if(pageVideoUrl == null) {
+      _pageVideoUrl(pageVideoUrlWrap);
+      Optional.ofNullable(pageVideoUrlWrap.getO()).ifPresent(o -> {
+        setPageVideoUrl(o);
+      });
+    }
+    return (SwitchToLinux)this;
+  }
+
+  public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return SwitchToLinux.staticSearchPageVideoUrl(siteRequest_, SwitchToLinux.staticSetPageVideoUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageVideoUrl() {
+    return pageVideoUrl;
+  }
+
+  public static String staticJsonPageVideoUrl(String pageVideoUrl) {
+    return pageVideoUrl;
+  }
+
+	//////////////////
   // pageImageUri //
 	//////////////////
 
@@ -1613,6 +1675,7 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         authorUrlInit();
         pageIdInit();
         courseNumInit();
+        pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -1745,6 +1808,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         return oSwitchToLinux.pageId;
       case "courseNum":
         return oSwitchToLinux.courseNum;
+      case "pageVideoUrl":
+        return oSwitchToLinux.pageVideoUrl;
       case "pageImageUri":
         return oSwitchToLinux.pageImageUri;
       case "pageImageWidth":
@@ -1828,6 +1893,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return SwitchToLinux.staticSetPageId(siteRequest_, v);
     case "courseNum":
       return SwitchToLinux.staticSetCourseNum(siteRequest_, v);
+    case "pageVideoUrl":
+      return SwitchToLinux.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
       return SwitchToLinux.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -1910,6 +1977,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return SwitchToLinux.staticSearchPageId(siteRequest_, (String)o);
     case "courseNum":
       return SwitchToLinux.staticSearchCourseNum(siteRequest_, (Integer)o);
+    case "pageVideoUrl":
+      return SwitchToLinux.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return SwitchToLinux.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1962,6 +2031,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return SwitchToLinux.staticSearchStrPageId(siteRequest_, (String)o);
     case "courseNum":
       return SwitchToLinux.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+    case "pageVideoUrl":
+      return SwitchToLinux.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return SwitchToLinux.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -2014,6 +2085,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return SwitchToLinux.staticSearchFqPageId(siteRequest_, o);
     case "courseNum":
       return SwitchToLinux.staticSearchFqCourseNum(siteRequest_, o);
+    case "pageVideoUrl":
+      return SwitchToLinux.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
       return SwitchToLinux.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -2103,6 +2176,12 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
           setCourseNum(val == null ? null : val.toString());
         }
         saves.add("courseNum");
+        return val;
+      } else if("pagevideourl".equals(varLower)) {
+        if(val instanceof String) {
+          setPageVideoUrl((String)val);
+        }
+        saves.add("pageVideoUrl");
         return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
@@ -2203,6 +2282,12 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         Integer courseNum = (Integer)doc.get("courseNum_docvalues_int");
         if(courseNum != null)
           oSwitchToLinux.setCourseNum(courseNum);
+      }
+
+      if(saves.contains("pageVideoUrl")) {
+        String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
+        if(pageVideoUrl != null)
+          oSwitchToLinux.setPageVideoUrl(pageVideoUrl);
       }
 
       if(saves.contains("pageImageUri")) {
@@ -2309,6 +2394,9 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);
     }
+    if(pageVideoUrl != null) {
+      doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
+    }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
     }
@@ -2370,6 +2458,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         return "pageId_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2415,6 +2505,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         return "pageId_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2454,6 +2546,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         return "pageId";
       case "courseNum_docvalues_int":
         return "courseNum";
+      case "pageVideoUrl_docvalues_string":
+        return "pageVideoUrl";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -2510,6 +2604,7 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
     oSwitchToLinux.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSwitchToLinux.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSwitchToLinux.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSwitchToLinux.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSwitchToLinux.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSwitchToLinux.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSwitchToLinux.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -2550,6 +2645,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
         apiRequest.addVars("pageId");
       if(!Objects.equals(courseNum, original.getCourseNum()))
         apiRequest.addVars("courseNum");
+      if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+        apiRequest.addVars("pageVideoUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -2593,6 +2690,7 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -2628,6 +2726,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
   public static final String SET_pageId = "setPageId";
   public static final String VAR_courseNum = "courseNum";
   public static final String SET_courseNum = "setCourseNum";
+  public static final String VAR_pageVideoUrl = "pageVideoUrl";
+  public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -2679,6 +2779,7 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
     vars.add(VAR_authorUrl);
     vars.add(VAR_pageId);
     vars.add(VAR_courseNum);
+    vars.add(VAR_pageVideoUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
@@ -2699,6 +2800,7 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_authorUrl = "author URL";
   public static final String DISPLAY_NAME_pageId = "Page ID";
   public static final String DISPLAY_NAME_courseNum = "Course Number";
+  public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -2763,6 +2865,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return patch ? SET_pageId : VAR_pageId;
     case VAR_courseNum:
       return patch ? SET_courseNum : VAR_courseNum;
+    case VAR_pageVideoUrl:
+      return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -2817,6 +2921,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return DISPLAY_NAME_pageId;
     case VAR_courseNum:
       return DISPLAY_NAME_courseNum;
+    case VAR_pageVideoUrl:
+      return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -2870,6 +2976,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return "The ID for this page. ";
     case VAR_courseNum:
       return "The course number for this page. ";
+    case VAR_pageVideoUrl:
+      return "The video URL for this page. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -2915,6 +3023,8 @@ public abstract class SwitchToLinuxGen<DEV> extends BaseResult {
       return "String";
     case VAR_courseNum:
       return "Integer";
+    case VAR_pageVideoUrl:
+      return "String";
     case VAR_pageImageUri:
       return "String";
     case VAR_pageImageWidth:

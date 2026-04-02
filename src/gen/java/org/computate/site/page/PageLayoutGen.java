@@ -4295,6 +4295,60 @@ public abstract class PageLayoutGen<DEV> extends Object {
   }
 
 	//////////////////
+  // pageVideoUrl //
+	//////////////////
+
+
+  /**
+   *  The entity pageVideoUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageVideoUrl;
+
+  /**
+   * <br> The entity pageVideoUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageVideoUrl(Wrap<String> w);
+
+  public String getPageVideoUrl() {
+    return pageVideoUrl;
+  }
+  public void setPageVideoUrl(String o) {
+    this.pageVideoUrl = PageLayout.staticSetPageVideoUrl(siteRequest_, o);
+  }
+  public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected PageLayout pageVideoUrlInit() {
+    Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
+    if(pageVideoUrl == null) {
+      _pageVideoUrl(pageVideoUrlWrap);
+      Optional.ofNullable(pageVideoUrlWrap.getO()).ifPresent(o -> {
+        setPageVideoUrl(o);
+      });
+    }
+    return (PageLayout)this;
+  }
+
+  public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return PageLayout.staticSearchPageVideoUrl(siteRequest_, PageLayout.staticSetPageVideoUrl(siteRequest_, o)).toString();
+  }
+
+	//////////////////
   // pageImageUri //
 	//////////////////
 
@@ -4760,6 +4814,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
     }).compose(a -> {
       Promise<Void> promise2 = Promise.promise();
       try {
+        pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -4960,6 +5015,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
         return oPageLayout.queryStr;
       case "promiseAfter":
         return oPageLayout.promiseAfter;
+      case "pageVideoUrl":
+        return oPageLayout.pageVideoUrl;
       case "pageImageUri":
         return oPageLayout.pageImageUri;
       case "pageImageWidth":
@@ -5127,6 +5184,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSetDEFAULT_MAP_ZOOM(siteRequest_, v);
     case "queryStr":
       return PageLayout.staticSetQueryStr(siteRequest_, v);
+    case "pageVideoUrl":
+      return PageLayout.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
       return PageLayout.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -5273,6 +5332,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSearchDEFAULT_MAP_ZOOM(siteRequest_, (BigDecimal)o);
     case "queryStr":
       return PageLayout.staticSearchQueryStr(siteRequest_, (String)o);
+    case "pageVideoUrl":
+      return PageLayout.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return PageLayout.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -5419,6 +5480,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSearchStrDEFAULT_MAP_ZOOM(siteRequest_, (String)o);
     case "queryStr":
       return PageLayout.staticSearchStrQueryStr(siteRequest_, (String)o);
+    case "pageVideoUrl":
+      return PageLayout.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return PageLayout.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -5565,6 +5628,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSearchFqDEFAULT_MAP_ZOOM(siteRequest_, o);
     case "queryStr":
       return PageLayout.staticSearchFqQueryStr(siteRequest_, o);
+    case "pageVideoUrl":
+      return PageLayout.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
       return PageLayout.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -5736,6 +5801,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
   public static final String SET_queryStr = "setQueryStr";
   public static final String VAR_promiseAfter = "promiseAfter";
   public static final String SET_promiseAfter = "setPromiseAfter";
+  public static final String VAR_pageVideoUrl = "pageVideoUrl";
+  public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -5820,6 +5887,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
   public static final String DISPLAY_NAME_DEFAULT_MAP_ZOOM = "";
   public static final String DISPLAY_NAME_queryStr = "";
   public static final String DISPLAY_NAME_promiseAfter = "";
+  public static final String DISPLAY_NAME_pageVideoUrl = "";
   public static final String DISPLAY_NAME_pageImageUri = "";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -5974,6 +6042,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return DISPLAY_NAME_queryStr;
     case VAR_promiseAfter:
       return DISPLAY_NAME_promiseAfter;
+    case VAR_pageVideoUrl:
+      return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:

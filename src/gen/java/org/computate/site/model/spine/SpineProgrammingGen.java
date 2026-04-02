@@ -159,15 +159,6 @@ import io.vertx.core.json.JsonObject;
 public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(SpineProgramming.class);
 
-  public static final String Description_frFR = "Learn how to become a SPINE Programmer building data-driven websites and increase your developer productivity up to 4900%. ";
-  public static final String AName_frFR = "a SPINE Programming Theory";
-  public static final String SingularName_frFR = "SPINE Programming Theory";
-  public static final String PluralName_frFR = "SPINE Programming Theory";
-  public static final String Title_frFR = "SPINE Programming Theory";
-  public static final String ThePluralName_frFR = "les SPINE Programming Theory";
-  public static final String NameAdjectiveSingular_frFR = "SPINE Programming Theory";
-  public static final String NameAdjectivePlural_frFR = "SPINE Programming Theory";
-
   public static final String Description_enUS = "Learn how to become a SPINE Programmer building data-driven websites and increase your developer productivity up to 4900%. ";
   public static final String AName_enUS = "a SPINE Programming Theory";
   public static final String This_enUS = "this ";
@@ -820,6 +811,68 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
 
   public static String staticJsonPageId(String pageId) {
     return pageId;
+  }
+
+	//////////////////
+  // pageVideoUrl //
+	//////////////////
+
+
+  /**
+   *  The entity pageVideoUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageVideoUrl;
+
+  /**
+   * <br> The entity pageVideoUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spine.SpineProgramming&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageVideoUrl(Wrap<String> w);
+
+  public String getPageVideoUrl() {
+    return pageVideoUrl;
+  }
+  public void setPageVideoUrl(String o) {
+    this.pageVideoUrl = SpineProgramming.staticSetPageVideoUrl(siteRequest_, o);
+  }
+  public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineProgramming pageVideoUrlInit() {
+    Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
+    if(pageVideoUrl == null) {
+      _pageVideoUrl(pageVideoUrlWrap);
+      Optional.ofNullable(pageVideoUrlWrap.getO()).ifPresent(o -> {
+        setPageVideoUrl(o);
+      });
+    }
+    return (SpineProgramming)this;
+  }
+
+  public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return SpineProgramming.staticSearchPageVideoUrl(siteRequest_, SpineProgramming.staticSetPageVideoUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageVideoUrl() {
+    return pageVideoUrl;
+  }
+
+  public static String staticJsonPageVideoUrl(String pageVideoUrl) {
+    return pageVideoUrl;
   }
 
 	//////////////////
@@ -1845,6 +1898,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
         authorNameInit();
         authorUrlInit();
         pageIdInit();
+        pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -1983,6 +2037,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
         return oSpineProgramming.authorUrl;
       case "pageId":
         return oSpineProgramming.pageId;
+      case "pageVideoUrl":
+        return oSpineProgramming.pageVideoUrl;
       case "pageImageUri":
         return oSpineProgramming.pageImageUri;
       case "pageImageWidth":
@@ -2072,6 +2128,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return SpineProgramming.staticSetAuthorUrl(siteRequest_, v);
     case "pageId":
       return SpineProgramming.staticSetPageId(siteRequest_, v);
+    case "pageVideoUrl":
+      return SpineProgramming.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
       return SpineProgramming.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -2160,6 +2218,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return SpineProgramming.staticSearchAuthorUrl(siteRequest_, (String)o);
     case "pageId":
       return SpineProgramming.staticSearchPageId(siteRequest_, (String)o);
+    case "pageVideoUrl":
+      return SpineProgramming.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return SpineProgramming.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -2218,6 +2278,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return SpineProgramming.staticSearchStrAuthorUrl(siteRequest_, (String)o);
     case "pageId":
       return SpineProgramming.staticSearchStrPageId(siteRequest_, (String)o);
+    case "pageVideoUrl":
+      return SpineProgramming.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return SpineProgramming.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -2276,6 +2338,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return SpineProgramming.staticSearchFqAuthorUrl(siteRequest_, o);
     case "pageId":
       return SpineProgramming.staticSearchFqPageId(siteRequest_, o);
+    case "pageVideoUrl":
+      return SpineProgramming.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
       return SpineProgramming.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -2383,6 +2447,12 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
           setPageId((String)val);
         }
         saves.add("pageId");
+        return val;
+      } else if("pagevideourl".equals(varLower)) {
+        if(val instanceof String) {
+          setPageVideoUrl((String)val);
+        }
+        saves.add("pageVideoUrl");
         return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
@@ -2497,6 +2567,12 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
           oSpineProgramming.setPageId(pageId);
       }
 
+      if(saves.contains("pageVideoUrl")) {
+        String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
+        if(pageVideoUrl != null)
+          oSpineProgramming.setPageVideoUrl(pageVideoUrl);
+      }
+
       if(saves.contains("pageImageUri")) {
         String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
         if(pageImageUri != null)
@@ -2608,6 +2684,9 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);
     }
+    if(pageVideoUrl != null) {
+      doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
+    }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
     }
@@ -2673,6 +2752,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
         return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2722,6 +2803,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
         return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2765,6 +2848,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
         return "authorUrl";
       case "pageId_docvalues_string":
         return "pageId";
+      case "pageVideoUrl_docvalues_string":
+        return "pageVideoUrl";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -2823,6 +2908,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     oSpineProgramming.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineProgramming.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineProgramming.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineProgramming.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineProgramming.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineProgramming.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSpineProgramming.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -2867,6 +2953,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
         apiRequest.addVars("authorUrl");
       if(!Objects.equals(pageId, original.getPageId()))
         apiRequest.addVars("pageId");
+      if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+        apiRequest.addVars("pageVideoUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -2912,6 +3000,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -2953,6 +3042,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   public static final String SET_authorUrl = "setAuthorUrl";
   public static final String VAR_pageId = "pageId";
   public static final String SET_pageId = "setPageId";
+  public static final String VAR_pageVideoUrl = "pageVideoUrl";
+  public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -3004,6 +3095,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     vars.add(VAR_authorName);
     vars.add(VAR_authorUrl);
     vars.add(VAR_pageId);
+    vars.add(VAR_pageVideoUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
@@ -3029,6 +3121,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_authorName = "author name";
   public static final String DISPLAY_NAME_authorUrl = "author URL";
   public static final String DISPLAY_NAME_pageId = "Page ID";
+  public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -3104,6 +3197,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return patch ? SET_authorUrl : VAR_authorUrl;
     case VAR_pageId:
       return patch ? SET_pageId : VAR_pageId;
+    case VAR_pageVideoUrl:
+      return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -3164,6 +3259,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return DISPLAY_NAME_authorUrl;
     case VAR_pageId:
       return DISPLAY_NAME_pageId;
+    case VAR_pageVideoUrl:
+      return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -3221,6 +3318,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
       return "The author URL";
     case VAR_pageId:
       return "The ID for this page. ";
+    case VAR_pageVideoUrl:
+      return "The video URL for this page. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -3271,6 +3370,8 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     case VAR_authorUrl:
       return "String";
     case VAR_pageId:
+      return "String";
+    case VAR_pageVideoUrl:
       return "String";
     case VAR_pageImageUri:
       return "String";

@@ -159,15 +159,6 @@ import io.vertx.core.json.JsonObject;
 public abstract class SitePageGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(SitePage.class);
 
-  public static final String Description_frFR = "Read the latest articles to learn more";
-  public static final String AName_frFR = "an article";
-  public static final String SingularName_frFR = "article";
-  public static final String PluralName_frFR = "articles";
-  public static final String Title_frFR = "articles";
-  public static final String ThePluralName_frFR = "les articles";
-  public static final String NameAdjectiveSingular_frFR = "article";
-  public static final String NameAdjectivePlural_frFR = "articles";
-
   public static final String Description_enUS = "Read the latest articles to learn more";
   public static final String AName_enUS = "an article";
   public static final String This_enUS = "this ";
@@ -1487,6 +1478,68 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   }
 
 	//////////////////
+  // pageVideoUrl //
+	//////////////////
+
+
+  /**
+   *  The entity pageVideoUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageVideoUrl;
+
+  /**
+   * <br> The entity pageVideoUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePage&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageVideoUrl(Wrap<String> w);
+
+  public String getPageVideoUrl() {
+    return pageVideoUrl;
+  }
+  public void setPageVideoUrl(String o) {
+    this.pageVideoUrl = SitePage.staticSetPageVideoUrl(siteRequest_, o);
+  }
+  public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SitePage pageVideoUrlInit() {
+    Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
+    if(pageVideoUrl == null) {
+      _pageVideoUrl(pageVideoUrlWrap);
+      Optional.ofNullable(pageVideoUrlWrap.getO()).ifPresent(o -> {
+        setPageVideoUrl(o);
+      });
+    }
+    return (SitePage)this;
+  }
+
+  public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return SitePage.staticSearchPageVideoUrl(siteRequest_, SitePage.staticSetPageVideoUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageVideoUrl() {
+    return pageVideoUrl;
+  }
+
+  public static String staticJsonPageVideoUrl(String pageVideoUrl) {
+    return pageVideoUrl;
+  }
+
+	//////////////////
   // pageImageUri //
 	//////////////////
 
@@ -2521,6 +2574,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         pageIdInit();
         h1Init();
         h2Init();
+        pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -2683,6 +2737,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         return oSitePage.h1;
       case "h2":
         return oSitePage.h2;
+      case "pageVideoUrl":
+        return oSitePage.pageVideoUrl;
       case "pageImageUri":
         return oSitePage.pageImageUri;
       case "pageImageWidth":
@@ -2796,6 +2852,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSetH1(siteRequest_, v);
     case "h2":
       return SitePage.staticSetH2(siteRequest_, v);
+    case "pageVideoUrl":
+      return SitePage.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
       return SitePage.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -2908,6 +2966,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSearchH1(siteRequest_, (String)o);
     case "h2":
       return SitePage.staticSearchH2(siteRequest_, (String)o);
+    case "pageVideoUrl":
+      return SitePage.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return SitePage.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -2990,6 +3050,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSearchStrH1(siteRequest_, (String)o);
     case "h2":
       return SitePage.staticSearchStrH2(siteRequest_, (String)o);
+    case "pageVideoUrl":
+      return SitePage.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return SitePage.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -3072,6 +3134,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSearchFqH1(siteRequest_, o);
     case "h2":
       return SitePage.staticSearchFqH2(siteRequest_, o);
+    case "pageVideoUrl":
+      return SitePage.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
       return SitePage.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -3191,6 +3255,12 @@ public abstract class SitePageGen<DEV> extends BaseResult {
           setH2((String)val);
         }
         saves.add("h2");
+        return val;
+      } else if("pagevideourl".equals(varLower)) {
+        if(val instanceof String) {
+          setPageVideoUrl((String)val);
+        }
+        saves.add("pageVideoUrl");
         return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
@@ -3317,6 +3387,12 @@ public abstract class SitePageGen<DEV> extends BaseResult {
           oSitePage.setH2(h2);
       }
 
+      if(saves.contains("pageVideoUrl")) {
+        String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
+        if(pageVideoUrl != null)
+          oSitePage.setPageVideoUrl(pageVideoUrl);
+      }
+
       if(saves.contains("pageImageUri")) {
         String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
         if(pageImageUri != null)
@@ -3434,6 +3510,9 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     if(h2 != null) {
       doc.put("h2_docvalues_string", h2);
     }
+    if(pageVideoUrl != null) {
+      doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
+    }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
     }
@@ -3503,6 +3582,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         return "h1_docvalues_string";
       case "h2":
         return "h2_docvalues_string";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -3556,6 +3637,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         return "h1_docvalues_string";
       case "h2":
         return "h2_docvalues_string";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -3603,6 +3686,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         return "h1";
       case "h2_docvalues_string":
         return "h2";
+      case "pageVideoUrl_docvalues_string":
+        return "pageVideoUrl";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -3663,6 +3748,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     oSitePage.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSitePage.setH1(Optional.ofNullable(doc.get("h1_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSitePage.setH2(Optional.ofNullable(doc.get("h2_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSitePage.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSitePage.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSitePage.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSitePage.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -3711,6 +3797,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         apiRequest.addVars("h1");
       if(!Objects.equals(h2, original.getH2()))
         apiRequest.addVars("h2");
+      if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+        apiRequest.addVars("pageVideoUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -3758,6 +3846,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(h1).map(v -> "h1: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(h2).map(v -> "h2: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -3823,6 +3912,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   public static final String SET_h1 = "setH1";
   public static final String VAR_h2 = "h2";
   public static final String SET_h2 = "setH2";
+  public static final String VAR_pageVideoUrl = "pageVideoUrl";
+  public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -3874,6 +3965,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     vars.add(VAR_authorName);
     vars.add(VAR_authorUrl);
     vars.add(VAR_pageId);
+    vars.add(VAR_pageVideoUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
@@ -3911,6 +4003,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_pageId = "Page ID";
   public static final String DISPLAY_NAME_h1 = "header 1";
   public static final String DISPLAY_NAME_h2 = "header 2";
+  public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -4010,6 +4103,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return patch ? SET_h1 : VAR_h1;
     case VAR_h2:
       return patch ? SET_h2 : VAR_h2;
+    case VAR_pageVideoUrl:
+      return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -4094,6 +4189,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return DISPLAY_NAME_h1;
     case VAR_h2:
       return DISPLAY_NAME_h2;
+    case VAR_pageVideoUrl:
+      return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -4155,6 +4252,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return "The 1st header of this page. ";
     case VAR_h2:
       return "The 2nd header of this page. ";
+    case VAR_pageVideoUrl:
+      return "The video URL for this page. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -4229,6 +4328,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     case VAR_h1:
       return "String";
     case VAR_h2:
+      return "String";
+    case VAR_pageVideoUrl:
       return "String";
     case VAR_pageImageUri:
       return "String";

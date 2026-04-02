@@ -1,4 +1,4 @@
-package org.computate.site.model.course;
+package org.computate.site.model.spinedoc;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -104,39 +104,39 @@ import java.util.Base64;
 import java.time.ZonedDateTime;
 import org.apache.commons.lang3.BooleanUtils;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.course.CompanyCoursePage;
+import org.computate.site.model.spinedoc.SpineDocPage;
 
 
 /**
  * Translate: false
  * Generated: true
  **/
-public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements CompanyCourseEnUSGenApiService {
+public class SpineDocEnUSGenApiServiceImpl extends BaseApiServiceImpl implements SpineDocEnUSGenApiService {
 
-  protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourseEnUSGenApiServiceImpl.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(SpineDocEnUSGenApiServiceImpl.class);
 
   // Search //
 
   @Override
-  public void searchCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void searchSpineDoc(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
-                response200SearchCompanyCourse(listCompanyCourse).onSuccess(response -> {
+              searchSpineDocList(siteRequest, false, true, false, "GET").onSuccess(listSpineDoc -> {
+                response200SearchSpineDoc(listSpineDoc).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("searchCompanyCourse succeeded. "));
+                  LOG.debug(String.format("searchSpineDoc succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("searchCompanyCourse failed. "), ex);
+                  LOG.error(String.format("searchSpineDoc failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("searchCompanyCourse failed. "), ex);
+                LOG.error(String.format("searchSpineDoc failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
       } catch(Exception ex) {
-        LOG.error(String.format("searchCompanyCourse failed. "), ex);
+        LOG.error(String.format("searchSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -144,7 +144,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("searchCompanyCourse failed. ", ex2));
+          LOG.error(String.format("searchSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -159,28 +159,28 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("searchCompanyCourse failed. "), ex);
+        LOG.error(String.format("searchSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<ServiceResponse> response200SearchCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+  public Future<ServiceResponse> response200SearchSpineDoc(SearchList<SpineDoc> listSpineDoc) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      List<String> fls = listCompanyCourse.getRequest().getFields();
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      List<String> fls = listSpineDoc.getRequest().getFields();
       JsonObject json = new JsonObject();
       JsonArray l = new JsonArray();
       List<String> scopes = siteRequest.getScopes();
-      listCompanyCourse.getList().stream().forEach(o -> {
+      listSpineDoc.getList().stream().forEach(o -> {
         JsonObject json2 = JsonObject.mapFrom(o);
         if(fls.size() > 0) {
           Set<String> fieldNames = new HashSet<String>();
           for(String fieldName : json2.fieldNames()) {
-            String v = CompanyCourse.varIndexedCompanyCourse(fieldName);
+            String v = SpineDoc.varIndexedSpineDoc(fieldName);
             if(v != null)
-              fieldNames.add(CompanyCourse.varIndexedCompanyCourse(fieldName));
+              fieldNames.add(SpineDoc.varIndexedSpineDoc(fieldName));
           }
           if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
             fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
@@ -198,15 +198,15 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         l.add(json2);
       });
       json.put("list", l);
-      response200Search(listCompanyCourse.getRequest(), listCompanyCourse.getResponse(), json);
+      response200Search(listSpineDoc.getRequest(), listSpineDoc.getResponse(), json);
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200SearchCompanyCourse failed. "), ex);
+      LOG.error(String.format("response200SearchSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void responsePivotSearchCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+  public void responsePivotSearchSpineDoc(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
     if(pivots != null) {
       for(SolrResponse.Pivot pivotField : pivots) {
         String entityIndexed = pivotField.getField();
@@ -235,7 +235,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         if(pivotFields2 != null) {
           JsonArray pivotArray2 = new JsonArray();
           pivotJson.put("pivot", pivotArray2);
-          responsePivotSearchCompanyCourse(pivotFields2, pivotArray2);
+          responsePivotSearchSpineDoc(pivotFields2, pivotArray2);
         }
       }
     }
@@ -244,25 +244,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   // GET //
 
   @Override
-  public void getCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void getSpineDoc(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
-                response200GETCompanyCourse(listCompanyCourse).onSuccess(response -> {
+              searchSpineDocList(siteRequest, false, true, false, "GET").onSuccess(listSpineDoc -> {
+                response200GETSpineDoc(listSpineDoc).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("getCompanyCourse succeeded. "));
+                  LOG.debug(String.format("getSpineDoc succeeded. "));
                 }).onFailure(ex -> {
-                  LOG.error(String.format("getCompanyCourse failed. "), ex);
+                  LOG.error(String.format("getSpineDoc failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("getCompanyCourse failed. "), ex);
+                LOG.error(String.format("getSpineDoc failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
       } catch(Exception ex) {
-        LOG.error(String.format("getCompanyCourse failed. "), ex);
+        LOG.error(String.format("getSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -270,7 +270,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("getCompanyCourse failed. ", ex2));
+          LOG.error(String.format("getSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -285,20 +285,20 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("getCompanyCourse failed. "), ex);
+        LOG.error(String.format("getSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<ServiceResponse> response200GETCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+  public Future<ServiceResponse> response200GETSpineDoc(SearchList<SpineDoc> listSpineDoc) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      JsonObject json = JsonObject.mapFrom(listCompanyCourse.getList().stream().findFirst().orElse(null));
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      JsonObject json = JsonObject.mapFrom(listSpineDoc.getList().stream().findFirst().orElse(null));
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200GETCompanyCourse failed. "), ex);
+      LOG.error(String.format("response200GETSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -307,27 +307,27 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   // PATCH //
 
   @Override
-  public void patchCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("patchCompanyCourse started. "));
+  public void patchSpineDoc(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("patchSpineDoc started. "));
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        String SPINEDOC = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEDOC");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
+          form.add("permission", String.format("%s-%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -341,7 +341,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEDOC".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -357,47 +357,47 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyCourse -> {
+              searchSpineDocList(siteRequest, true, false, true, "PATCH").onSuccess(listSpineDoc -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listCompanyCourse.getRequest().getRows());
-                  apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
+                  apiRequest.setRows(listSpineDoc.getRequest().getRows());
+                  apiRequest.setNumFound(listSpineDoc.getResponse().getResponse().getNumFound());
                   apiRequest.setNumPATCH(0L);
                   apiRequest.initDeepApiRequest(siteRequest);
                   siteRequest.setApiRequest_(apiRequest);
                   if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listCompanyCourse.first());
-                  apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-                  eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+                    apiRequest.setOriginal(listSpineDoc.first());
+                  apiRequest.setId(Optional.ofNullable(listSpineDoc.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+                  eventBus.publish("websocketSpineDoc", JsonObject.mapFrom(apiRequest).toString());
 
-                  listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
-                    response200PATCHCompanyCourse(siteRequest).onSuccess(response -> {
-                      LOG.debug(String.format("patchCompanyCourse succeeded. "));
+                  listPATCHSpineDoc(apiRequest, listSpineDoc).onSuccess(e -> {
+                    response200PATCHSpineDoc(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("patchSpineDoc succeeded. "));
                       eventHandler.handle(Future.succeededFuture(response));
                     }).onFailure(ex -> {
-                      LOG.error(String.format("patchCompanyCourse failed. "), ex);
+                      LOG.error(String.format("patchSpineDoc failed. "), ex);
                       error(siteRequest, eventHandler, ex);
                     });
                   }).onFailure(ex -> {
-                    LOG.error(String.format("patchCompanyCourse failed. "), ex);
+                    LOG.error(String.format("patchSpineDoc failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 } catch(Exception ex) {
-                  LOG.error(String.format("patchCompanyCourse failed. "), ex);
+                  LOG.error(String.format("patchSpineDoc failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 }
               }).onFailure(ex -> {
-                LOG.error(String.format("patchCompanyCourse failed. "), ex);
+                LOG.error(String.format("patchSpineDoc failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("patchCompanyCourse failed. "), ex);
+            LOG.error(String.format("patchSpineDoc failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("patchCompanyCourse failed. "), ex);
+        LOG.error(String.format("patchSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -405,7 +405,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("patchCompanyCourse failed. ", ex2));
+          LOG.error(String.format("patchSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -420,58 +420,58 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("patchCompanyCourse failed. "), ex);
+        LOG.error(String.format("patchSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listPATCHCompanyCourse(ApiRequest apiRequest, SearchList<CompanyCourse> listCompanyCourse) {
+  public Future<Void> listPATCHSpineDoc(ApiRequest apiRequest, SearchList<SpineDoc> listSpineDoc) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
-    SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-    listCompanyCourse.getList().forEach(o -> {
+    SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+    listSpineDoc.getList().forEach(o -> {
       SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
       siteRequest2.setScopes(siteRequest.getScopes());
       o.setSiteRequest_(siteRequest2);
       siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
       JsonObject jsonObject = JsonObject.mapFrom(o);
-      CompanyCourse o2 = jsonObject.mapTo(CompanyCourse.class);
+      SpineDoc o2 = jsonObject.mapTo(SpineDoc.class);
       o2.setSiteRequest_(siteRequest2);
       futures.add(Future.future(promise1 -> {
-        patchCompanyCourseFuture(o2, false).onSuccess(a -> {
+        patchSpineDocFuture(o2, false).onSuccess(a -> {
           promise1.complete();
         }).onFailure(ex -> {
-          LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+          LOG.error(String.format("listPATCHSpineDoc failed. "), ex);
           promise1.tryFail(ex);
         });
       }));
     });
     CompositeFuture.all(futures).onSuccess( a -> {
-      listCompanyCourse.next().onSuccess(next -> {
+      listSpineDoc.next().onSuccess(next -> {
         if(next) {
-          listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(b -> {
+          listPATCHSpineDoc(apiRequest, listSpineDoc).onSuccess(b -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+            LOG.error(String.format("listPATCHSpineDoc failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+        LOG.error(String.format("listPATCHSpineDoc failed. "), ex);
         promise.tryFail(ex);
       });
     }).onFailure(ex -> {
-      LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+      LOG.error(String.format("listPATCHSpineDoc failed. "), ex);
       promise.tryFail(ex);
     });
     return promise.future();
   }
 
   @Override
-  public void patchCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void patchSpineDocFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
@@ -483,9 +483,9 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyCourseList(siteRequest, false, true, true, "PATCH").onSuccess(listCompanyCourse -> {
+        searchSpineDocList(siteRequest, false, true, true, "PATCH").onSuccess(listSpineDoc -> {
           try {
-            CompanyCourse o = listCompanyCourse.first();
+            SpineDoc o = listSpineDoc.first();
             ApiRequest apiRequest = new ApiRequest();
             apiRequest.setRows(1L);
             apiRequest.setNumFound(1L);
@@ -495,55 +495,55 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
               siteRequest.getRequestVars().put( "refresh", "false" );
             }
-            CompanyCourse o2;
+            SpineDoc o2;
             if(o != null) {
               if(apiRequest.getNumFound() == 1L)
                 apiRequest.setOriginal(o);
-              apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o3 -> o3.getPageId().toString()).orElse(null));
+              apiRequest.setId(Optional.ofNullable(listSpineDoc.first()).map(o3 -> o3.getPageId().toString()).orElse(null));
               JsonObject jsonObject = JsonObject.mapFrom(o);
-              o2 = jsonObject.mapTo(CompanyCourse.class);
+              o2 = jsonObject.mapTo(SpineDoc.class);
               o2.setSiteRequest_(siteRequest);
-              patchCompanyCourseFuture(o2, false).onSuccess(o3 -> {
+              patchSpineDocFuture(o2, false).onSuccess(o3 -> {
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
               }).onFailure(ex -> {
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              String m = String.format("%s %s not found", "course", null);
+              String m = String.format("%s %s not found", "SPINE doc", null);
               eventHandler.handle(Future.failedFuture(m));
             }
           } catch(Exception ex) {
-            LOG.error(String.format("patchCompanyCourse failed. "), ex);
+            LOG.error(String.format("patchSpineDoc failed. "), ex);
             error(siteRequest, eventHandler, ex);
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("patchCompanyCourse failed. "), ex);
+          LOG.error(String.format("patchSpineDoc failed. "), ex);
           error(siteRequest, eventHandler, ex);
         });
       } catch(Exception ex) {
-        LOG.error(String.format("patchCompanyCourse failed. "), ex);
+        LOG.error(String.format("patchSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
-      LOG.error(String.format("patchCompanyCourse failed. "), ex);
+      LOG.error(String.format("patchSpineDoc failed. "), ex);
       error(null, eventHandler, ex);
     });
   }
 
-  public Future<CompanyCourse> patchCompanyCourseFuture(CompanyCourse o, Boolean inheritPrimaryKey) {
+  public Future<SpineDoc> patchSpineDocFuture(SpineDoc o, Boolean inheritPrimaryKey) {
     SiteRequest siteRequest = o.getSiteRequest_();
-    Promise<CompanyCourse> promise = Promise.promise();
+    Promise<SpineDoc> promise = Promise.promise();
 
     try {
       ApiRequest apiRequest = siteRequest.getApiRequest_();
-      persistCompanyCourse(o, true).onSuccess(c -> {
-        indexCompanyCourse(o).onSuccess(e -> {
+      persistSpineDoc(o, true).onSuccess(c -> {
+        indexSpineDoc(o).onSuccess(e -> {
           if(apiRequest != null) {
             apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
             if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
-              o.apiRequestCompanyCourse();
+              o.apiRequestSpineDoc();
               if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(true))
-                eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+                eventBus.publish("websocketSpineDoc", JsonObject.mapFrom(apiRequest).toString());
             }
           }
           promise.complete(o);
@@ -554,19 +554,19 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("patchCompanyCourseFuture failed. "), ex);
+      LOG.error(String.format("patchSpineDocFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200PATCHCompanyCourse(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200PATCHSpineDoc(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200PATCHCompanyCourse failed. "), ex);
+      LOG.error(String.format("response200PATCHSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -575,27 +575,27 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   // POST //
 
   @Override
-  public void postCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("postCompanyCourse started. "));
+  public void postSpineDoc(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("postSpineDoc started. "));
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        String SPINEDOC = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEDOC");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "POST"));
+          form.add("permission", String.format("%s-%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, pageId, "POST"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -609,7 +609,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEDOC".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -631,7 +631,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               apiRequest.setNumPATCH(0L);
               apiRequest.initDeepApiRequest(siteRequest);
               siteRequest.setApiRequest_(apiRequest);
-              eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+              eventBus.publish("websocketSpineDoc", JsonObject.mapFrom(apiRequest).toString());
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
@@ -651,23 +651,23 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               params.put("query", query);
               JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
               JsonObject json = new JsonObject().put("context", context);
-              eventBus.request(CompanyCourse.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyCourseFuture")).onSuccess(a -> {
+              eventBus.request(SpineDoc.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postSpineDocFuture")).onSuccess(a -> {
                 JsonObject responseMessage = (JsonObject)a.body();
                 JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
-                LOG.debug(String.format("postCompanyCourse succeeded. "));
+                LOG.debug(String.format("postSpineDoc succeeded. "));
               }).onFailure(ex -> {
-                LOG.error(String.format("postCompanyCourse failed. "), ex);
+                LOG.error(String.format("postSpineDoc failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("postCompanyCourse failed. "), ex);
+            LOG.error(String.format("postSpineDoc failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("postCompanyCourse failed. "), ex);
+        LOG.error(String.format("postSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -675,7 +675,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("postCompanyCourse failed. ", ex2));
+          LOG.error(String.format("postSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -690,14 +690,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("postCompanyCourse failed. "), ex);
+        LOG.error(String.format("postSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
   @Override
-  public void postCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void postSpineDocFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
@@ -716,13 +716,13 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
           siteRequest.getRequestVars().put( "refresh", "false" );
         }
-        postCompanyCourseFuture(siteRequest, false).onSuccess(o -> {
+        postSpineDocFuture(siteRequest, false).onSuccess(o -> {
           eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(o).encodePrettily()))));
         }).onFailure(ex -> {
           eventHandler.handle(Future.failedFuture(ex));
         });
       } catch(Throwable ex) {
-        LOG.error(String.format("postCompanyCourse failed. "), ex);
+        LOG.error(String.format("postSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -730,7 +730,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("postCompanyCourse failed. ", ex2));
+          LOG.error(String.format("postSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -745,20 +745,20 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("postCompanyCourse failed. "), ex);
+        LOG.error(String.format("postSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<CompanyCourse> postCompanyCourseFuture(SiteRequest siteRequest, Boolean pageId) {
-    Promise<CompanyCourse> promise = Promise.promise();
+  public Future<SpineDoc> postSpineDocFuture(SiteRequest siteRequest, Boolean pageId) {
+    Promise<SpineDoc> promise = Promise.promise();
 
     try {
-      createCompanyCourse(siteRequest).onSuccess(companyCourse -> {
-        persistCompanyCourse(companyCourse, false).onSuccess(c -> {
-          indexCompanyCourse(companyCourse).onSuccess(o2 -> {
-            promise.complete(companyCourse);
+      createSpineDoc(siteRequest).onSuccess(spineDoc -> {
+        persistSpineDoc(spineDoc, false).onSuccess(c -> {
+          indexSpineDoc(spineDoc).onSuccess(o2 -> {
+            promise.complete(spineDoc);
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -769,270 +769,20 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("postCompanyCourseFuture failed. "), ex);
+      LOG.error(String.format("postSpineDocFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200POSTCompanyCourse(CompanyCourse o) {
+  public Future<ServiceResponse> response200POSTSpineDoc(SpineDoc o) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       JsonObject json = JsonObject.mapFrom(o);
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200POSTCompanyCourse failed. "), ex);
-      promise.tryFail(ex);
-    }
-    return promise.future();
-  }
-
-  // DELETE //
-
-  @Override
-  public void deleteCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("deleteCompanyCourse started. "));
-    Boolean classPublicRead = true;
-    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-      try {
-        siteRequest.setLang("enUS");
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
-        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-        MultiMap form = MultiMap.caseInsensitiveMultiMap();
-        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-        form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
-        if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
-        webClient.post(
-            config.getInteger(ComputateConfigKeys.AUTH_PORT)
-            , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-            )
-            .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
-            .sendForm(form)
-            .expecting(HttpResponseExpectation.SC_OK)
-        .onComplete(authorizationDecisionResponse -> {
-          try {
-            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
-              String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-              eventHandler.handle(Future.succeededFuture(
-                new ServiceResponse(403, "FORBIDDEN",
-                  Buffer.buffer().appendString(
-                    new JsonObject()
-                      .put("errorCode", "403")
-                      .put("errorMessage", msg)
-                      .encodePrettily()
-                    ), MultiMap.caseInsensitiveMultiMap()
-                )
-              ));
-            } else {
-              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-              List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyCourse -> {
-                try {
-                  ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listCompanyCourse.getRequest().getRows());
-                  apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
-                  apiRequest.setNumPATCH(0L);
-                  apiRequest.initDeepApiRequest(siteRequest);
-                  siteRequest.setApiRequest_(apiRequest);
-                  if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listCompanyCourse.first());
-                  eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
-
-                  listDELETECompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
-                    response200DELETECompanyCourse(siteRequest).onSuccess(response -> {
-                      LOG.debug(String.format("deleteCompanyCourse succeeded. "));
-                      eventHandler.handle(Future.succeededFuture(response));
-                    }).onFailure(ex -> {
-                      LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-                      error(siteRequest, eventHandler, ex);
-                    });
-                  }).onFailure(ex -> {
-                    LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-                    error(siteRequest, eventHandler, ex);
-                  });
-                } catch(Exception ex) {
-                  LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-                  error(siteRequest, eventHandler, ex);
-                }
-              }).onFailure(ex -> {
-                LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-                error(siteRequest, eventHandler, ex);
-              });
-            }
-          } catch(Exception ex) {
-            LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-            error(null, eventHandler, ex);
-          }
-        });
-      } catch(Exception ex) {
-        LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    }).onFailure(ex -> {
-      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-        try {
-          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-        } catch(Exception ex2) {
-          LOG.error(String.format("deleteCompanyCourse failed. ", ex2));
-          error(null, eventHandler, ex2);
-        }
-      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-        eventHandler.handle(Future.succeededFuture(
-          new ServiceResponse(401, "UNAUTHORIZED",
-            Buffer.buffer().appendString(
-              new JsonObject()
-                .put("errorCode", "401")
-                .put("errorMessage", "SSO Resource Permission check returned DENY")
-                .encodePrettily()
-              ), MultiMap.caseInsensitiveMultiMap()
-              )
-          ));
-      } else {
-        LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    });
-  }
-
-  public Future<Void> listDELETECompanyCourse(ApiRequest apiRequest, SearchList<CompanyCourse> listCompanyCourse) {
-    Promise<Void> promise = Promise.promise();
-    List<Future> futures = new ArrayList<>();
-    SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-    listCompanyCourse.getList().forEach(o -> {
-      SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
-      siteRequest2.setScopes(siteRequest.getScopes());
-      o.setSiteRequest_(siteRequest2);
-      siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
-      JsonObject jsonObject = JsonObject.mapFrom(o);
-      CompanyCourse o2 = jsonObject.mapTo(CompanyCourse.class);
-      o2.setSiteRequest_(siteRequest2);
-      futures.add(Future.future(promise1 -> {
-        deleteCompanyCourseFuture(o).onSuccess(a -> {
-          promise1.complete();
-        }).onFailure(ex -> {
-          LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-          promise1.tryFail(ex);
-        });
-      }));
-    });
-    CompositeFuture.all(futures).onSuccess( a -> {
-      listCompanyCourse.next().onSuccess(next -> {
-        if(next) {
-          listDELETECompanyCourse(apiRequest, listCompanyCourse).onSuccess(b -> {
-            promise.complete();
-          }).onFailure(ex -> {
-            LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-            promise.tryFail(ex);
-          });
-        } else {
-          promise.complete();
-        }
-      }).onFailure(ex -> {
-        LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-        promise.tryFail(ex);
-      });
-    }).onFailure(ex -> {
-      LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-      promise.tryFail(ex);
-    });
-    return promise.future();
-  }
-
-  @Override
-  public void deleteCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
-    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-      try {
-        siteRequest.setLang("enUS");
-        siteRequest.setJsonObject(body);
-        serviceRequest.getParams().getJsonObject("query").put("rows", 1);
-        Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
-          scopes.stream().map(v -> v.toString()).forEach(scope -> {
-            siteRequest.addScopes(scope);
-          });
-        });
-        searchCompanyCourseList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyCourse -> {
-          try {
-            CompanyCourse o = listCompanyCourse.first();
-            if(o != null && listCompanyCourse.getResponse().getResponse().getNumFound() == 1) {
-              ApiRequest apiRequest = new ApiRequest();
-              apiRequest.setRows(1L);
-              apiRequest.setNumFound(1L);
-              apiRequest.setNumPATCH(0L);
-              apiRequest.initDeepApiRequest(siteRequest);
-              siteRequest.setApiRequest_(apiRequest);
-              if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
-                siteRequest.getRequestVars().put( "refresh", "false" );
-              }
-              if(apiRequest.getNumFound() == 1L)
-                apiRequest.setOriginal(o);
-              apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-              deleteCompanyCourseFuture(o).onSuccess(o2 -> {
-                eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
-              }).onFailure(ex -> {
-                eventHandler.handle(Future.failedFuture(ex));
-              });
-            } else {
-              eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
-            }
-          } catch(Exception ex) {
-            LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-            error(siteRequest, eventHandler, ex);
-          }
-        }).onFailure(ex -> {
-          LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-          error(siteRequest, eventHandler, ex);
-        });
-      } catch(Exception ex) {
-        LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    }).onFailure(ex -> {
-      LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-      error(null, eventHandler, ex);
-    });
-  }
-
-  public Future<CompanyCourse> deleteCompanyCourseFuture(CompanyCourse o) {
-    SiteRequest siteRequest = o.getSiteRequest_();
-    Promise<CompanyCourse> promise = Promise.promise();
-
-    try {
-      ApiRequest apiRequest = siteRequest.getApiRequest_();
-      unindexCompanyCourse(o).onSuccess(e -> {
-        promise.complete(o);
-      }).onFailure(ex -> {
-        promise.tryFail(ex);
-      });
-    } catch(Exception ex) {
-      LOG.error(String.format("deleteCompanyCourseFuture failed. "), ex);
-      promise.tryFail(ex);
-    }
-    return promise.future();
-  }
-
-  public Future<ServiceResponse> response200DELETECompanyCourse(SiteRequest siteRequest) {
-    Promise<ServiceResponse> promise = Promise.promise();
-    try {
-      JsonObject json = new JsonObject();
-      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-    } catch(Exception ex) {
-      LOG.error(String.format("response200DELETECompanyCourse failed. "), ex);
+      LOG.error(String.format("response200POSTSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -1041,27 +791,27 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   // PUTImport //
 
   @Override
-  public void putimportCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("putimportCompanyCourse started. "));
+  public void putimportSpineDoc(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("putimportSpineDoc started. "));
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        String SPINEDOC = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEDOC");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "PUT"));
+          form.add("permission", String.format("%s-%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, pageId, "PUT"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1075,7 +825,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEDOC".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1098,32 +848,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               apiRequest.setNumPATCH(0L);
               apiRequest.initDeepApiRequest(siteRequest);
               siteRequest.setApiRequest_(apiRequest);
-              eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
-              varsCompanyCourse(siteRequest).onSuccess(d -> {
-                listPUTImportCompanyCourse(apiRequest, siteRequest).onSuccess(e -> {
-                  response200PUTImportCompanyCourse(siteRequest).onSuccess(response -> {
-                    LOG.debug(String.format("putimportCompanyCourse succeeded. "));
+              eventBus.publish("websocketSpineDoc", JsonObject.mapFrom(apiRequest).toString());
+              varsSpineDoc(siteRequest).onSuccess(d -> {
+                listPUTImportSpineDoc(apiRequest, siteRequest).onSuccess(e -> {
+                  response200PUTImportSpineDoc(siteRequest).onSuccess(response -> {
+                    LOG.debug(String.format("putimportSpineDoc succeeded. "));
                     eventHandler.handle(Future.succeededFuture(response));
                   }).onFailure(ex -> {
-                    LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+                    LOG.error(String.format("putimportSpineDoc failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 }).onFailure(ex -> {
-                  LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+                  LOG.error(String.format("putimportSpineDoc failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 });
               }).onFailure(ex -> {
-                LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+                LOG.error(String.format("putimportSpineDoc failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+            LOG.error(String.format("putimportSpineDoc failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+        LOG.error(String.format("putimportSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -1131,7 +881,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("putimportCompanyCourse failed. ", ex2));
+          LOG.error(String.format("putimportSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1146,13 +896,13 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+        LOG.error(String.format("putimportSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listPUTImportCompanyCourse(ApiRequest apiRequest, SiteRequest siteRequest) {
+  public Future<Void> listPUTImportSpineDoc(ApiRequest apiRequest, SiteRequest siteRequest) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
     JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -1177,10 +927,10 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           params.put("query", query);
           JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
           JsonObject json = new JsonObject().put("context", context);
-          eventBus.request(CompanyCourse.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportCompanyCourseFuture")).onSuccess(a -> {
+          eventBus.request(SpineDoc.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportSpineDocFuture")).onSuccess(a -> {
             promise1.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+            LOG.error(String.format("listPUTImportSpineDoc failed. "), ex);
             promise1.tryFail(ex);
           });
         }));
@@ -1189,18 +939,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
         promise.complete();
       }).onFailure(ex -> {
-        LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+        LOG.error(String.format("listPUTImportSpineDoc failed. "), ex);
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+      LOG.error(String.format("listPUTImportSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public void putimportCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void putimportSpineDocFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
@@ -1216,22 +966,22 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         apiRequest.setNumPATCH(0L);
         apiRequest.initDeepApiRequest(siteRequest);
         siteRequest.setApiRequest_(apiRequest);
-        String pageId = Optional.ofNullable(body.getString(CompanyCourse.VAR_pageId)).orElse(body.getString(CompanyCourse.VAR_solrId));
+        String pageId = Optional.ofNullable(body.getString(SpineDoc.VAR_pageId)).orElse(body.getString(SpineDoc.VAR_solrId));
         if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
           siteRequest.getRequestVars().put( "refresh", "false" );
         }
 
-        SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+        SearchList<SpineDoc> searchList = new SearchList<SpineDoc>();
         searchList.setStore(true);
         searchList.q("*:*");
-        searchList.setC(CompanyCourse.class);
+        searchList.setC(SpineDoc.class);
         searchList.fq("archived_docvalues_boolean:false");
         searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
           try {
             if(searchList.size() >= 1) {
-              CompanyCourse o = searchList.getList().stream().findFirst().orElse(null);
-              CompanyCourse o2 = new CompanyCourse();
+              SpineDoc o = searchList.getList().stream().findFirst().orElse(null);
+              SpineDoc o2 = new SpineDoc();
               o2.setSiteRequest_(siteRequest);
               JsonObject body2 = new JsonObject();
               for(String f : body.fieldNames()) {
@@ -1278,32 +1028,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
                 apiRequest.setId(Optional.ofNullable(o.getPageId()).map(v -> v.toString()).orElse(null));
               }
               siteRequest.setJsonObject(body2);
-              patchCompanyCourseFuture(o2, true).onSuccess(b -> {
-                LOG.debug("Import CompanyCourse {} succeeded, modified CompanyCourse. ", body.getValue(CompanyCourse.VAR_pageId));
+              patchSpineDocFuture(o2, true).onSuccess(b -> {
+                LOG.debug("Import SpineDoc {} succeeded, modified SpineDoc. ", body.getValue(SpineDoc.VAR_pageId));
                 eventHandler.handle(Future.succeededFuture());
               }).onFailure(ex -> {
-                LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+                LOG.error(String.format("putimportSpineDocFuture failed. "), ex);
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              postCompanyCourseFuture(siteRequest, true).onSuccess(b -> {
-                LOG.debug("Import CompanyCourse {} succeeded, created new CompanyCourse. ", body.getValue(CompanyCourse.VAR_pageId));
+              postSpineDocFuture(siteRequest, true).onSuccess(b -> {
+                LOG.debug("Import SpineDoc {} succeeded, created new SpineDoc. ", body.getValue(SpineDoc.VAR_pageId));
                 eventHandler.handle(Future.succeededFuture());
               }).onFailure(ex -> {
-                LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+                LOG.error(String.format("putimportSpineDocFuture failed. "), ex);
                 eventHandler.handle(Future.failedFuture(ex));
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+            LOG.error(String.format("putimportSpineDocFuture failed. "), ex);
             eventHandler.handle(Future.failedFuture(ex));
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+          LOG.error(String.format("putimportSpineDocFuture failed. "), ex);
           eventHandler.handle(Future.failedFuture(ex));
         });
       } catch(Exception ex) {
-        LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+        LOG.error(String.format("putimportSpineDocFuture failed. "), ex);
         eventHandler.handle(Future.failedFuture(ex));
       }
     }).onFailure(ex -> {
@@ -1311,7 +1061,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("putimportCompanyCourse failed. ", ex2));
+          LOG.error(String.format("putimportSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1326,1012 +1076,48 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+        LOG.error(String.format("putimportSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<ServiceResponse> response200PUTImportCompanyCourse(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200PUTImportSpineDoc(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200PUTImportCompanyCourse failed. "), ex);
+      LOG.error(String.format("response200PUTImportSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  // SearchPage //
+  // DELETE //
 
   @Override
-  public void searchpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
-    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-      try {
-        siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
-                response200SearchPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
-                  eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("searchpageCompanyCourse succeeded. "));
-                }).onFailure(ex -> {
-                  LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
-                  error(siteRequest, eventHandler, ex);
-                });
-              }).onFailure(ex -> {
-                LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
-                error(siteRequest, eventHandler, ex);
-              });
-      } catch(Exception ex) {
-        LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    }).onFailure(ex -> {
-      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-        try {
-          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-        } catch(Exception ex2) {
-          LOG.error(String.format("searchpageCompanyCourse failed. ", ex2));
-          error(null, eventHandler, ex2);
-        }
-      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-        eventHandler.handle(Future.succeededFuture(
-          new ServiceResponse(401, "UNAUTHORIZED",
-            Buffer.buffer().appendString(
-              new JsonObject()
-                .put("errorCode", "401")
-                .put("errorMessage", "SSO Resource Permission check returned DENY")
-                .encodePrettily()
-              ), MultiMap.caseInsensitiveMultiMap()
-              )
-          ));
-      } else {
-        LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    });
-  }
-
-  public void searchpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
-    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
-    ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
-    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
-    promise.complete();
-  }
-
-  public String templateUriSearchPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
-    return "en-us/search/course/CompanyCourseSearchPage.htm";
-  }
-  public void templateSearchPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyCourse result = listCompanyCourse.first();
-      String pageTemplateUri = templateUriSearchPageCompanyCourse(serviceRequest, result);
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/course/CompanyCourseSearchPage.htm"), Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else if(pageTemplateUri.endsWith(".md")) {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
-        Map<String, Object> data = new HashMap<>();
-        String body = "";
-        if(template.startsWith("---\n")) {
-          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
-          if(mMeta.find()) {
-            String meta = mMeta.group(1);
-            body = mMeta.group(2);
-            Yaml yaml = new Yaml();
-            Map<String, Object> map = yaml.load(meta);
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-          }
-        }
-        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
-        org.commonmark.node.Node document = parser.parse(body);
-        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
-        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
-        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
-        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      }
-    } catch(Exception ex) {
-      LOG.error(String.format("templateSearchPageCompanyCourse failed. "), ex);
-      ExceptionUtils.rethrow(ex);
-    }
-  }
-  public Future<ServiceResponse> response200SearchPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
-    Promise<ServiceResponse> promise = Promise.promise();
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      CompanyCoursePage page = new CompanyCoursePage();
-      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-      siteRequest.setRequestHeaders(requestHeaders);
-
-      page.setSearchListCompanyCourse_(listCompanyCourse);
-      page.setSiteRequest_(siteRequest);
-      page.setServiceRequest(siteRequest.getServiceRequest());
-      page.setWebClient(webClient);
-      page.setVertx(vertx);
-      page.promiseDeepCompanyCoursePage(siteRequest).onSuccess(a -> {
-        try {
-          JsonObject ctx = ConfigKeys.getPageContext(config);
-          ctx.mergeIn(JsonObject.mapFrom(page));
-          Promise<Void> promise1 = Promise.promise();
-          searchpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
-          promise1.future().onSuccess(b -> {
-            try {
-              Promise<String> promise2 = Promise.promise();
-              templateSearchPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
-              promise2.future().onSuccess(renderedTemplate -> {
-                try {
-                  Buffer buffer = Buffer.buffer(renderedTemplate);
-                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-                } catch(Throwable ex) {
-                  LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
-                  promise.fail(ex);
-                }
-              }).onFailure(ex -> {
-                promise.fail(ex);
-              });
-            } catch(Throwable ex) {
-              LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
-              promise.tryFail(ex);
-            }
-          }).onFailure(ex -> {
-            promise.tryFail(ex);
-          });
-        } catch(Exception ex) {
-          LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
-          promise.tryFail(ex);
-        }
-      }).onFailure(ex -> {
-        promise.tryFail(ex);
-      });
-    } catch(Exception ex) {
-      LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
-      promise.tryFail(ex);
-    }
-    return promise.future();
-  }
-  public void responsePivotSearchPageCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
-    if(pivots != null) {
-      for(SolrResponse.Pivot pivotField : pivots) {
-        String entityIndexed = pivotField.getField();
-        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
-        JsonObject pivotJson = new JsonObject();
-        pivotArray.add(pivotJson);
-        pivotJson.put("field", entityVar);
-        pivotJson.put("value", pivotField.getValue());
-        pivotJson.put("count", pivotField.getCount());
-        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
-        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
-        if(pivotRanges != null) {
-          JsonObject rangeJson = new JsonObject();
-          pivotJson.put("ranges", rangeJson);
-          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
-            JsonObject rangeFacetJson = new JsonObject();
-            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
-            rangeJson.put(rangeFacetVar, rangeFacetJson);
-            JsonObject rangeFacetCountsObject = new JsonObject();
-            rangeFacetJson.put("counts", rangeFacetCountsObject);
-            rangeFacet.getCounts().forEach((value, count) -> {
-              rangeFacetCountsObject.put(value, count);
-            });
-          }
-        }
-        if(pivotFields2 != null) {
-          JsonArray pivotArray2 = new JsonArray();
-          pivotJson.put("pivot", pivotArray2);
-          responsePivotSearchPageCompanyCourse(pivotFields2, pivotArray2);
-        }
-      }
-    }
-  }
-
-  // EditPage //
-
-  @Override
-  public void editpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void deleteSpineDoc(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("deleteSpineDoc started. "));
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        String SPINEDOC = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEDOC");
         List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "GET"));
-        webClient.post(
-            config.getInteger(ComputateConfigKeys.AUTH_PORT)
-              , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-              , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-              )
-              .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-              .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
-              .sendForm(form)
-              .expecting(HttpResponseExpectation.SC_OK)
-        .onComplete(authorizationDecisionResponse -> {
-          try {
-            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            {
-              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-              List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
-                response200EditPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
-                  eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("editpageCompanyCourse succeeded. "));
-                }).onFailure(ex -> {
-                  LOG.error(String.format("editpageCompanyCourse failed. "), ex);
-                  error(siteRequest, eventHandler, ex);
-                });
-              }).onFailure(ex -> {
-                LOG.error(String.format("editpageCompanyCourse failed. "), ex);
-                error(siteRequest, eventHandler, ex);
-            });
-            }
-          } catch(Exception ex) {
-            LOG.error(String.format("editpageCompanyCourse failed. "), ex);
-            error(null, eventHandler, ex);
-          }
-        });
-      } catch(Exception ex) {
-        LOG.error(String.format("editpageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    }).onFailure(ex -> {
-      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-        try {
-          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-        } catch(Exception ex2) {
-          LOG.error(String.format("editpageCompanyCourse failed. ", ex2));
-          error(null, eventHandler, ex2);
-        }
-      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-        eventHandler.handle(Future.succeededFuture(
-          new ServiceResponse(401, "UNAUTHORIZED",
-            Buffer.buffer().appendString(
-              new JsonObject()
-                .put("errorCode", "401")
-                .put("errorMessage", "SSO Resource Permission check returned DENY")
-                .encodePrettily()
-              ), MultiMap.caseInsensitiveMultiMap()
-              )
-          ));
-      } else {
-        LOG.error(String.format("editpageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    });
-  }
-
-  public void editpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
-    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
-    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
-    promise.complete();
-  }
-
-  public String templateUriEditPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
-    return "en-us/edit/course/CompanyCourseEditPage.htm";
-  }
-  public void templateEditPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyCourse result = listCompanyCourse.first();
-      String pageTemplateUri = templateUriEditPageCompanyCourse(serviceRequest, result);
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/course/CompanyCourseEditPage.htm"), Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else if(pageTemplateUri.endsWith(".md")) {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
-        Map<String, Object> data = new HashMap<>();
-        String body = "";
-        if(template.startsWith("---\n")) {
-          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
-          if(mMeta.find()) {
-            String meta = mMeta.group(1);
-            body = mMeta.group(2);
-            Yaml yaml = new Yaml();
-            Map<String, Object> map = yaml.load(meta);
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-          }
-        }
-        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
-        org.commonmark.node.Node document = parser.parse(body);
-        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
-        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
-        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
-        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      }
-    } catch(Exception ex) {
-      LOG.error(String.format("templateEditPageCompanyCourse failed. "), ex);
-      ExceptionUtils.rethrow(ex);
-    }
-  }
-  public Future<ServiceResponse> response200EditPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
-    Promise<ServiceResponse> promise = Promise.promise();
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      CompanyCoursePage page = new CompanyCoursePage();
-      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-      siteRequest.setRequestHeaders(requestHeaders);
-
-      page.setSearchListCompanyCourse_(listCompanyCourse);
-      page.setSiteRequest_(siteRequest);
-      page.setServiceRequest(siteRequest.getServiceRequest());
-      page.setWebClient(webClient);
-      page.setVertx(vertx);
-      page.promiseDeepCompanyCoursePage(siteRequest).onSuccess(a -> {
-        try {
-          JsonObject ctx = ConfigKeys.getPageContext(config);
-          ctx.mergeIn(JsonObject.mapFrom(page));
-          Promise<Void> promise1 = Promise.promise();
-          editpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
-          promise1.future().onSuccess(b -> {
-            try {
-              Promise<String> promise2 = Promise.promise();
-              templateEditPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
-              promise2.future().onSuccess(renderedTemplate -> {
-                try {
-                  Buffer buffer = Buffer.buffer(renderedTemplate);
-                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-                } catch(Throwable ex) {
-                  LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
-                  promise.fail(ex);
-                }
-              }).onFailure(ex -> {
-                promise.fail(ex);
-              });
-            } catch(Throwable ex) {
-              LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
-              promise.tryFail(ex);
-            }
-          }).onFailure(ex -> {
-            promise.tryFail(ex);
-          });
-        } catch(Exception ex) {
-          LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
-          promise.tryFail(ex);
-        }
-      }).onFailure(ex -> {
-        promise.tryFail(ex);
-      });
-    } catch(Exception ex) {
-      LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
-      promise.tryFail(ex);
-    }
-    return promise.future();
-  }
-  public void responsePivotEditPageCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
-    if(pivots != null) {
-      for(SolrResponse.Pivot pivotField : pivots) {
-        String entityIndexed = pivotField.getField();
-        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
-        JsonObject pivotJson = new JsonObject();
-        pivotArray.add(pivotJson);
-        pivotJson.put("field", entityVar);
-        pivotJson.put("value", pivotField.getValue());
-        pivotJson.put("count", pivotField.getCount());
-        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
-        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
-        if(pivotRanges != null) {
-          JsonObject rangeJson = new JsonObject();
-          pivotJson.put("ranges", rangeJson);
-          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
-            JsonObject rangeFacetJson = new JsonObject();
-            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
-            rangeJson.put(rangeFacetVar, rangeFacetJson);
-            JsonObject rangeFacetCountsObject = new JsonObject();
-            rangeFacetJson.put("counts", rangeFacetCountsObject);
-            rangeFacet.getCounts().forEach((value, count) -> {
-              rangeFacetCountsObject.put(value, count);
-            });
-          }
-        }
-        if(pivotFields2 != null) {
-          JsonArray pivotArray2 = new JsonArray();
-          pivotJson.put("pivot", pivotArray2);
-          responsePivotEditPageCompanyCourse(pivotFields2, pivotArray2);
-        }
-      }
-    }
-  }
-
-  // DisplayPage //
-
-  @Override
-  public void displaypageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
-    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-      try {
-        siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
-                response200DisplayPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
-                  eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("displaypageCompanyCourse succeeded. "));
-                }).onFailure(ex -> {
-                  LOG.error(String.format("displaypageCompanyCourse failed. "), ex);
-                  error(siteRequest, eventHandler, ex);
-                });
-              }).onFailure(ex -> {
-                LOG.error(String.format("displaypageCompanyCourse failed. "), ex);
-                error(siteRequest, eventHandler, ex);
-            });
-      } catch(Exception ex) {
-        LOG.error(String.format("displaypageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    }).onFailure(ex -> {
-      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-        try {
-          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-        } catch(Exception ex2) {
-          LOG.error(String.format("displaypageCompanyCourse failed. ", ex2));
-          error(null, eventHandler, ex2);
-        }
-      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-        eventHandler.handle(Future.succeededFuture(
-          new ServiceResponse(401, "UNAUTHORIZED",
-            Buffer.buffer().appendString(
-              new JsonObject()
-                .put("errorCode", "401")
-                .put("errorMessage", "SSO Resource Permission check returned DENY")
-                .encodePrettily()
-              ), MultiMap.caseInsensitiveMultiMap()
-              )
-          ));
-      } else {
-        LOG.error(String.format("displaypageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    });
-  }
-
-  public void displaypageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
-    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
-    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
-    promise.complete();
-  }
-
-  public String templateUriDisplayPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
-    return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
-  }
-  public void templateDisplayPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyCourse result = listCompanyCourse.first();
-      String pageTemplateUri = templateUriDisplayPageCompanyCourse(serviceRequest, result);
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else if(pageTemplateUri.endsWith(".md")) {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
-        Map<String, Object> data = new HashMap<>();
-        String body = "";
-        if(template.startsWith("---\n")) {
-          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
-          if(mMeta.find()) {
-            String meta = mMeta.group(1);
-            body = mMeta.group(2);
-            Yaml yaml = new Yaml();
-            Map<String, Object> map = yaml.load(meta);
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-          }
-        }
-        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
-        org.commonmark.node.Node document = parser.parse(body);
-        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
-        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
-        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
-        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      }
-    } catch(Exception ex) {
-      LOG.error(String.format("templateDisplayPageCompanyCourse failed. "), ex);
-      ExceptionUtils.rethrow(ex);
-    }
-  }
-  public Future<ServiceResponse> response200DisplayPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
-    Promise<ServiceResponse> promise = Promise.promise();
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      CompanyCoursePage page = new CompanyCoursePage();
-      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-      siteRequest.setRequestHeaders(requestHeaders);
-
-      page.setSearchListCompanyCourse_(listCompanyCourse);
-      page.setSiteRequest_(siteRequest);
-      page.setServiceRequest(siteRequest.getServiceRequest());
-      page.setWebClient(webClient);
-      page.setVertx(vertx);
-      page.promiseDeepCompanyCoursePage(siteRequest).onSuccess(a -> {
-        try {
-          JsonObject ctx = ConfigKeys.getPageContext(config);
-          ctx.mergeIn(JsonObject.mapFrom(page));
-          Promise<Void> promise1 = Promise.promise();
-          displaypageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
-          promise1.future().onSuccess(b -> {
-            try {
-              Promise<String> promise2 = Promise.promise();
-              templateDisplayPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
-              promise2.future().onSuccess(renderedTemplate -> {
-                try {
-                  Buffer buffer = Buffer.buffer(renderedTemplate);
-                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-                } catch(Throwable ex) {
-                  LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
-                  promise.fail(ex);
-                }
-              }).onFailure(ex -> {
-                promise.fail(ex);
-              });
-            } catch(Throwable ex) {
-              LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
-              promise.tryFail(ex);
-            }
-          }).onFailure(ex -> {
-            promise.tryFail(ex);
-          });
-        } catch(Exception ex) {
-          LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
-          promise.tryFail(ex);
-        }
-      }).onFailure(ex -> {
-        promise.tryFail(ex);
-      });
-    } catch(Exception ex) {
-      LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
-      promise.tryFail(ex);
-    }
-    return promise.future();
-  }
-  public void responsePivotDisplayPageCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
-    if(pivots != null) {
-      for(SolrResponse.Pivot pivotField : pivots) {
-        String entityIndexed = pivotField.getField();
-        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
-        JsonObject pivotJson = new JsonObject();
-        pivotArray.add(pivotJson);
-        pivotJson.put("field", entityVar);
-        pivotJson.put("value", pivotField.getValue());
-        pivotJson.put("count", pivotField.getCount());
-        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
-        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
-        if(pivotRanges != null) {
-          JsonObject rangeJson = new JsonObject();
-          pivotJson.put("ranges", rangeJson);
-          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
-            JsonObject rangeFacetJson = new JsonObject();
-            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
-            rangeJson.put(rangeFacetVar, rangeFacetJson);
-            JsonObject rangeFacetCountsObject = new JsonObject();
-            rangeFacetJson.put("counts", rangeFacetCountsObject);
-            rangeFacet.getCounts().forEach((value, count) -> {
-              rangeFacetCountsObject.put(value, count);
-            });
-          }
-        }
-        if(pivotFields2 != null) {
-          JsonArray pivotArray2 = new JsonArray();
-          pivotJson.put("pivot", pivotArray2);
-          responsePivotDisplayPageCompanyCourse(pivotFields2, pivotArray2);
-        }
-      }
-    }
-  }
-
-  // UserPage //
-
-  @Override
-  public void userpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    Boolean classPublicRead = true;
-    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-      try {
-        siteRequest.setLang("enUS");
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
-        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-        MultiMap form = MultiMap.caseInsensitiveMultiMap();
-        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-        form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
-        if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "GET"));
-        webClient.post(
-            config.getInteger(ComputateConfigKeys.AUTH_PORT)
-              , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-              , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-              )
-              .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-              .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
-              .sendForm(form)
-              .expecting(HttpResponseExpectation.SC_OK)
-        .onComplete(authorizationDecisionResponse -> {
-          try {
-            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            {
-              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-              List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
-                response200UserPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
-                  eventHandler.handle(Future.succeededFuture(response));
-                  LOG.debug(String.format("userpageCompanyCourse succeeded. "));
-                }).onFailure(ex -> {
-                  LOG.error(String.format("userpageCompanyCourse failed. "), ex);
-                  error(siteRequest, eventHandler, ex);
-                });
-              }).onFailure(ex -> {
-                LOG.error(String.format("userpageCompanyCourse failed. "), ex);
-                error(siteRequest, eventHandler, ex);
-            });
-            }
-          } catch(Exception ex) {
-            LOG.error(String.format("userpageCompanyCourse failed. "), ex);
-            error(null, eventHandler, ex);
-          }
-        });
-      } catch(Exception ex) {
-        LOG.error(String.format("userpageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    }).onFailure(ex -> {
-      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-        try {
-          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-        } catch(Exception ex2) {
-          LOG.error(String.format("userpageCompanyCourse failed. ", ex2));
-          error(null, eventHandler, ex2);
-        }
-      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-        eventHandler.handle(Future.succeededFuture(
-          new ServiceResponse(401, "UNAUTHORIZED",
-            Buffer.buffer().appendString(
-              new JsonObject()
-                .put("errorCode", "401")
-                .put("errorMessage", "SSO Resource Permission check returned DENY")
-                .encodePrettily()
-              ), MultiMap.caseInsensitiveMultiMap()
-              )
-          ));
-      } else {
-        LOG.error(String.format("userpageCompanyCourse failed. "), ex);
-        error(null, eventHandler, ex);
-      }
-    });
-  }
-
-  public void userpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
-    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
-    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
-    promise.complete();
-  }
-
-  public String templateUriUserPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
-    return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
-  }
-  public void templateUserPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      CompanyCourse result = listCompanyCourse.first();
-      String pageTemplateUri = templateUriUserPageCompanyCourse(serviceRequest, result);
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else if(pageTemplateUri.endsWith(".md")) {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
-        Map<String, Object> data = new HashMap<>();
-        String body = "";
-        if(template.startsWith("---\n")) {
-          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
-          if(mMeta.find()) {
-            String meta = mMeta.group(1);
-            body = mMeta.group(2);
-            Yaml yaml = new Yaml();
-            Map<String, Object> map = yaml.load(meta);
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-            map.forEach((resultKey, value) -> {
-              if(resultKey.startsWith(metaPrefixResult)) {
-                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
-                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
-                if(val instanceof String) {
-                  String rendered = jinjava.render(val, ctx.getMap());
-                  data.put(key, rendered);
-                } else {
-                  data.put(key, val);
-                }
-              }
-            });
-          }
-        }
-        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
-        org.commonmark.node.Node document = parser.parse(body);
-        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
-        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
-        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
-        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
-        promise.complete(renderedTemplate);
-      } else {
-        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-        String renderedTemplate = jinjava.render(template, ctx.getMap());
-        promise.complete(renderedTemplate);
-      }
-    } catch(Exception ex) {
-      LOG.error(String.format("templateUserPageCompanyCourse failed. "), ex);
-      ExceptionUtils.rethrow(ex);
-    }
-  }
-  public Future<ServiceResponse> response200UserPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
-    Promise<ServiceResponse> promise = Promise.promise();
-    try {
-      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      CompanyCoursePage page = new CompanyCoursePage();
-      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-      siteRequest.setRequestHeaders(requestHeaders);
-
-      page.setSearchListCompanyCourse_(listCompanyCourse);
-      page.setSiteRequest_(siteRequest);
-      page.setServiceRequest(siteRequest.getServiceRequest());
-      page.setWebClient(webClient);
-      page.setVertx(vertx);
-      page.promiseDeepCompanyCoursePage(siteRequest).onSuccess(a -> {
-        try {
-          JsonObject ctx = ConfigKeys.getPageContext(config);
-          ctx.mergeIn(JsonObject.mapFrom(page));
-          Promise<Void> promise1 = Promise.promise();
-          userpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
-          promise1.future().onSuccess(b -> {
-            try {
-              Promise<String> promise2 = Promise.promise();
-              templateUserPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
-              promise2.future().onSuccess(renderedTemplate -> {
-                try {
-                  Buffer buffer = Buffer.buffer(renderedTemplate);
-                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-                } catch(Throwable ex) {
-                  LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
-                  promise.fail(ex);
-                }
-              }).onFailure(ex -> {
-                promise.fail(ex);
-              });
-            } catch(Throwable ex) {
-              LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
-              promise.tryFail(ex);
-            }
-          }).onFailure(ex -> {
-            promise.tryFail(ex);
-          });
-        } catch(Exception ex) {
-          LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
-          promise.tryFail(ex);
-        }
-      }).onFailure(ex -> {
-        promise.tryFail(ex);
-      });
-    } catch(Exception ex) {
-      LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
-      promise.tryFail(ex);
-    }
-    return promise.future();
-  }
-  public void responsePivotUserPageCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
-    if(pivots != null) {
-      for(SolrResponse.Pivot pivotField : pivots) {
-        String entityIndexed = pivotField.getField();
-        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
-        JsonObject pivotJson = new JsonObject();
-        pivotArray.add(pivotJson);
-        pivotJson.put("field", entityVar);
-        pivotJson.put("value", pivotField.getValue());
-        pivotJson.put("count", pivotField.getCount());
-        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
-        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
-        if(pivotRanges != null) {
-          JsonObject rangeJson = new JsonObject();
-          pivotJson.put("ranges", rangeJson);
-          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
-            JsonObject rangeFacetJson = new JsonObject();
-            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
-            rangeJson.put(rangeFacetVar, rangeFacetJson);
-            JsonObject rangeFacetCountsObject = new JsonObject();
-            rangeFacetJson.put("counts", rangeFacetCountsObject);
-            rangeFacet.getCounts().forEach((value, count) -> {
-              rangeFacetCountsObject.put(value, count);
-            });
-          }
-        }
-        if(pivotFields2 != null) {
-          JsonArray pivotArray2 = new JsonArray();
-          pivotJson.put("pivot", pivotArray2);
-          responsePivotUserPageCompanyCourse(pivotFields2, pivotArray2);
-        }
-      }
-    }
-  }
-
-  // DELETEFilter //
-
-  @Override
-  public void deletefilterCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-    LOG.debug(String.format("deletefilterCompanyCourse started. "));
-    Boolean classPublicRead = true;
-    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-      try {
-        siteRequest.setLang("enUS");
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
-        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-        MultiMap form = MultiMap.caseInsensitiveMultiMap();
-        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-        form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
-        if(pageId != null)
-          form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -2345,7 +1131,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
-            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEDOC".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -2361,46 +1147,46 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyCourse -> {
+              searchSpineDocList(siteRequest, true, false, true, "DELETE").onSuccess(listSpineDoc -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listCompanyCourse.getRequest().getRows());
-                  apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
+                  apiRequest.setRows(listSpineDoc.getRequest().getRows());
+                  apiRequest.setNumFound(listSpineDoc.getResponse().getResponse().getNumFound());
                   apiRequest.setNumPATCH(0L);
                   apiRequest.initDeepApiRequest(siteRequest);
                   siteRequest.setApiRequest_(apiRequest);
                   if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listCompanyCourse.first());
-                  eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+                    apiRequest.setOriginal(listSpineDoc.first());
+                  eventBus.publish("websocketSpineDoc", JsonObject.mapFrom(apiRequest).toString());
 
-                  listDELETEFilterCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
-                    response200DELETEFilterCompanyCourse(siteRequest).onSuccess(response -> {
-                      LOG.debug(String.format("deletefilterCompanyCourse succeeded. "));
+                  listDELETESpineDoc(apiRequest, listSpineDoc).onSuccess(e -> {
+                    response200DELETESpineDoc(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("deleteSpineDoc succeeded. "));
                       eventHandler.handle(Future.succeededFuture(response));
                     }).onFailure(ex -> {
-                      LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+                      LOG.error(String.format("deleteSpineDoc failed. "), ex);
                       error(siteRequest, eventHandler, ex);
                     });
                   }).onFailure(ex -> {
-                    LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+                    LOG.error(String.format("deleteSpineDoc failed. "), ex);
                     error(siteRequest, eventHandler, ex);
                   });
                 } catch(Exception ex) {
-                  LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+                  LOG.error(String.format("deleteSpineDoc failed. "), ex);
                   error(siteRequest, eventHandler, ex);
                 }
               }).onFailure(ex -> {
-                LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+                LOG.error(String.format("deleteSpineDoc failed. "), ex);
                 error(siteRequest, eventHandler, ex);
               });
             }
           } catch(Exception ex) {
-            LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+            LOG.error(String.format("deleteSpineDoc failed. "), ex);
             error(null, eventHandler, ex);
           }
         });
       } catch(Exception ex) {
-        LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+        LOG.error(String.format("deleteSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
@@ -2408,7 +1194,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         try {
           eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
         } catch(Exception ex2) {
-          LOG.error(String.format("deletefilterCompanyCourse failed. ", ex2));
+          LOG.error(String.format("deleteSpineDoc failed. ", ex2));
           error(null, eventHandler, ex2);
         }
       } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2423,58 +1209,58 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               )
           ));
       } else {
-        LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+        LOG.error(String.format("deleteSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     });
   }
 
-  public Future<Void> listDELETEFilterCompanyCourse(ApiRequest apiRequest, SearchList<CompanyCourse> listCompanyCourse) {
+  public Future<Void> listDELETESpineDoc(ApiRequest apiRequest, SearchList<SpineDoc> listSpineDoc) {
     Promise<Void> promise = Promise.promise();
     List<Future> futures = new ArrayList<>();
-    SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-    listCompanyCourse.getList().forEach(o -> {
+    SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+    listSpineDoc.getList().forEach(o -> {
       SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
       siteRequest2.setScopes(siteRequest.getScopes());
       o.setSiteRequest_(siteRequest2);
       siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
       JsonObject jsonObject = JsonObject.mapFrom(o);
-      CompanyCourse o2 = jsonObject.mapTo(CompanyCourse.class);
+      SpineDoc o2 = jsonObject.mapTo(SpineDoc.class);
       o2.setSiteRequest_(siteRequest2);
       futures.add(Future.future(promise1 -> {
-        deletefilterCompanyCourseFuture(o).onSuccess(a -> {
+        deleteSpineDocFuture(o).onSuccess(a -> {
           promise1.complete();
         }).onFailure(ex -> {
-          LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
+          LOG.error(String.format("listDELETESpineDoc failed. "), ex);
           promise1.tryFail(ex);
         });
       }));
     });
     CompositeFuture.all(futures).onSuccess( a -> {
-      listCompanyCourse.next().onSuccess(next -> {
+      listSpineDoc.next().onSuccess(next -> {
         if(next) {
-          listDELETEFilterCompanyCourse(apiRequest, listCompanyCourse).onSuccess(b -> {
+          listDELETESpineDoc(apiRequest, listSpineDoc).onSuccess(b -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
+            LOG.error(String.format("listDELETESpineDoc failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
+        LOG.error(String.format("listDELETESpineDoc failed. "), ex);
         promise.tryFail(ex);
       });
     }).onFailure(ex -> {
-      LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
+      LOG.error(String.format("listDELETESpineDoc failed. "), ex);
       promise.tryFail(ex);
     });
     return promise.future();
   }
 
   @Override
-  public void deletefilterCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+  public void deleteSpineDocFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
     Boolean classPublicRead = true;
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
@@ -2486,10 +1272,10 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyCourseList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyCourse -> {
+        searchSpineDocList(siteRequest, false, true, true, "DELETE").onSuccess(listSpineDoc -> {
           try {
-            CompanyCourse o = listCompanyCourse.first();
-            if(o != null && listCompanyCourse.getResponse().getResponse().getNumFound() == 1) {
+            SpineDoc o = listSpineDoc.first();
+            if(o != null && listSpineDoc.getResponse().getResponse().getNumFound() == 1) {
               ApiRequest apiRequest = new ApiRequest();
               apiRequest.setRows(1L);
               apiRequest.setNumFound(1L);
@@ -2501,8 +1287,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               }
               if(apiRequest.getNumFound() == 1L)
                 apiRequest.setOriginal(o);
-              apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-              deletefilterCompanyCourseFuture(o).onSuccess(o2 -> {
+              apiRequest.setId(Optional.ofNullable(listSpineDoc.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+              deleteSpineDocFuture(o).onSuccess(o2 -> {
                 eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
               }).onFailure(ex -> {
                 eventHandler.handle(Future.failedFuture(ex));
@@ -2511,48 +1297,1002 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
             }
           } catch(Exception ex) {
-            LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+            LOG.error(String.format("deleteSpineDoc failed. "), ex);
             error(siteRequest, eventHandler, ex);
           }
         }).onFailure(ex -> {
-          LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+          LOG.error(String.format("deleteSpineDoc failed. "), ex);
           error(siteRequest, eventHandler, ex);
         });
       } catch(Exception ex) {
-        LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+        LOG.error(String.format("deleteSpineDoc failed. "), ex);
         error(null, eventHandler, ex);
       }
     }).onFailure(ex -> {
-      LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
+      LOG.error(String.format("deleteSpineDoc failed. "), ex);
       error(null, eventHandler, ex);
     });
   }
 
-  public Future<CompanyCourse> deletefilterCompanyCourseFuture(CompanyCourse o) {
+  public Future<SpineDoc> deleteSpineDocFuture(SpineDoc o) {
     SiteRequest siteRequest = o.getSiteRequest_();
-    Promise<CompanyCourse> promise = Promise.promise();
+    Promise<SpineDoc> promise = Promise.promise();
 
     try {
       ApiRequest apiRequest = siteRequest.getApiRequest_();
-      unindexCompanyCourse(o).onSuccess(e -> {
+      unindexSpineDoc(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("deletefilterCompanyCourseFuture failed. "), ex);
+      LOG.error(String.format("deleteSpineDocFuture failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<ServiceResponse> response200DELETEFilterCompanyCourse(SiteRequest siteRequest) {
+  public Future<ServiceResponse> response200DELETESpineDoc(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
       promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
-      LOG.error(String.format("response200DELETEFilterCompanyCourse failed. "), ex);
+      LOG.error(String.format("response200DELETESpineDoc failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+
+  // SearchPage //
+
+  @Override
+  public void searchpageSpineDoc(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+              searchSpineDocList(siteRequest, false, true, false, "GET").onSuccess(listSpineDoc -> {
+                response200SearchPageSpineDoc(listSpineDoc).onSuccess(response -> {
+                  eventHandler.handle(Future.succeededFuture(response));
+                  LOG.debug(String.format("searchpageSpineDoc succeeded. "));
+                }).onFailure(ex -> {
+                  LOG.error(String.format("searchpageSpineDoc failed. "), ex);
+                  error(siteRequest, eventHandler, ex);
+                });
+              }).onFailure(ex -> {
+                LOG.error(String.format("searchpageSpineDoc failed. "), ex);
+                error(siteRequest, eventHandler, ex);
+              });
+      } catch(Exception ex) {
+        LOG.error(String.format("searchpageSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+        try {
+          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+        } catch(Exception ex2) {
+          LOG.error(String.format("searchpageSpineDoc failed. ", ex2));
+          error(null, eventHandler, ex2);
+        }
+      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+        eventHandler.handle(Future.succeededFuture(
+          new ServiceResponse(401, "UNAUTHORIZED",
+            Buffer.buffer().appendString(
+              new JsonObject()
+                .put("errorCode", "401")
+                .put("errorMessage", "SSO Resource Permission check returned DENY")
+                .encodePrettily()
+              ), MultiMap.caseInsensitiveMultiMap()
+              )
+          ));
+      } else {
+        LOG.error(String.format("searchpageSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    });
+  }
+
+  public void searchpageSpineDocPageInit(JsonObject ctx, SpineDocPage page, SearchList<SpineDoc> listSpineDoc, Promise<Void> promise) {
+    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-doc"));
+    ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-doc"));
+    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
+    promise.complete();
+  }
+
+  public String templateUriSearchPageSpineDoc(ServiceRequest serviceRequest, SpineDoc result) {
+    return "en-us/search/spine-doc/SpineDocSearchPage.htm";
+  }
+  public void templateSearchPageSpineDoc(JsonObject ctx, SpineDocPage page, SearchList<SpineDoc> listSpineDoc, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SpineDoc result = listSpineDoc.first();
+      String pageTemplateUri = templateUriSearchPageSpineDoc(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/spine-doc/SpineDocSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageSpineDoc failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
+  }
+  public Future<ServiceResponse> response200SearchPageSpineDoc(SearchList<SpineDoc> listSpineDoc) {
+    Promise<ServiceResponse> promise = Promise.promise();
+    try {
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      SpineDocPage page = new SpineDocPage();
+      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+      siteRequest.setRequestHeaders(requestHeaders);
+
+      page.setSearchListSpineDoc_(listSpineDoc);
+      page.setSiteRequest_(siteRequest);
+      page.setServiceRequest(siteRequest.getServiceRequest());
+      page.setWebClient(webClient);
+      page.setVertx(vertx);
+      page.promiseDeepSpineDocPage(siteRequest).onSuccess(a -> {
+        try {
+          JsonObject ctx = ConfigKeys.getPageContext(config);
+          ctx.mergeIn(JsonObject.mapFrom(page));
+          Promise<Void> promise1 = Promise.promise();
+          searchpageSpineDocPageInit(ctx, page, listSpineDoc, promise1);
+          promise1.future().onSuccess(b -> {
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageSpineDoc(ctx, page, listSpineDoc, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageSpineDoc failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
+                promise.fail(ex);
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageSpineDoc failed. "), ex);
+              promise.tryFail(ex);
+            }
+          }).onFailure(ex -> {
+            promise.tryFail(ex);
+          });
+        } catch(Exception ex) {
+          LOG.error(String.format("response200SearchPageSpineDoc failed. "), ex);
+          promise.tryFail(ex);
+        }
+      }).onFailure(ex -> {
+        promise.tryFail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("response200SearchPageSpineDoc failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+  public void responsePivotSearchPageSpineDoc(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+    if(pivots != null) {
+      for(SolrResponse.Pivot pivotField : pivots) {
+        String entityIndexed = pivotField.getField();
+        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+        JsonObject pivotJson = new JsonObject();
+        pivotArray.add(pivotJson);
+        pivotJson.put("field", entityVar);
+        pivotJson.put("value", pivotField.getValue());
+        pivotJson.put("count", pivotField.getCount());
+        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+        if(pivotRanges != null) {
+          JsonObject rangeJson = new JsonObject();
+          pivotJson.put("ranges", rangeJson);
+          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+            JsonObject rangeFacetJson = new JsonObject();
+            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+            rangeJson.put(rangeFacetVar, rangeFacetJson);
+            JsonObject rangeFacetCountsObject = new JsonObject();
+            rangeFacetJson.put("counts", rangeFacetCountsObject);
+            rangeFacet.getCounts().forEach((value, count) -> {
+              rangeFacetCountsObject.put(value, count);
+            });
+          }
+        }
+        if(pivotFields2 != null) {
+          JsonArray pivotArray2 = new JsonArray();
+          pivotJson.put("pivot", pivotArray2);
+          responsePivotSearchPageSpineDoc(pivotFields2, pivotArray2);
+        }
+      }
+    }
+  }
+
+  // EditPage //
+
+  @Override
+  public void editpageSpineDoc(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String SPINEDOC = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEDOC");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s-%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+              , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+              , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+              )
+              .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+              .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+              .sendForm(form)
+              .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEDOC".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchSpineDocList(siteRequest, false, true, false, "GET").onSuccess(listSpineDoc -> {
+                response200EditPageSpineDoc(listSpineDoc).onSuccess(response -> {
+                  eventHandler.handle(Future.succeededFuture(response));
+                  LOG.debug(String.format("editpageSpineDoc succeeded. "));
+                }).onFailure(ex -> {
+                  LOG.error(String.format("editpageSpineDoc failed. "), ex);
+                  error(siteRequest, eventHandler, ex);
+                });
+              }).onFailure(ex -> {
+                LOG.error(String.format("editpageSpineDoc failed. "), ex);
+                error(siteRequest, eventHandler, ex);
+            });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("editpageSpineDoc failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
+      } catch(Exception ex) {
+        LOG.error(String.format("editpageSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+        try {
+          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+        } catch(Exception ex2) {
+          LOG.error(String.format("editpageSpineDoc failed. ", ex2));
+          error(null, eventHandler, ex2);
+        }
+      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+        eventHandler.handle(Future.succeededFuture(
+          new ServiceResponse(401, "UNAUTHORIZED",
+            Buffer.buffer().appendString(
+              new JsonObject()
+                .put("errorCode", "401")
+                .put("errorMessage", "SSO Resource Permission check returned DENY")
+                .encodePrettily()
+              ), MultiMap.caseInsensitiveMultiMap()
+              )
+          ));
+      } else {
+        LOG.error(String.format("editpageSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    });
+  }
+
+  public void editpageSpineDocPageInit(JsonObject ctx, SpineDocPage page, SearchList<SpineDoc> listSpineDoc, Promise<Void> promise) {
+    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-doc"));
+    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
+    promise.complete();
+  }
+
+  public String templateUriEditPageSpineDoc(ServiceRequest serviceRequest, SpineDoc result) {
+    return "en-us/edit/spine-doc/SpineDocEditPage.htm";
+  }
+  public void templateEditPageSpineDoc(JsonObject ctx, SpineDocPage page, SearchList<SpineDoc> listSpineDoc, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SpineDoc result = listSpineDoc.first();
+      String pageTemplateUri = templateUriEditPageSpineDoc(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/spine-doc/SpineDocEditPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageSpineDoc failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
+  }
+  public Future<ServiceResponse> response200EditPageSpineDoc(SearchList<SpineDoc> listSpineDoc) {
+    Promise<ServiceResponse> promise = Promise.promise();
+    try {
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      SpineDocPage page = new SpineDocPage();
+      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+      siteRequest.setRequestHeaders(requestHeaders);
+
+      page.setSearchListSpineDoc_(listSpineDoc);
+      page.setSiteRequest_(siteRequest);
+      page.setServiceRequest(siteRequest.getServiceRequest());
+      page.setWebClient(webClient);
+      page.setVertx(vertx);
+      page.promiseDeepSpineDocPage(siteRequest).onSuccess(a -> {
+        try {
+          JsonObject ctx = ConfigKeys.getPageContext(config);
+          ctx.mergeIn(JsonObject.mapFrom(page));
+          Promise<Void> promise1 = Promise.promise();
+          editpageSpineDocPageInit(ctx, page, listSpineDoc, promise1);
+          promise1.future().onSuccess(b -> {
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageSpineDoc(ctx, page, listSpineDoc, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageSpineDoc failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
+                promise.fail(ex);
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageSpineDoc failed. "), ex);
+              promise.tryFail(ex);
+            }
+          }).onFailure(ex -> {
+            promise.tryFail(ex);
+          });
+        } catch(Exception ex) {
+          LOG.error(String.format("response200EditPageSpineDoc failed. "), ex);
+          promise.tryFail(ex);
+        }
+      }).onFailure(ex -> {
+        promise.tryFail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("response200EditPageSpineDoc failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+  public void responsePivotEditPageSpineDoc(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+    if(pivots != null) {
+      for(SolrResponse.Pivot pivotField : pivots) {
+        String entityIndexed = pivotField.getField();
+        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+        JsonObject pivotJson = new JsonObject();
+        pivotArray.add(pivotJson);
+        pivotJson.put("field", entityVar);
+        pivotJson.put("value", pivotField.getValue());
+        pivotJson.put("count", pivotField.getCount());
+        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+        if(pivotRanges != null) {
+          JsonObject rangeJson = new JsonObject();
+          pivotJson.put("ranges", rangeJson);
+          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+            JsonObject rangeFacetJson = new JsonObject();
+            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+            rangeJson.put(rangeFacetVar, rangeFacetJson);
+            JsonObject rangeFacetCountsObject = new JsonObject();
+            rangeFacetJson.put("counts", rangeFacetCountsObject);
+            rangeFacet.getCounts().forEach((value, count) -> {
+              rangeFacetCountsObject.put(value, count);
+            });
+          }
+        }
+        if(pivotFields2 != null) {
+          JsonArray pivotArray2 = new JsonArray();
+          pivotJson.put("pivot", pivotArray2);
+          responsePivotEditPageSpineDoc(pivotFields2, pivotArray2);
+        }
+      }
+    }
+  }
+
+  // DisplayPage //
+
+  @Override
+  public void displaypageSpineDoc(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+              searchSpineDocList(siteRequest, false, true, false, "GET").onSuccess(listSpineDoc -> {
+                response200DisplayPageSpineDoc(listSpineDoc).onSuccess(response -> {
+                  eventHandler.handle(Future.succeededFuture(response));
+                  LOG.debug(String.format("displaypageSpineDoc succeeded. "));
+                }).onFailure(ex -> {
+                  LOG.error(String.format("displaypageSpineDoc failed. "), ex);
+                  error(siteRequest, eventHandler, ex);
+                });
+              }).onFailure(ex -> {
+                LOG.error(String.format("displaypageSpineDoc failed. "), ex);
+                error(siteRequest, eventHandler, ex);
+            });
+      } catch(Exception ex) {
+        LOG.error(String.format("displaypageSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+        try {
+          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+        } catch(Exception ex2) {
+          LOG.error(String.format("displaypageSpineDoc failed. ", ex2));
+          error(null, eventHandler, ex2);
+        }
+      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+        eventHandler.handle(Future.succeededFuture(
+          new ServiceResponse(401, "UNAUTHORIZED",
+            Buffer.buffer().appendString(
+              new JsonObject()
+                .put("errorCode", "401")
+                .put("errorMessage", "SSO Resource Permission check returned DENY")
+                .encodePrettily()
+              ), MultiMap.caseInsensitiveMultiMap()
+              )
+          ));
+      } else {
+        LOG.error(String.format("displaypageSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    });
+  }
+
+  public void displaypageSpineDocPageInit(JsonObject ctx, SpineDocPage page, SearchList<SpineDoc> listSpineDoc, Promise<Void> promise) {
+    String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-doc"));
+    ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("enUSUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
+    promise.complete();
+  }
+
+  public String templateUriDisplayPageSpineDoc(ServiceRequest serviceRequest, SpineDoc result) {
+    return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateDisplayPageSpineDoc(JsonObject ctx, SpineDocPage page, SearchList<SpineDoc> listSpineDoc, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SpineDoc result = listSpineDoc.first();
+      String pageTemplateUri = templateUriDisplayPageSpineDoc(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateDisplayPageSpineDoc failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
+  }
+  public Future<ServiceResponse> response200DisplayPageSpineDoc(SearchList<SpineDoc> listSpineDoc) {
+    Promise<ServiceResponse> promise = Promise.promise();
+    try {
+      SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+      SpineDocPage page = new SpineDocPage();
+      MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+      siteRequest.setRequestHeaders(requestHeaders);
+
+      page.setSearchListSpineDoc_(listSpineDoc);
+      page.setSiteRequest_(siteRequest);
+      page.setServiceRequest(siteRequest.getServiceRequest());
+      page.setWebClient(webClient);
+      page.setVertx(vertx);
+      page.promiseDeepSpineDocPage(siteRequest).onSuccess(a -> {
+        try {
+          JsonObject ctx = ConfigKeys.getPageContext(config);
+          ctx.mergeIn(JsonObject.mapFrom(page));
+          Promise<Void> promise1 = Promise.promise();
+          displaypageSpineDocPageInit(ctx, page, listSpineDoc, promise1);
+          promise1.future().onSuccess(b -> {
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateDisplayPageSpineDoc(ctx, page, listSpineDoc, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200DisplayPageSpineDoc failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
+                promise.fail(ex);
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200DisplayPageSpineDoc failed. "), ex);
+              promise.tryFail(ex);
+            }
+          }).onFailure(ex -> {
+            promise.tryFail(ex);
+          });
+        } catch(Exception ex) {
+          LOG.error(String.format("response200DisplayPageSpineDoc failed. "), ex);
+          promise.tryFail(ex);
+        }
+      }).onFailure(ex -> {
+        promise.tryFail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("response200DisplayPageSpineDoc failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+  public void responsePivotDisplayPageSpineDoc(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+    if(pivots != null) {
+      for(SolrResponse.Pivot pivotField : pivots) {
+        String entityIndexed = pivotField.getField();
+        String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+        JsonObject pivotJson = new JsonObject();
+        pivotArray.add(pivotJson);
+        pivotJson.put("field", entityVar);
+        pivotJson.put("value", pivotField.getValue());
+        pivotJson.put("count", pivotField.getCount());
+        Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+        List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+        if(pivotRanges != null) {
+          JsonObject rangeJson = new JsonObject();
+          pivotJson.put("ranges", rangeJson);
+          for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+            JsonObject rangeFacetJson = new JsonObject();
+            String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+            rangeJson.put(rangeFacetVar, rangeFacetJson);
+            JsonObject rangeFacetCountsObject = new JsonObject();
+            rangeFacetJson.put("counts", rangeFacetCountsObject);
+            rangeFacet.getCounts().forEach((value, count) -> {
+              rangeFacetCountsObject.put(value, count);
+            });
+          }
+        }
+        if(pivotFields2 != null) {
+          JsonArray pivotArray2 = new JsonArray();
+          pivotJson.put("pivot", pivotArray2);
+          responsePivotDisplayPageSpineDoc(pivotFields2, pivotArray2);
+        }
+      }
+    }
+  }
+
+  // DELETEFilter //
+
+  @Override
+  public void deletefilterSpineDoc(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("deletefilterSpineDoc started. "));
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String SPINEDOC = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEDOC");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s-%s#%s", SpineDoc.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+            , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+            )
+            .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+            .sendForm(form)
+            .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEDOC".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+              String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+              eventHandler.handle(Future.succeededFuture(
+                new ServiceResponse(403, "FORBIDDEN",
+                  Buffer.buffer().appendString(
+                    new JsonObject()
+                      .put("errorCode", "403")
+                      .put("errorMessage", msg)
+                      .encodePrettily()
+                    ), MultiMap.caseInsensitiveMultiMap()
+                )
+              ));
+            } else {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchSpineDocList(siteRequest, true, false, true, "DELETE").onSuccess(listSpineDoc -> {
+                try {
+                  ApiRequest apiRequest = new ApiRequest();
+                  apiRequest.setRows(listSpineDoc.getRequest().getRows());
+                  apiRequest.setNumFound(listSpineDoc.getResponse().getResponse().getNumFound());
+                  apiRequest.setNumPATCH(0L);
+                  apiRequest.initDeepApiRequest(siteRequest);
+                  siteRequest.setApiRequest_(apiRequest);
+                  if(apiRequest.getNumFound() == 1L)
+                    apiRequest.setOriginal(listSpineDoc.first());
+                  eventBus.publish("websocketSpineDoc", JsonObject.mapFrom(apiRequest).toString());
+
+                  listDELETEFilterSpineDoc(apiRequest, listSpineDoc).onSuccess(e -> {
+                    response200DELETEFilterSpineDoc(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("deletefilterSpineDoc succeeded. "));
+                      eventHandler.handle(Future.succeededFuture(response));
+                    }).onFailure(ex -> {
+                      LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+                      error(siteRequest, eventHandler, ex);
+                    });
+                  }).onFailure(ex -> {
+                    LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+                    error(siteRequest, eventHandler, ex);
+                  });
+                } catch(Exception ex) {
+                  LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+                  error(siteRequest, eventHandler, ex);
+                }
+              }).onFailure(ex -> {
+                LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+                error(siteRequest, eventHandler, ex);
+              });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
+      } catch(Exception ex) {
+        LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+        try {
+          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+        } catch(Exception ex2) {
+          LOG.error(String.format("deletefilterSpineDoc failed. ", ex2));
+          error(null, eventHandler, ex2);
+        }
+      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+        eventHandler.handle(Future.succeededFuture(
+          new ServiceResponse(401, "UNAUTHORIZED",
+            Buffer.buffer().appendString(
+              new JsonObject()
+                .put("errorCode", "401")
+                .put("errorMessage", "SSO Resource Permission check returned DENY")
+                .encodePrettily()
+              ), MultiMap.caseInsensitiveMultiMap()
+              )
+          ));
+      } else {
+        LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    });
+  }
+
+  public Future<Void> listDELETEFilterSpineDoc(ApiRequest apiRequest, SearchList<SpineDoc> listSpineDoc) {
+    Promise<Void> promise = Promise.promise();
+    List<Future> futures = new ArrayList<>();
+    SiteRequest siteRequest = listSpineDoc.getSiteRequest_(SiteRequest.class);
+    listSpineDoc.getList().forEach(o -> {
+      SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+      siteRequest2.setScopes(siteRequest.getScopes());
+      o.setSiteRequest_(siteRequest2);
+      siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+      JsonObject jsonObject = JsonObject.mapFrom(o);
+      SpineDoc o2 = jsonObject.mapTo(SpineDoc.class);
+      o2.setSiteRequest_(siteRequest2);
+      futures.add(Future.future(promise1 -> {
+        deletefilterSpineDocFuture(o).onSuccess(a -> {
+          promise1.complete();
+        }).onFailure(ex -> {
+          LOG.error(String.format("listDELETEFilterSpineDoc failed. "), ex);
+          promise1.tryFail(ex);
+        });
+      }));
+    });
+    CompositeFuture.all(futures).onSuccess( a -> {
+      listSpineDoc.next().onSuccess(next -> {
+        if(next) {
+          listDELETEFilterSpineDoc(apiRequest, listSpineDoc).onSuccess(b -> {
+            promise.complete();
+          }).onFailure(ex -> {
+            LOG.error(String.format("listDELETEFilterSpineDoc failed. "), ex);
+            promise.tryFail(ex);
+          });
+        } else {
+          promise.complete();
+        }
+      }).onFailure(ex -> {
+        LOG.error(String.format("listDELETEFilterSpineDoc failed. "), ex);
+        promise.tryFail(ex);
+      });
+    }).onFailure(ex -> {
+      LOG.error(String.format("listDELETEFilterSpineDoc failed. "), ex);
+      promise.tryFail(ex);
+    });
+    return promise.future();
+  }
+
+  @Override
+  public void deletefilterSpineDocFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+        siteRequest.setJsonObject(body);
+        serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+        Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+          scopes.stream().map(v -> v.toString()).forEach(scope -> {
+            siteRequest.addScopes(scope);
+          });
+        });
+        searchSpineDocList(siteRequest, false, true, true, "DELETE").onSuccess(listSpineDoc -> {
+          try {
+            SpineDoc o = listSpineDoc.first();
+            if(o != null && listSpineDoc.getResponse().getResponse().getNumFound() == 1) {
+              ApiRequest apiRequest = new ApiRequest();
+              apiRequest.setRows(1L);
+              apiRequest.setNumFound(1L);
+              apiRequest.setNumPATCH(0L);
+              apiRequest.initDeepApiRequest(siteRequest);
+              siteRequest.setApiRequest_(apiRequest);
+              if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
+                siteRequest.getRequestVars().put( "refresh", "false" );
+              }
+              if(apiRequest.getNumFound() == 1L)
+                apiRequest.setOriginal(o);
+              apiRequest.setId(Optional.ofNullable(listSpineDoc.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+              deletefilterSpineDocFuture(o).onSuccess(o2 -> {
+                eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+              }).onFailure(ex -> {
+                eventHandler.handle(Future.failedFuture(ex));
+              });
+            } else {
+              eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+            error(siteRequest, eventHandler, ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+          error(siteRequest, eventHandler, ex);
+        });
+      } catch(Exception ex) {
+        LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      LOG.error(String.format("deletefilterSpineDoc failed. "), ex);
+      error(null, eventHandler, ex);
+    });
+  }
+
+  public Future<SpineDoc> deletefilterSpineDocFuture(SpineDoc o) {
+    SiteRequest siteRequest = o.getSiteRequest_();
+    Promise<SpineDoc> promise = Promise.promise();
+
+    try {
+      ApiRequest apiRequest = siteRequest.getApiRequest_();
+      unindexSpineDoc(o).onSuccess(e -> {
+        promise.complete(o);
+      }).onFailure(ex -> {
+        promise.tryFail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("deletefilterSpineDocFuture failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+
+  public Future<ServiceResponse> response200DELETEFilterSpineDoc(SiteRequest siteRequest) {
+    Promise<ServiceResponse> promise = Promise.promise();
+    try {
+      JsonObject json = new JsonObject();
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+    } catch(Exception ex) {
+      LOG.error(String.format("response200DELETEFilterSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -2560,62 +2300,62 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
   // General //
 
-  public Future<CompanyCourse> createCompanyCourse(SiteRequest siteRequest) {
-    Promise<CompanyCourse> promise = Promise.promise();
+  public Future<SpineDoc> createSpineDoc(SiteRequest siteRequest) {
+    Promise<SpineDoc> promise = Promise.promise();
     try {
-      CompanyCourse o = new CompanyCourse();
+      SpineDoc o = new SpineDoc();
       o.setSiteRequest_(siteRequest);
       promise.complete(o);
     } catch(Exception ex) {
-      LOG.error(String.format("createCompanyCourse failed. "), ex);
+      LOG.error(String.format("createSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public void searchCompanyCourseQ(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+  public void searchSpineDocQ(SearchList<SpineDoc> searchList, String entityVar, String valueIndexed, String varIndexed) {
     searchList.q(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : SearchTool.escapeQueryChars(valueIndexed)));
     if(!"*".equals(entityVar)) {
     }
   }
 
-  public String searchCompanyCourseFq(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+  public String searchSpineDocFq(SearchList<SpineDoc> searchList, String entityVar, String valueIndexed, String varIndexed) {
     if(varIndexed == null)
       throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
     if(StringUtils.startsWith(valueIndexed, "[")) {
       String[] fqs = StringUtils.substringAfter(StringUtils.substringBeforeLast(valueIndexed, "]"), "[").split(" TO ");
       if(fqs.length != 2)
         throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
-      String fq1 = fqs[0].equals("*") ? fqs[0] : CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
-      String fq2 = fqs[1].equals("*") ? fqs[1] : CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
+      String fq1 = fqs[0].equals("*") ? fqs[0] : SpineDoc.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
+      String fq2 = fqs[1].equals("*") ? fqs[1] : SpineDoc.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
        return varIndexed + ":[" + fq1 + " TO " + fq2 + "]";
     } else {
-      return varIndexed + ":" + SearchTool.escapeQueryChars(CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
+      return varIndexed + ":" + SearchTool.escapeQueryChars(SpineDoc.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
     }
   }
 
-  public void searchCompanyCourseSort(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+  public void searchSpineDocSort(SearchList<SpineDoc> searchList, String entityVar, String valueIndexed, String varIndexed) {
     if(varIndexed == null)
       throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
     searchList.sort(varIndexed, valueIndexed);
   }
 
-  public void searchCompanyCourseRows(SearchList<CompanyCourse> searchList, Long valueRows) {
+  public void searchSpineDocRows(SearchList<SpineDoc> searchList, Long valueRows) {
       searchList.rows(valueRows != null ? valueRows : 10L);
   }
 
-  public void searchCompanyCourseStart(SearchList<CompanyCourse> searchList, Long valueStart) {
+  public void searchSpineDocStart(SearchList<SpineDoc> searchList, Long valueStart) {
     searchList.start(valueStart);
   }
 
-  public void searchCompanyCourseVar(SearchList<CompanyCourse> searchList, String var, String value) {
+  public void searchSpineDocVar(SearchList<SpineDoc> searchList, String var, String value) {
     searchList.getSiteRequest_(SiteRequest.class).getRequestVars().put(var, value);
   }
 
-  public void searchCompanyCourseUri(SearchList<CompanyCourse> searchList) {
+  public void searchSpineDocUri(SearchList<SpineDoc> searchList) {
   }
 
-  public Future<ServiceResponse> varsCompanyCourse(SiteRequest siteRequest) {
+  public Future<ServiceResponse> varsSpineDoc(SiteRequest siteRequest) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
@@ -2633,25 +2373,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             siteRequest.getRequestVars().put(entityVar, valueIndexed);
           }
         } catch(Exception ex) {
-          LOG.error(String.format("searchCompanyCourse failed. "), ex);
+          LOG.error(String.format("searchSpineDoc failed. "), ex);
           promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
-      LOG.error(String.format("searchCompanyCourse failed. "), ex);
+      LOG.error(String.format("searchSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<SearchList<CompanyCourse>> searchCompanyCourseList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
-    Promise<SearchList<CompanyCourse>> promise = Promise.promise();
+  public Future<SearchList<SpineDoc>> searchSpineDocList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
+    Promise<SearchList<SpineDoc>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-      SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+      SearchList<SpineDoc> searchList = new SearchList<SpineDoc>();
       searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
@@ -2662,12 +2402,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       searchList.setPopulate(populate);
       searchList.setStore(store);
       searchList.q("*:*");
-      searchList.setC(CompanyCourse.class);
+      searchList.setC(SpineDoc.class);
       searchList.setSiteRequest_(siteRequest);
       searchList.facetMinCount(1);
       if(entityList != null) {
         for(String v : entityList) {
-          searchList.fl(CompanyCourse.varIndexedCompanyCourse(v));
+          searchList.fl(SpineDoc.varIndexedSpineDoc(v));
         }
       }
 
@@ -2696,7 +2436,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               String[] varsIndexed = new String[entityVars.length];
               for(Integer i = 0; i < entityVars.length; i++) {
                 entityVar = entityVars[i];
-                varsIndexed[i] = CompanyCourse.varIndexedCompanyCourse(entityVar);
+                varsIndexed[i] = SpineDoc.varIndexedSpineDoc(entityVar);
               }
               searchList.facetPivot((solrLocalParams == null ? "" : solrLocalParams) + StringUtils.join(varsIndexed, ","));
             }
@@ -2708,8 +2448,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
                 while(mQ.find()) {
                   entityVar = mQ.group(1).trim();
                   valueIndexed = mQ.group(2).trim();
-                  varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-                  String entityQ = searchCompanyCourseFq(searchList, entityVar, valueIndexed, varIndexed);
+                  varIndexed = SpineDoc.varIndexedSpineDoc(entityVar);
+                  String entityQ = searchSpineDocFq(searchList, entityVar, valueIndexed, varIndexed);
                   mQ.appendReplacement(sb, entityQ);
                 }
                 if(!sb.isEmpty()) {
@@ -2722,8 +2462,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
                 while(mFq.find()) {
                   entityVar = mFq.group(1).trim();
                   valueIndexed = mFq.group(2).trim();
-                  varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-                  String entityFq = searchCompanyCourseFq(searchList, entityVar, valueIndexed, varIndexed);
+                  varIndexed = SpineDoc.varIndexedSpineDoc(entityVar);
+                  String entityFq = searchSpineDocFq(searchList, entityVar, valueIndexed, varIndexed);
                   mFq.appendReplacement(sb, entityFq);
                 }
                 if(!sb.isEmpty()) {
@@ -2733,14 +2473,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               } else if(paramName.equals("sort")) {
                 entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
                 valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-                varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-                searchCompanyCourseSort(searchList, entityVar, valueIndexed, varIndexed);
+                varIndexed = SpineDoc.varIndexedSpineDoc(entityVar);
+                searchSpineDocSort(searchList, entityVar, valueIndexed, varIndexed);
               } else if(paramName.equals("start")) {
                 valueStart = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-                searchCompanyCourseStart(searchList, valueStart);
+                searchSpineDocStart(searchList, valueStart);
               } else if(paramName.equals("rows")) {
                 valueRows = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-                searchCompanyCourseRows(searchList, valueRows);
+                searchSpineDocRows(searchList, valueRows);
               } else if(paramName.equals("stats")) {
                 searchList.stats((Boolean)paramObject);
               } else if(paramName.equals("stats.field")) {
@@ -2748,7 +2488,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
                 if(mStats.find()) {
                   String solrLocalParams = mStats.group(1);
                   entityVar = mStats.group(2).trim();
-                  varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+                  varIndexed = SpineDoc.varIndexedSpineDoc(entityVar);
                   searchList.statsField((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
                   statsField = entityVar;
                   statsFieldIndexed = varIndexed;
@@ -2774,25 +2514,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
                 if(mFacetRange.find()) {
                   String solrLocalParams = mFacetRange.group(1);
                   entityVar = mFacetRange.group(2).trim();
-                  varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+                  varIndexed = SpineDoc.varIndexedSpineDoc(entityVar);
                   searchList.facetRange((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
                   facetRange = entityVar;
                 }
               } else if(paramName.equals("facet.field")) {
                 entityVar = (String)paramObject;
-                varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+                varIndexed = SpineDoc.varIndexedSpineDoc(entityVar);
                 if(varIndexed != null)
                   searchList.facetField(varIndexed);
               } else if(paramName.equals("var")) {
                 entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
                 valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-                searchCompanyCourseVar(searchList, entityVar, valueIndexed);
+                searchSpineDocVar(searchList, entityVar, valueIndexed);
               } else if(paramName.equals("cursorMark")) {
                 valueCursorMark = (String)paramObject;
                 searchList.cursorMark((String)paramObject);
               }
             }
-            searchCompanyCourseUri(searchList);
+            searchSpineDocUri(searchList);
           }
         } catch(Exception e) {
           ExceptionUtils.rethrow(e);
@@ -2800,6 +2540,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
       if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
         searchList.sort("courseNum_docvalues_int", "asc");
+        searchList.sort("lessonNum_docvalues_int", "asc");
         searchList.setDefaultSort(true);
       }
       String facetRange2 = facetRange;
@@ -2808,7 +2549,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       String facetRangeGap2 = facetRangeGap;
       String statsField2 = statsField;
       String statsFieldIndexed2 = statsFieldIndexed;
-      searchCompanyCourse2(siteRequest, populate, store, modify, searchList);
+      searchSpineDoc2(siteRequest, populate, store, modify, searchList);
       searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
         if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
           StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
@@ -2844,26 +2585,26 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           searchList.query().onSuccess(b -> {
             promise.complete(searchList);
           }).onFailure(ex -> {
-            LOG.error(String.format("searchCompanyCourse failed. "), ex);
+            LOG.error(String.format("searchSpineDoc failed. "), ex);
             promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
-        LOG.error(String.format("searchCompanyCourse failed. "), ex);
+        LOG.error(String.format("searchSpineDoc failed. "), ex);
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("searchCompanyCourse failed. "), ex);
+      LOG.error(String.format("searchSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
-  public void searchCompanyCourse2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyCourse> searchList) {
+  public void searchSpineDoc2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<SpineDoc> searchList) {
   }
 
-  public Future<Void> persistCompanyCourse(CompanyCourse o, Boolean patch) {
+  public Future<Void> persistSpineDoc(SpineDoc o, Boolean patch) {
     Promise<Void> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
@@ -2883,38 +2624,38 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               try {
                 o.persistForClass(columnName, columnValue);
               } catch(Exception e) {
-                LOG.error(String.format("persistCompanyCourse failed. "), e);
+                LOG.error(String.format("persistSpineDoc failed. "), e);
               }
             }
           });
           o.promiseDeepForClass(siteRequest).onSuccess(a -> {
             promise.complete();
           }).onFailure(ex -> {
-            LOG.error(String.format("persistCompanyCourse failed. "), ex);
+            LOG.error(String.format("persistSpineDoc failed. "), ex);
             promise.tryFail(ex);
           });
         } catch(Exception ex) {
-          LOG.error(String.format("persistCompanyCourse failed. "), ex);
+          LOG.error(String.format("persistSpineDoc failed. "), ex);
           promise.tryFail(ex);
         }
     } catch(Exception ex) {
-      LOG.error(String.format("persistCompanyCourse failed. "), ex);
+      LOG.error(String.format("persistSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
   public String searchVar(String varIndexed) {
-    return CompanyCourse.searchVarCompanyCourse(varIndexed);
+    return SpineDoc.searchVarSpineDoc(varIndexed);
   }
 
   @Override
   public String getClassApiAddress() {
-    return CompanyCourse.CLASS_API_ADDRESS_CompanyCourse;
+    return SpineDoc.CLASS_API_ADDRESS_SpineDoc;
   }
 
-  public Future<CompanyCourse> indexCompanyCourse(CompanyCourse o) {
-    Promise<CompanyCourse> promise = Promise.promise();
+  public Future<SpineDoc> indexSpineDoc(SpineDoc o) {
+    Promise<SpineDoc> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -2923,7 +2664,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       json.put("add", add);
       JsonObject doc = new JsonObject();
       add.put("doc", doc);
-      o.indexCompanyCourse(doc);
+      o.indexSpineDoc(doc);
       String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
       String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
       String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
@@ -2940,18 +2681,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").sendBuffer(json.toBuffer()).expecting(HttpResponseExpectation.SC_OK).onSuccess(b -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        LOG.error(String.format("indexCompanyCourse failed. "), new RuntimeException(ex));
+        LOG.error(String.format("indexSpineDoc failed. "), new RuntimeException(ex));
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("indexCompanyCourse failed. "), ex);
+      LOG.error(String.format("indexSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<CompanyCourse> unindexCompanyCourse(CompanyCourse o) {
-    Promise<CompanyCourse> promise = Promise.promise();
+  public Future<SpineDoc> unindexSpineDoc(SpineDoc o) {
+    Promise<SpineDoc> promise = Promise.promise();
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -2959,7 +2700,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         JsonObject json = new JsonObject();
         JsonObject delete = new JsonObject();
         json.put("delete", delete);
-        String query = String.format("filter(%s:%s)", CompanyCourse.VAR_solrId, o.obtainForClass(CompanyCourse.VAR_solrId));
+        String query = String.format("filter(%s:%s)", SpineDoc.VAR_solrId, o.obtainForClass(SpineDoc.VAR_solrId));
         delete.put("query", query);
         String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
         String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -2977,15 +2718,15 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").sendBuffer(json.toBuffer()).expecting(HttpResponseExpectation.SC_OK).onSuccess(b -> {
           promise.complete(o);
         }).onFailure(ex -> {
-          LOG.error(String.format("unindexCompanyCourse failed. "), new RuntimeException(ex));
+          LOG.error(String.format("unindexSpineDoc failed. "), new RuntimeException(ex));
           promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        LOG.error(String.format("unindexCompanyCourse failed. "), ex);
+        LOG.error(String.format("unindexSpineDoc failed. "), ex);
         promise.tryFail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("unindexCompanyCourse failed. "), ex);
+      LOG.error(String.format("unindexSpineDoc failed. "), ex);
       promise.tryFail(ex);
     }
     return promise.future();
@@ -2998,29 +2739,33 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      CompanyCourse o = new CompanyCourse();
+      SpineDoc o = new SpineDoc();
       o.setSiteRequest_((SiteRequest)siteRequest);
 
-      o.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, (String)result.get(CompanyCourse.VAR_name)));
-      o.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, (String)result.get(CompanyCourse.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      o.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, (String)result.get(CompanyCourse.VAR_description)));
-      o.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, (String)result.get(CompanyCourse.VAR_price)));
-      o.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, (String)result.get(CompanyCourse.VAR_archived)));
-      o.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, (String)result.get(CompanyCourse.VAR_pageId)));
-      o.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyCourse.VAR_emailTemplate)));
-      o.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_storeUrl)));
-      o.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyCourse.VAR_downloadUri)));
-      o.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, (String)result.get(CompanyCourse.VAR_courseNum)));
-      o.persistForClass(CompanyCourse.VAR_objectTitle, CompanyCourse.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_objectTitle)));
-      o.persistForClass(CompanyCourse.VAR_pageVideoUrl, CompanyCourse.staticSetPageVideoUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_pageVideoUrl)));
-      o.persistForClass(CompanyCourse.VAR_displayPage, CompanyCourse.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyCourse.VAR_displayPage)));
-      o.persistForClass(CompanyCourse.VAR_pageImageUri, CompanyCourse.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageUri)));
-      o.persistForClass(CompanyCourse.VAR_editPage, CompanyCourse.staticSetEditPage(siteRequest2, (String)result.get(CompanyCourse.VAR_editPage)));
-      o.persistForClass(CompanyCourse.VAR_userPage, CompanyCourse.staticSetUserPage(siteRequest2, (String)result.get(CompanyCourse.VAR_userPage)));
-      o.persistForClass(CompanyCourse.VAR_download, CompanyCourse.staticSetDownload(siteRequest2, (String)result.get(CompanyCourse.VAR_download)));
-      o.persistForClass(CompanyCourse.VAR_pageImageAlt, CompanyCourse.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageAlt)));
-      o.persistForClass(CompanyCourse.VAR_relatedArticleIds, CompanyCourse.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyCourse.VAR_relatedArticleIds)));
-      o.persistForClass(CompanyCourse.VAR_solrId, CompanyCourse.staticSetSolrId(siteRequest2, (String)result.get(CompanyCourse.VAR_solrId)));
+      o.persistForClass(SpineDoc.VAR_created, SpineDoc.staticSetCreated(siteRequest2, (String)result.get(SpineDoc.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(SpineDoc.VAR_importance, SpineDoc.staticSetImportance(siteRequest2, (String)result.get(SpineDoc.VAR_importance)));
+      o.persistForClass(SpineDoc.VAR_courseNum, SpineDoc.staticSetCourseNum(siteRequest2, (String)result.get(SpineDoc.VAR_courseNum)));
+      o.persistForClass(SpineDoc.VAR_archived, SpineDoc.staticSetArchived(siteRequest2, (String)result.get(SpineDoc.VAR_archived)));
+      o.persistForClass(SpineDoc.VAR_lessonNum, SpineDoc.staticSetLessonNum(siteRequest2, (String)result.get(SpineDoc.VAR_lessonNum)));
+      o.persistForClass(SpineDoc.VAR_name, SpineDoc.staticSetName(siteRequest2, (String)result.get(SpineDoc.VAR_name)));
+      o.persistForClass(SpineDoc.VAR_description, SpineDoc.staticSetDescription(siteRequest2, (String)result.get(SpineDoc.VAR_description)));
+      o.persistForClass(SpineDoc.VAR_authorName, SpineDoc.staticSetAuthorName(siteRequest2, (String)result.get(SpineDoc.VAR_authorName)));
+      o.persistForClass(SpineDoc.VAR_authorUrl, SpineDoc.staticSetAuthorUrl(siteRequest2, (String)result.get(SpineDoc.VAR_authorUrl)));
+      o.persistForClass(SpineDoc.VAR_pageId, SpineDoc.staticSetPageId(siteRequest2, (String)result.get(SpineDoc.VAR_pageId)));
+      o.persistForClass(SpineDoc.VAR_objectTitle, SpineDoc.staticSetObjectTitle(siteRequest2, (String)result.get(SpineDoc.VAR_objectTitle)));
+      o.persistForClass(SpineDoc.VAR_pageVideoUrl, SpineDoc.staticSetPageVideoUrl(siteRequest2, (String)result.get(SpineDoc.VAR_pageVideoUrl)));
+      o.persistForClass(SpineDoc.VAR_displayPage, SpineDoc.staticSetDisplayPage(siteRequest2, (String)result.get(SpineDoc.VAR_displayPage)));
+      o.persistForClass(SpineDoc.VAR_pageImageUri, SpineDoc.staticSetPageImageUri(siteRequest2, (String)result.get(SpineDoc.VAR_pageImageUri)));
+      o.persistForClass(SpineDoc.VAR_editPage, SpineDoc.staticSetEditPage(siteRequest2, (String)result.get(SpineDoc.VAR_editPage)));
+      o.persistForClass(SpineDoc.VAR_userPage, SpineDoc.staticSetUserPage(siteRequest2, (String)result.get(SpineDoc.VAR_userPage)));
+      o.persistForClass(SpineDoc.VAR_download, SpineDoc.staticSetDownload(siteRequest2, (String)result.get(SpineDoc.VAR_download)));
+      o.persistForClass(SpineDoc.VAR_pageImageAlt, SpineDoc.staticSetPageImageAlt(siteRequest2, (String)result.get(SpineDoc.VAR_pageImageAlt)));
+      o.persistForClass(SpineDoc.VAR_prerequisiteArticleIds, SpineDoc.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SpineDoc.VAR_prerequisiteArticleIds)));
+      o.persistForClass(SpineDoc.VAR_solrId, SpineDoc.staticSetSolrId(siteRequest2, (String)result.get(SpineDoc.VAR_solrId)));
+      o.persistForClass(SpineDoc.VAR_nextArticleIds, SpineDoc.staticSetNextArticleIds(siteRequest2, (String)result.get(SpineDoc.VAR_nextArticleIds)));
+      o.persistForClass(SpineDoc.VAR_labelsString, SpineDoc.staticSetLabelsString(siteRequest2, (String)result.get(SpineDoc.VAR_labelsString)));
+      o.persistForClass(SpineDoc.VAR_labels, SpineDoc.staticSetLabels(siteRequest2, (String)result.get(SpineDoc.VAR_labels)));
+      o.persistForClass(SpineDoc.VAR_relatedArticleIds, SpineDoc.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SpineDoc.VAR_relatedArticleIds)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {

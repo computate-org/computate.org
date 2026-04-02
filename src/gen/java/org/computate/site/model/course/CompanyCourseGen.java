@@ -158,15 +158,6 @@ import io.vertx.core.json.JsonObject;
 public abstract class CompanyCourseGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourse.class);
 
-  public static final String Description_frFR = "Take an exciting hands-on course on your own computer with computate";
-  public static final String AName_frFR = "a course";
-  public static final String SingularName_frFR = "course";
-  public static final String PluralName_frFR = "courses";
-  public static final String Title_frFR = "courses";
-  public static final String ThePluralName_frFR = "les courses";
-  public static final String NameAdjectiveSingular_frFR = "course";
-  public static final String NameAdjectivePlural_frFR = "courses";
-
   public static final String Description_enUS = "Take an exciting hands-on course on your own computer with computate";
   public static final String AName_enUS = "a course";
   public static final String This_enUS = "this ";
@@ -757,6 +748,68 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   }
 
 	//////////////////
+  // pageVideoUrl //
+	//////////////////
+
+
+  /**
+   *  The entity pageVideoUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageVideoUrl;
+
+  /**
+   * <br> The entity pageVideoUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageVideoUrl(Wrap<String> w);
+
+  public String getPageVideoUrl() {
+    return pageVideoUrl;
+  }
+  public void setPageVideoUrl(String o) {
+    this.pageVideoUrl = CompanyCourse.staticSetPageVideoUrl(siteRequest_, o);
+  }
+  public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyCourse pageVideoUrlInit() {
+    Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
+    if(pageVideoUrl == null) {
+      _pageVideoUrl(pageVideoUrlWrap);
+      Optional.ofNullable(pageVideoUrlWrap.getO()).ifPresent(o -> {
+        setPageVideoUrl(o);
+      });
+    }
+    return (CompanyCourse)this;
+  }
+
+  public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
+    return CompanyCourse.staticSearchPageVideoUrl(siteRequest_, CompanyCourse.staticSetPageVideoUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageVideoUrl() {
+    return pageVideoUrl;
+  }
+
+  public static String staticJsonPageVideoUrl(String pageVideoUrl) {
+    return pageVideoUrl;
+  }
+
+	//////////////////
   // pageImageUri //
 	//////////////////
 
@@ -1273,6 +1326,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         storeUrlInit();
         downloadUriInit();
         courseNumInit();
+        pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -1367,6 +1421,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         return oCompanyCourse.downloadUri;
       case "courseNum":
         return oCompanyCourse.courseNum;
+      case "pageVideoUrl":
+        return oCompanyCourse.pageVideoUrl;
       case "pageImageUri":
         return oCompanyCourse.pageImageUri;
       case "pageImageWidth":
@@ -1438,6 +1494,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return CompanyCourse.staticSetDownloadUri(siteRequest_, v);
     case "courseNum":
       return CompanyCourse.staticSetCourseNum(siteRequest_, v);
+    case "pageVideoUrl":
+      return CompanyCourse.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
       return CompanyCourse.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -1512,6 +1570,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return CompanyCourse.staticSearchDownloadUri(siteRequest_, (String)o);
     case "courseNum":
       return CompanyCourse.staticSearchCourseNum(siteRequest_, (Integer)o);
+    case "pageVideoUrl":
+      return CompanyCourse.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return CompanyCourse.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1556,6 +1616,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return CompanyCourse.staticSearchStrDownloadUri(siteRequest_, (String)o);
     case "courseNum":
       return CompanyCourse.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+    case "pageVideoUrl":
+      return CompanyCourse.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
       return CompanyCourse.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1600,6 +1662,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return CompanyCourse.staticSearchFqDownloadUri(siteRequest_, o);
     case "courseNum":
       return CompanyCourse.staticSearchFqCourseNum(siteRequest_, o);
+    case "pageVideoUrl":
+      return CompanyCourse.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
       return CompanyCourse.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -1694,6 +1758,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         }
         saves.add("courseNum");
         return val;
+      } else if("pagevideourl".equals(varLower)) {
+        if(val instanceof String) {
+          setPageVideoUrl((String)val);
+        }
+        saves.add("pageVideoUrl");
+        return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
           setPageImageUri((String)val);
@@ -1777,6 +1847,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
           oCompanyCourse.setCourseNum(courseNum);
       }
 
+      if(saves.contains("pageVideoUrl")) {
+        String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
+        if(pageVideoUrl != null)
+          oCompanyCourse.setPageVideoUrl(pageVideoUrl);
+      }
+
       if(saves.contains("pageImageUri")) {
         String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
         if(pageImageUri != null)
@@ -1849,6 +1925,9 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);
     }
+    if(pageVideoUrl != null) {
+      doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
+    }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
     }
@@ -1892,6 +1971,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         return "downloadUri_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -1929,6 +2010,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         return "downloadUri_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
+      case "pageVideoUrl":
+        return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -1964,6 +2047,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         return "downloadUri";
       case "courseNum_docvalues_int":
         return "courseNum";
+      case "pageVideoUrl_docvalues_string":
+        return "pageVideoUrl";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -2014,6 +2099,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     oCompanyCourse.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oCompanyCourse.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -2050,6 +2136,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         apiRequest.addVars("downloadUri");
       if(!Objects.equals(courseNum, original.getCourseNum()))
         apiRequest.addVars("courseNum");
+      if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+        apiRequest.addVars("pageVideoUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -2083,6 +2171,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -2116,6 +2205,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   public static final String SET_downloadUri = "setDownloadUri";
   public static final String VAR_courseNum = "courseNum";
   public static final String SET_courseNum = "setCourseNum";
+  public static final String VAR_pageVideoUrl = "pageVideoUrl";
+  public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -2153,6 +2244,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     vars.add(VAR_storeUrl);
     vars.add(VAR_downloadUri);
     vars.add(VAR_courseNum);
+    vars.add(VAR_pageVideoUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
@@ -2176,6 +2268,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_storeUrl = "store URL";
   public static final String DISPLAY_NAME_downloadUri = "download URI";
   public static final String DISPLAY_NAME_courseNum = "Course Number";
+  public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -2241,6 +2334,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return patch ? SET_downloadUri : VAR_downloadUri;
     case VAR_courseNum:
       return patch ? SET_courseNum : VAR_courseNum;
+    case VAR_pageVideoUrl:
+      return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -2283,6 +2378,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return DISPLAY_NAME_downloadUri;
     case VAR_courseNum:
       return DISPLAY_NAME_courseNum;
+    case VAR_pageVideoUrl:
+      return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -2324,6 +2421,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return "The download relative URI for this page. ";
     case VAR_courseNum:
       return "The course number for this page. ";
+    case VAR_pageVideoUrl:
+      return "The video URL for this page. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -2361,6 +2460,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       return "String";
     case VAR_courseNum:
       return "Integer";
+    case VAR_pageVideoUrl:
+      return "String";
     case VAR_pageImageUri:
       return "String";
     case VAR_pageImageWidth:

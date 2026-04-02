@@ -1397,11 +1397,6 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
   public void searchpageSpineProgrammingPageInit(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1502,19 +1497,24 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           Promise<Void> promise1 = Promise.promise();
           searchpageSpineProgrammingPageInit(ctx, page, listSpineProgramming, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageSpineProgramming failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageSpineProgramming failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageSpineProgramming failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1657,12 +1657,6 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
   public void editpageSpineProgrammingPageInit(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1763,19 +1757,24 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           Promise<Void> promise1 = Promise.promise();
           editpageSpineProgrammingPageInit(ctx, page, listSpineProgramming, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageSpineProgramming failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageSpineProgramming failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageSpineProgramming failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1880,12 +1879,6 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
   public void displaypageSpineProgrammingPageInit(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1986,19 +1979,24 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           Promise<Void> promise1 = Promise.promise();
           displaypageSpineProgrammingPageInit(ctx, page, listSpineProgramming, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateDisplayPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200DisplayPageSpineProgramming failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateDisplayPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200DisplayPageSpineProgramming failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200DisplayPageSpineProgramming failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2755,8 +2753,9 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       o.persistForClass(SpineProgramming.VAR_authorUrl, SpineProgramming.staticSetAuthorUrl(siteRequest2, (String)result.get(SpineProgramming.VAR_authorUrl)));
       o.persistForClass(SpineProgramming.VAR_pageId, SpineProgramming.staticSetPageId(siteRequest2, (String)result.get(SpineProgramming.VAR_pageId)));
       o.persistForClass(SpineProgramming.VAR_objectTitle, SpineProgramming.staticSetObjectTitle(siteRequest2, (String)result.get(SpineProgramming.VAR_objectTitle)));
-      o.persistForClass(SpineProgramming.VAR_pageImageUri, SpineProgramming.staticSetPageImageUri(siteRequest2, (String)result.get(SpineProgramming.VAR_pageImageUri)));
+      o.persistForClass(SpineProgramming.VAR_pageVideoUrl, SpineProgramming.staticSetPageVideoUrl(siteRequest2, (String)result.get(SpineProgramming.VAR_pageVideoUrl)));
       o.persistForClass(SpineProgramming.VAR_displayPage, SpineProgramming.staticSetDisplayPage(siteRequest2, (String)result.get(SpineProgramming.VAR_displayPage)));
+      o.persistForClass(SpineProgramming.VAR_pageImageUri, SpineProgramming.staticSetPageImageUri(siteRequest2, (String)result.get(SpineProgramming.VAR_pageImageUri)));
       o.persistForClass(SpineProgramming.VAR_editPage, SpineProgramming.staticSetEditPage(siteRequest2, (String)result.get(SpineProgramming.VAR_editPage)));
       o.persistForClass(SpineProgramming.VAR_userPage, SpineProgramming.staticSetUserPage(siteRequest2, (String)result.get(SpineProgramming.VAR_userPage)));
       o.persistForClass(SpineProgramming.VAR_download, SpineProgramming.staticSetDownload(siteRequest2, (String)result.get(SpineProgramming.VAR_download)));

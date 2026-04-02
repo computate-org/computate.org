@@ -449,6 +449,13 @@ public class PageLayout extends PageLayoutGen<Object> {
   }
 
   /**
+   * {@inheritDoc}
+   * Description: The video URL for this page. 
+   */
+  protected void _pageVideoUrl(Wrap<String> w) {
+  }
+
+  /**
    * Description: The image URI for this page
    */
   protected void _pageImageUri(Wrap<String> w) {

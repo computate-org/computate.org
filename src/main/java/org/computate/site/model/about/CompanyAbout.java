@@ -163,6 +163,17 @@ public class CompanyAbout extends CompanyAboutGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
+   * Facet: true
+   * DisplayName: video URL
+   * Description: The video URL for this page. 
+   */
+  protected void _pageVideoUrl(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
    * HtmRow: 4
    * HtmCell: 1
    * Facet: true

@@ -1,4 +1,4 @@
-package org.computate.site.model.learnskills;
+package org.computate.site.model.spinedoc;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.result.BaseResult;
@@ -34,10 +34,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
+import java.lang.Boolean;
+import java.math.BigDecimal;
 import java.lang.String;
 import java.lang.Integer;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.learnskills.LearnSkills;
+import org.computate.site.model.spinedoc.SpineDoc;
 import io.vertx.core.json.JsonArray;
 import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
@@ -51,37 +53,34 @@ import io.vertx.core.json.JsonObject;
 /**
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
- * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class LearnSkillsGen into the class LearnSkills. 
- * </li><li>You can add a class comment "Rows: 100" if you wish the LearnSkills API to return more or less than 10 records by default. 
- * In this case, the API will return 100 records from the API instead of 10 by default. 
- * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
- * </li><li>You can add a class comment "Model: true" if you wish to persist these LearnSkills objects in a relational PostgreSQL database transactionally in the RESTful API. 
- * The code to persist and query the LearnSkillsGen data in the database will then be automatically generated. 
+ * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class SpineDocGen into the class SpineDoc. 
+ * </li><li>You can add a class comment "Model: true" if you wish to persist these SpineDoc objects in a relational PostgreSQL database transactionally in the RESTful API. 
+ * The code to persist and query the SpineDocGen data in the database will then be automatically generated. 
  * </li>
- * <h3>About the LearnSkills class and it's generated class LearnSkillsGen&lt;BaseResult&gt;: </h3>extends LearnSkillsGen
+ * <h3>About the SpineDoc class and it's generated class SpineDocGen&lt;BaseResult&gt;: </h3>extends SpineDocGen
  * <p>
- * This Java class extends a generated Java class LearnSkillsGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
+ * This Java class extends a generated Java class SpineDocGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills">Find the class LearnSkills in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc">Find the class SpineDoc in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends LearnSkillsGen<BaseResult>
- * <p>This <code>class LearnSkills extends LearnSkillsGen&lt;BaseResult&gt;</code>, which means it extends a newly generated LearnSkillsGen. 
- * The generated <code>class LearnSkillsGen extends BaseResult</code> which means that LearnSkills extends LearnSkillsGen which extends BaseResult. 
+ * extends SpineDocGen<BaseResult>
+ * <p>This <code>class SpineDoc extends SpineDocGen&lt;BaseResult&gt;</code>, which means it extends a newly generated SpineDocGen. 
+ * The generated <code>class SpineDocGen extends BaseResult</code> which means that SpineDoc extends SpineDocGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: Learn cloud developer skills"</b>, which groups all of the OpenAPIs for LearnSkills objects under the tag "Learn cloud developer skills". 
+ * <p>This class contains a comment <b>"ApiTag: SPINE docs"</b>, which groups all of the OpenAPIs for SpineDoc objects under the tag "SPINE docs". 
  * </p>
- * <h2>ApiUri.enUS: /en-us/api/learn-skills</h2>
- * <p>This class contains a comment <b>"ApiUri: /en-us/api/learn-skills"</b>, which defines the base API URI for LearnSkills objects as "/en-us/api/learn-skills" in the OpenAPI spec. 
+ * <h2>ApiUri.enUS: /en-us/api/spine-doc</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/spine-doc"</b>, which defines the base API URI for SpineDoc objects as "/en-us/api/spine-doc" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -89,30 +88,33 @@ import io.vertx.core.json.JsonObject;
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
  * </p>
  * <h2>{@inheritDoc}</h2>
- * <p>By adding a class comment "{@inheritDoc}", the LearnSkills class will inherit the helpful inherited class comments from the super class LearnSkillsGen. 
+ * <p>By adding a class comment "{@inheritDoc}", the SpineDoc class will inherit the helpful inherited class comments from the super class SpineDocGen. 
  * </p>
- * <h2>Rows: null</h2>
- * <h2>Order: 2</h2>
- * <p>This class contains a comment <b>"Order: 2"</b>, which means this class will be sorted by the given number 2 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Rows: 100</h2>
+ * <p>This class contains a comment <b>"Rows: 100"</b>, which means the SpineDoc API will return a default of 100 records instead of 10 by default. 
+ * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
  * </p>
- * <h2>SqlOrder: 2</h2>
- * <p>This class contains a comment <b>"SqlOrder: 2"</b>, which means this class will be sorted by the given number 2 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>Order: 5</h2>
+ * <p>This class contains a comment <b>"Order: 5"</b>, which means this class will be sorted by the given number 5 ascending when code that relates to multiple classes at the same time is generated. 
+ * </p>
+ * <h2>SqlOrder: 5</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 5"</b>, which means this class will be sorted by the given number 5 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
- * This creates a new Java class org.computate.site.model.learnskills.LearnSkillsPage. 
+ * This creates a new Java class org.computate.site.model.spinedoc.SpineDocPage. 
  * </p>
  * <h2>SuperPage.enUS: PageLayout</h2>
  * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
- * This means that the newly created class org.computate.site.model.learnskills.LearnSkillsPage extends org.computate.site.page.PageLayout. 
+ * This means that the newly created class org.computate.site.model.spinedoc.SpineDocPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
  *   This class contains a comment <b>"Promise: true"</b>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
- *   This means that the LearnSkills Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
+ *   This means that the SpineDoc Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
  * <p>
  *   Adding protected void methods beginning with an underscore with a Promise as the only parameter will automatically set `Promise: true`. 
@@ -131,19 +133,19 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>AName.enUS: a Learn cloud developer skills</h2>
- * <p>This class contains a comment <b>"AName.enUS: a Learn cloud developer skills"</b>, which identifies the language context to describe a LearnSkills as "a Learn cloud developer skills". 
+ * <h2>AName.enUS: a SPINE doc</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a SPINE doc"</b>, which identifies the language context to describe a SpineDoc as "a SPINE doc". 
  * </p>
  * <p>
- * Delete the class LearnSkills in Solr: 
+ * Delete the class SpineDoc in Solr: 
  * <pre>
- * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&lt;/query&gt;&lt;/delete&gt;'
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&lt;/query&gt;&lt;/delete&gt;'
  * </pre>
  * </p>
  * <p>
- * Delete  the package org.computate.site.model.learnskills in Solr: 
+ * Delete  the package org.computate.site.model.spinedoc in Solr: 
  * <pre>
- * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.learnskills&lt;/query&gt;&lt;/delete&gt;'
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.spinedoc&lt;/query&gt;&lt;/delete&gt;'
  * </pre>
  * </p>
  * <p>
@@ -154,63 +156,352 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * Generated: true
  **/
-public abstract class LearnSkillsGen<DEV> extends BaseResult {
-  protected static final Logger LOG = LoggerFactory.getLogger(LearnSkills.class);
+public abstract class SpineDocGen<DEV> extends BaseResult {
+  protected static final Logger LOG = LoggerFactory.getLogger(SpineDoc.class);
 
-  public static final String Description_enUS = "Learn how to manage SPINE apps in OpenShift Local to manage cloud secrets, pods, GitOps, and more. ";
-  public static final String AName_enUS = "a Learn cloud developer skills";
+  public static final String Description_enUS = "Learn about the bones that form the platform and data models built with SPINE Programming Theory and increase your developer productivity up to 4900%. ";
+  public static final String AName_enUS = "a SPINE doc";
   public static final String This_enUS = "this ";
-  public static final String ThisName_enUS = "this Learn cloud developer skills";
+  public static final String ThisName_enUS = "this SPINE doc";
   public static final String A_enUS = "a ";
-  public static final String TheName_enUS = "the Learn cloud developer skills";
-  public static final String SingularName_enUS = "Learn cloud developer skills";
-  public static final String PluralName_enUS = "Learn cloud developer skills";
-  public static final String NameActual_enUS = "current Learn cloud developer skills";
-  public static final String AllName_enUS = "all Learn cloud developer skills";
-  public static final String SearchAllNameBy_enUS = "search Learn cloud developer skills by ";
-  public static final String SearchAllName_enUS = "search Learn cloud developer skills";
-  public static final String Title_enUS = "Learn cloud developer skills";
-  public static final String ThePluralName_enUS = "the Learn cloud developer skills";
-  public static final String NoNameFound_enUS = "no Learn cloud developer skills found";
-  public static final String ApiUri_enUS = "/en-us/api/learn-skills";
-  public static final String ApiUriSearchPage_enUS = "/en-us/search/skills";
-  public static final String ApiUriEditPage_enUS = "/en-us/edit/skills/{pageId}";
-  public static final String OfName_enUS = "of Learn cloud developer skills";
-  public static final String ANameAdjective_enUS = "a Learn cloud developer skills";
-  public static final String NameAdjectiveSingular_enUS = "Learn cloud developer skills";
-  public static final String NameAdjectivePlural_enUS = "Learn cloud developer skills";
-  public static final String Search_enUS_OpenApiUri = "/en-us/api/learn-skills";
-  public static final String Search_enUS_StringFormatUri = "/en-us/api/learn-skills";
-  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/learn-skills";
-  public static final String GET_enUS_OpenApiUri = "/en-us/api/learn-skills/{pageId}";
-  public static final String GET_enUS_StringFormatUri = "/en-us/api/learn-skills/%s";
-  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/learn-skills/%s";
-  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/learn-skills";
-  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/learn-skills";
-  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/learn-skills";
-  public static final String POST_enUS_OpenApiUri = "/en-us/api/learn-skills";
-  public static final String POST_enUS_StringFormatUri = "/en-us/api/learn-skills";
-  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/learn-skills";
-  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/learn-skills/{pageId}";
-  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/learn-skills/%s";
-  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/learn-skills/%s";
-  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/learn-skills-import";
-  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/learn-skills-import";
-  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/learn-skills-import";
-  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/skills";
-  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/skills";
-  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/skills";
-  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/skills/{pageId}";
-  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/skills/%s";
-  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/skills/%s";
-  public static final String DisplayPage_enUS_OpenApiUri = "/en-us/learn/skills/{pageId}";
-  public static final String DisplayPage_enUS_StringFormatUri = "/en-us/learn/skills/%s";
-  public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/learn/skills/%s";
-  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/learn-skills";
-  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/learn-skills";
-  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/learn-skills";
+  public static final String TheName_enUS = "the SPINE doc";
+  public static final String SingularName_enUS = "SPINE doc";
+  public static final String PluralName_enUS = "SPINE docs";
+  public static final String NameActual_enUS = "current SPINE doc";
+  public static final String AllName_enUS = "all SPINE docs";
+  public static final String SearchAllNameBy_enUS = "search SPINE docs by ";
+  public static final String SearchAllName_enUS = "search SPINE docs";
+  public static final String Title_enUS = "SPINE docs";
+  public static final String ThePluralName_enUS = "the SPINE docs";
+  public static final String NoNameFound_enUS = "no SPINE doc found";
+  public static final String ApiUri_enUS = "/en-us/api/spine-doc";
+  public static final String ApiUriSearchPage_enUS = "/en-us/search/spine-doc";
+  public static final String ApiUriEditPage_enUS = "/en-us/edit/spine-doc/{pageId}";
+  public static final String OfName_enUS = "of SPINE doc";
+  public static final String ANameAdjective_enUS = "a SPINE doc";
+  public static final String NameAdjectiveSingular_enUS = "SPINE doc";
+  public static final String NameAdjectivePlural_enUS = "SPINE docs";
+  public static final String Search_enUS_OpenApiUri = "/en-us/api/spine-doc";
+  public static final String Search_enUS_StringFormatUri = "/en-us/api/spine-doc";
+  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/spine-doc";
+  public static final String GET_enUS_OpenApiUri = "/en-us/api/spine-doc/{pageId}";
+  public static final String GET_enUS_StringFormatUri = "/en-us/api/spine-doc/%s";
+  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/spine-doc/%s";
+  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/spine-doc";
+  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/spine-doc";
+  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/spine-doc";
+  public static final String POST_enUS_OpenApiUri = "/en-us/api/spine-doc";
+  public static final String POST_enUS_StringFormatUri = "/en-us/api/spine-doc";
+  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/spine-doc";
+  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/spine-doc-import";
+  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/spine-doc-import";
+  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/spine-doc-import";
+  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/spine-doc/{pageId}";
+  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/spine-doc/%s";
+  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/spine-doc/%s";
+  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/spine-doc";
+  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/spine-doc";
+  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/spine-doc";
+  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/spine-doc/{pageId}";
+  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/spine-doc/%s";
+  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/spine-doc/%s";
+  public static final String DisplayPage_enUS_OpenApiUri = "/en-us/learn/spine-doc/{pageId}";
+  public static final String DisplayPage_enUS_StringFormatUri = "/en-us/learn/spine-doc/%s";
+  public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/learn/spine-doc/%s";
+  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/spine-doc";
+  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/spine-doc";
+  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/spine-doc";
 
-  public static final String Icon = "<i class=\"fa-kit fa-computate-c-key\"></i>";
+  public static final String Icon = "<i class=\"fa-kit fa-spine\"></i>";
+  public static final Integer Rows = 100;
+
+	/////////////
+  // article //
+	/////////////
+
+
+  /**
+   *  The entity article
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected Boolean article;
+
+  /**
+   * <br> The entity article
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:article">Find the entity article in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _article(Wrap<Boolean> w);
+
+  public Boolean getArticle() {
+    return article;
+  }
+
+  public void setArticle(Boolean article) {
+    this.article = article;
+  }
+  @JsonIgnore
+  public void setArticle(String o) {
+    this.article = SpineDoc.staticSetArticle(siteRequest_, o);
+  }
+  public static Boolean staticSetArticle(SiteRequest siteRequest_, String o) {
+    return Boolean.parseBoolean(o);
+  }
+  protected SpineDoc articleInit() {
+    Wrap<Boolean> articleWrap = new Wrap<Boolean>().var("article");
+    if(article == null) {
+      _article(articleWrap);
+      Optional.ofNullable(articleWrap.getO()).ifPresent(o -> {
+        setArticle(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static Boolean staticSearchArticle(SiteRequest siteRequest_, Boolean o) {
+    return o;
+  }
+
+  public static String staticSearchStrArticle(SiteRequest siteRequest_, Boolean o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqArticle(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchArticle(siteRequest_, SpineDoc.staticSetArticle(siteRequest_, o)).toString();
+  }
+
+	////////////////
+  // importance //
+	////////////////
+
+
+  /**
+   *  The entity importance
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected BigDecimal importance;
+
+  /**
+   * <br> The entity importance
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:importance">Find the entity importance in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _importance(Wrap<BigDecimal> w);
+
+  public BigDecimal getImportance() {
+    return importance;
+  }
+
+  public void setImportance(BigDecimal importance) {
+    this.importance = importance;
+  }
+  @JsonIgnore
+  public void setImportance(String o) {
+    this.importance = SpineDoc.staticSetImportance(siteRequest_, o);
+  }
+  public static Integer staticScaleImportance() {
+    return 2;
+  }
+  public static MathContext staticMathContextImportance() {
+    return new MathContext(0, RoundingMode.valueOf("HALF_UP"));
+  }
+  public static BigDecimal staticSetImportance(SiteRequest siteRequest_, String o) {
+    o = StringUtils.removeAll(o, "[^\\d\\.-]");
+    if(NumberUtils.isParsable(o))
+      return new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP"));
+    return null;
+  }
+  @JsonIgnore
+  public void setImportance(Double o) {
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP")));
+  }
+  @JsonIgnore
+  public void setImportance(Integer o) {
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP")));
+  }
+  @JsonIgnore
+  public void setImportance(Number o) {
+    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP")));
+  }
+  protected SpineDoc importanceInit() {
+    Wrap<BigDecimal> importanceWrap = new Wrap<BigDecimal>().var("importance");
+    if(importance == null) {
+      _importance(importanceWrap);
+      Optional.ofNullable(importanceWrap.getO()).ifPresent(o -> {
+        setImportance(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchImportance(SiteRequest siteRequest_, BigDecimal o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchStrImportance(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqImportance(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchImportance(siteRequest_, SpineDoc.staticSetImportance(siteRequest_, o)).toString();
+  }
+
+  public BigDecimal sqlImportance() {
+    return importance;
+  }
+
+  public static String staticJsonImportance(BigDecimal importance) {
+    return Optional.ofNullable(importance).map(v -> v.toString()).orElse(null);
+  }
+
+	///////////////
+  // courseNum //
+	///////////////
+
+
+  /**
+   *  The entity courseNum
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer courseNum;
+
+  /**
+   * <br> The entity courseNum
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:courseNum">Find the entity courseNum in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _courseNum(Wrap<Integer> w);
+
+  public Integer getCourseNum() {
+    return courseNum;
+  }
+
+  public void setCourseNum(Integer courseNum) {
+    this.courseNum = courseNum;
+  }
+  @JsonIgnore
+  public void setCourseNum(String o) {
+    this.courseNum = SpineDoc.staticSetCourseNum(siteRequest_, o);
+  }
+  public static Integer staticSetCourseNum(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected SpineDoc courseNumInit() {
+    Wrap<Integer> courseNumWrap = new Wrap<Integer>().var("courseNum");
+    if(courseNum == null) {
+      _courseNum(courseNumWrap);
+      Optional.ofNullable(courseNumWrap.getO()).ifPresent(o -> {
+        setCourseNum(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static Integer staticSearchCourseNum(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
+
+  public static String staticSearchStrCourseNum(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqCourseNum(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchCourseNum(siteRequest_, SpineDoc.staticSetCourseNum(siteRequest_, o)).toString();
+  }
+
+  public Integer sqlCourseNum() {
+    return courseNum;
+  }
+
+  public static String staticJsonCourseNum(Integer courseNum) {
+    return Optional.ofNullable(courseNum).map(v -> v.toString()).orElse(null);
+  }
+
+	///////////////
+  // lessonNum //
+	///////////////
+
+
+  /**
+   *  The entity lessonNum
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer lessonNum;
+
+  /**
+   * <br> The entity lessonNum
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:lessonNum">Find the entity lessonNum in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _lessonNum(Wrap<Integer> w);
+
+  public Integer getLessonNum() {
+    return lessonNum;
+  }
+
+  public void setLessonNum(Integer lessonNum) {
+    this.lessonNum = lessonNum;
+  }
+  @JsonIgnore
+  public void setLessonNum(String o) {
+    this.lessonNum = SpineDoc.staticSetLessonNum(siteRequest_, o);
+  }
+  public static Integer staticSetLessonNum(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected SpineDoc lessonNumInit() {
+    Wrap<Integer> lessonNumWrap = new Wrap<Integer>().var("lessonNum");
+    if(lessonNum == null) {
+      _lessonNum(lessonNumWrap);
+      Optional.ofNullable(lessonNumWrap.getO()).ifPresent(o -> {
+        setLessonNum(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static Integer staticSearchLessonNum(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
+
+  public static String staticSearchStrLessonNum(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqLessonNum(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchLessonNum(siteRequest_, SpineDoc.staticSetLessonNum(siteRequest_, o)).toString();
+  }
+
+  public Integer sqlLessonNum() {
+    return lessonNum;
+  }
+
+  public static String staticJsonLessonNum(Integer lessonNum) {
+    return Optional.ofNullable(lessonNum).map(v -> v.toString()).orElse(null);
+  }
 
 	//////////
   // name //
@@ -228,7 +519,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity name
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -238,12 +529,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return name;
   }
   public void setName(String o) {
-    this.name = LearnSkills.staticSetName(siteRequest_, o);
+    this.name = SpineDoc.staticSetName(siteRequest_, o);
   }
   public static String staticSetName(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills nameInit() {
+  protected SpineDoc nameInit() {
     Wrap<String> nameWrap = new Wrap<String>().var("name");
     if(name == null) {
       _name(nameWrap);
@@ -251,7 +542,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setName(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchName(SiteRequest siteRequest_, String o) {
@@ -263,7 +554,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchName(siteRequest_, LearnSkills.staticSetName(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchName(siteRequest_, SpineDoc.staticSetName(siteRequest_, o)).toString();
   }
 
   public String sqlName() {
@@ -290,7 +581,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity description
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -300,12 +591,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return description;
   }
   public void setDescription(String o) {
-    this.description = LearnSkills.staticSetDescription(siteRequest_, o);
+    this.description = SpineDoc.staticSetDescription(siteRequest_, o);
   }
   public static String staticSetDescription(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills descriptionInit() {
+  protected SpineDoc descriptionInit() {
     Wrap<String> descriptionWrap = new Wrap<String>().var("description");
     if(description == null) {
       _description(descriptionWrap);
@@ -313,7 +604,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setDescription(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
@@ -325,7 +616,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchDescription(siteRequest_, LearnSkills.staticSetDescription(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchDescription(siteRequest_, SpineDoc.staticSetDescription(siteRequest_, o)).toString();
   }
 
   public String sqlDescription() {
@@ -352,7 +643,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity authorName
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:authorName">Find the entity authorName in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:authorName">Find the entity authorName in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -362,12 +653,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return authorName;
   }
   public void setAuthorName(String o) {
-    this.authorName = LearnSkills.staticSetAuthorName(siteRequest_, o);
+    this.authorName = SpineDoc.staticSetAuthorName(siteRequest_, o);
   }
   public static String staticSetAuthorName(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills authorNameInit() {
+  protected SpineDoc authorNameInit() {
     Wrap<String> authorNameWrap = new Wrap<String>().var("authorName");
     if(authorName == null) {
       _authorName(authorNameWrap);
@@ -375,7 +666,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setAuthorName(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchAuthorName(SiteRequest siteRequest_, String o) {
@@ -387,7 +678,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqAuthorName(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchAuthorName(siteRequest_, LearnSkills.staticSetAuthorName(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchAuthorName(siteRequest_, SpineDoc.staticSetAuthorName(siteRequest_, o)).toString();
   }
 
   public String sqlAuthorName() {
@@ -414,7 +705,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity authorUrl
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:authorUrl">Find the entity authorUrl in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:authorUrl">Find the entity authorUrl in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -424,12 +715,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return authorUrl;
   }
   public void setAuthorUrl(String o) {
-    this.authorUrl = LearnSkills.staticSetAuthorUrl(siteRequest_, o);
+    this.authorUrl = SpineDoc.staticSetAuthorUrl(siteRequest_, o);
   }
   public static String staticSetAuthorUrl(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills authorUrlInit() {
+  protected SpineDoc authorUrlInit() {
     Wrap<String> authorUrlWrap = new Wrap<String>().var("authorUrl");
     if(authorUrl == null) {
       _authorUrl(authorUrlWrap);
@@ -437,7 +728,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setAuthorUrl(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchAuthorUrl(SiteRequest siteRequest_, String o) {
@@ -449,7 +740,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqAuthorUrl(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchAuthorUrl(siteRequest_, LearnSkills.staticSetAuthorUrl(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchAuthorUrl(siteRequest_, SpineDoc.staticSetAuthorUrl(siteRequest_, o)).toString();
   }
 
   public String sqlAuthorUrl() {
@@ -476,7 +767,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageId
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -486,12 +777,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return pageId;
   }
   public void setPageId(String o) {
-    this.pageId = LearnSkills.staticSetPageId(siteRequest_, o);
+    this.pageId = SpineDoc.staticSetPageId(siteRequest_, o);
   }
   public static String staticSetPageId(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills pageIdInit() {
+  protected SpineDoc pageIdInit() {
     Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
     if(pageId == null) {
       _pageId(pageIdWrap);
@@ -499,7 +790,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageId(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
@@ -511,7 +802,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageId(siteRequest_, LearnSkills.staticSetPageId(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageId(siteRequest_, SpineDoc.staticSetPageId(siteRequest_, o)).toString();
   }
 
   public String sqlPageId() {
@@ -520,76 +811,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
   public static String staticJsonPageId(String pageId) {
     return pageId;
-  }
-
-	///////////////
-  // courseNum //
-	///////////////
-
-
-  /**
-   *  The entity courseNum
-   *	 is defined as null before being initialized. 
-   */
-  @JsonProperty
-  @JsonSerialize(using = ToStringSerializer.class)
-  @JsonInclude(Include.NON_NULL)
-  protected Integer courseNum;
-
-  /**
-   * <br> The entity courseNum
-   *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:courseNum">Find the entity courseNum in Solr</a>
-   * <br>
-   * @param w is for wrapping a value to assign to this entity during initialization. 
-   **/
-  protected abstract void _courseNum(Wrap<Integer> w);
-
-  public Integer getCourseNum() {
-    return courseNum;
-  }
-
-  public void setCourseNum(Integer courseNum) {
-    this.courseNum = courseNum;
-  }
-  @JsonIgnore
-  public void setCourseNum(String o) {
-    this.courseNum = LearnSkills.staticSetCourseNum(siteRequest_, o);
-  }
-  public static Integer staticSetCourseNum(SiteRequest siteRequest_, String o) {
-    if(NumberUtils.isParsable(o))
-      return Integer.parseInt(o);
-    return null;
-  }
-  protected LearnSkills courseNumInit() {
-    Wrap<Integer> courseNumWrap = new Wrap<Integer>().var("courseNum");
-    if(courseNum == null) {
-      _courseNum(courseNumWrap);
-      Optional.ofNullable(courseNumWrap.getO()).ifPresent(o -> {
-        setCourseNum(o);
-      });
-    }
-    return (LearnSkills)this;
-  }
-
-  public static Integer staticSearchCourseNum(SiteRequest siteRequest_, Integer o) {
-    return o;
-  }
-
-  public static String staticSearchStrCourseNum(SiteRequest siteRequest_, Integer o) {
-    return o == null ? null : o.toString();
-  }
-
-  public static String staticSearchFqCourseNum(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchCourseNum(siteRequest_, LearnSkills.staticSetCourseNum(siteRequest_, o)).toString();
-  }
-
-  public Integer sqlCourseNum() {
-    return courseNum;
-  }
-
-  public static String staticJsonCourseNum(Integer courseNum) {
-    return Optional.ofNullable(courseNum).map(v -> v.toString()).orElse(null);
   }
 
 	//////////////////
@@ -608,7 +829,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageVideoUrl
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageVideoUrl">Find the entity pageVideoUrl in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -618,12 +839,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return pageVideoUrl;
   }
   public void setPageVideoUrl(String o) {
-    this.pageVideoUrl = LearnSkills.staticSetPageVideoUrl(siteRequest_, o);
+    this.pageVideoUrl = SpineDoc.staticSetPageVideoUrl(siteRequest_, o);
   }
   public static String staticSetPageVideoUrl(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills pageVideoUrlInit() {
+  protected SpineDoc pageVideoUrlInit() {
     Wrap<String> pageVideoUrlWrap = new Wrap<String>().var("pageVideoUrl");
     if(pageVideoUrl == null) {
       _pageVideoUrl(pageVideoUrlWrap);
@@ -631,7 +852,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageVideoUrl(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPageVideoUrl(SiteRequest siteRequest_, String o) {
@@ -643,7 +864,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageVideoUrl(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageVideoUrl(siteRequest_, LearnSkills.staticSetPageVideoUrl(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageVideoUrl(siteRequest_, SpineDoc.staticSetPageVideoUrl(siteRequest_, o)).toString();
   }
 
   public String sqlPageVideoUrl() {
@@ -670,7 +891,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageUri
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -680,12 +901,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return pageImageUri;
   }
   public void setPageImageUri(String o) {
-    this.pageImageUri = LearnSkills.staticSetPageImageUri(siteRequest_, o);
+    this.pageImageUri = SpineDoc.staticSetPageImageUri(siteRequest_, o);
   }
   public static String staticSetPageImageUri(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills pageImageUriInit() {
+  protected SpineDoc pageImageUriInit() {
     Wrap<String> pageImageUriWrap = new Wrap<String>().var("pageImageUri");
     if(pageImageUri == null) {
       _pageImageUri(pageImageUriWrap);
@@ -693,7 +914,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageImageUri(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPageImageUri(SiteRequest siteRequest_, String o) {
@@ -705,7 +926,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageUri(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageImageUri(siteRequest_, LearnSkills.staticSetPageImageUri(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageImageUri(siteRequest_, SpineDoc.staticSetPageImageUri(siteRequest_, o)).toString();
   }
 
   public String sqlPageImageUri() {
@@ -733,7 +954,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageWidth
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -748,14 +969,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setPageImageWidth(String o) {
-    this.pageImageWidth = LearnSkills.staticSetPageImageWidth(siteRequest_, o);
+    this.pageImageWidth = SpineDoc.staticSetPageImageWidth(siteRequest_, o);
   }
   public static Integer staticSetPageImageWidth(SiteRequest siteRequest_, String o) {
     if(NumberUtils.isParsable(o))
       return Integer.parseInt(o);
     return null;
   }
-  protected LearnSkills pageImageWidthInit() {
+  protected SpineDoc pageImageWidthInit() {
     Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().var("pageImageWidth");
     if(pageImageWidth == null) {
       _pageImageWidth(pageImageWidthWrap);
@@ -763,7 +984,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageImageWidth(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static Integer staticSearchPageImageWidth(SiteRequest siteRequest_, Integer o) {
@@ -775,7 +996,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageWidth(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageImageWidth(siteRequest_, LearnSkills.staticSetPageImageWidth(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageImageWidth(siteRequest_, SpineDoc.staticSetPageImageWidth(siteRequest_, o)).toString();
   }
 
 	/////////////////////
@@ -795,7 +1016,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageHeight
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
    * <br>
    * @param c is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -810,14 +1031,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setPageImageHeight(String o) {
-    this.pageImageHeight = LearnSkills.staticSetPageImageHeight(siteRequest_, o);
+    this.pageImageHeight = SpineDoc.staticSetPageImageHeight(siteRequest_, o);
   }
   public static Integer staticSetPageImageHeight(SiteRequest siteRequest_, String o) {
     if(NumberUtils.isParsable(o))
       return Integer.parseInt(o);
     return null;
   }
-  protected LearnSkills pageImageHeightInit() {
+  protected SpineDoc pageImageHeightInit() {
     Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().var("pageImageHeight");
     if(pageImageHeight == null) {
       _pageImageHeight(pageImageHeightWrap);
@@ -825,7 +1046,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageImageHeight(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static Integer staticSearchPageImageHeight(SiteRequest siteRequest_, Integer o) {
@@ -837,7 +1058,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageHeight(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageImageHeight(siteRequest_, LearnSkills.staticSetPageImageHeight(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageImageHeight(siteRequest_, SpineDoc.staticSetPageImageHeight(siteRequest_, o)).toString();
   }
 
 	///////////////////
@@ -856,7 +1077,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageType
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
    * <br>
    * @param c is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -866,12 +1087,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return pageImageType;
   }
   public void setPageImageType(String o) {
-    this.pageImageType = LearnSkills.staticSetPageImageType(siteRequest_, o);
+    this.pageImageType = SpineDoc.staticSetPageImageType(siteRequest_, o);
   }
   public static String staticSetPageImageType(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills pageImageTypeInit() {
+  protected SpineDoc pageImageTypeInit() {
     Wrap<String> pageImageTypeWrap = new Wrap<String>().var("pageImageType");
     if(pageImageType == null) {
       _pageImageType(pageImageTypeWrap);
@@ -879,7 +1100,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageImageType(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPageImageType(SiteRequest siteRequest_, String o) {
@@ -891,7 +1112,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageType(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageImageType(siteRequest_, LearnSkills.staticSetPageImageType(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageImageType(siteRequest_, SpineDoc.staticSetPageImageType(siteRequest_, o)).toString();
   }
 
 	//////////////////
@@ -910,7 +1131,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity pageImageAlt
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
    * <br>
    * @param c is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -920,12 +1141,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return pageImageAlt;
   }
   public void setPageImageAlt(String o) {
-    this.pageImageAlt = LearnSkills.staticSetPageImageAlt(siteRequest_, o);
+    this.pageImageAlt = SpineDoc.staticSetPageImageAlt(siteRequest_, o);
   }
   public static String staticSetPageImageAlt(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills pageImageAltInit() {
+  protected SpineDoc pageImageAltInit() {
     Wrap<String> pageImageAltWrap = new Wrap<String>().var("pageImageAlt");
     if(pageImageAlt == null) {
       _pageImageAlt(pageImageAltWrap);
@@ -933,7 +1154,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPageImageAlt(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPageImageAlt(SiteRequest siteRequest_, String o) {
@@ -945,7 +1166,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPageImageAlt(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPageImageAlt(siteRequest_, LearnSkills.staticSetPageImageAlt(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPageImageAlt(siteRequest_, SpineDoc.staticSetPageImageAlt(siteRequest_, o)).toString();
   }
 
   public String sqlPageImageAlt() {
@@ -972,7 +1193,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity prerequisiteArticleIds
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:prerequisiteArticleIds">Find the entity prerequisiteArticleIds in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:prerequisiteArticleIds">Find the entity prerequisiteArticleIds in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -982,12 +1203,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return prerequisiteArticleIds;
   }
   public void setPrerequisiteArticleIds(String o) {
-    this.prerequisiteArticleIds = LearnSkills.staticSetPrerequisiteArticleIds(siteRequest_, o);
+    this.prerequisiteArticleIds = SpineDoc.staticSetPrerequisiteArticleIds(siteRequest_, o);
   }
   public static String staticSetPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills prerequisiteArticleIdsInit() {
+  protected SpineDoc prerequisiteArticleIdsInit() {
     Wrap<String> prerequisiteArticleIdsWrap = new Wrap<String>().var("prerequisiteArticleIds");
     if(prerequisiteArticleIds == null) {
       _prerequisiteArticleIds(prerequisiteArticleIdsWrap);
@@ -995,7 +1216,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPrerequisiteArticleIds(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
@@ -1007,7 +1228,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPrerequisiteArticleIds(siteRequest_, LearnSkills.staticSetPrerequisiteArticleIds(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPrerequisiteArticleIds(siteRequest_, SpineDoc.staticSetPrerequisiteArticleIds(siteRequest_, o)).toString();
   }
 
   public String sqlPrerequisiteArticleIds() {
@@ -1029,30 +1250,30 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<LearnSkills> prerequisiteArticleSearch;
+  protected SearchList<SpineDoc> prerequisiteArticleSearch;
 
   /**
    * <br> The entity prerequisiteArticleSearch
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:prerequisiteArticleSearch">Find the entity prerequisiteArticleSearch in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:prerequisiteArticleSearch">Find the entity prerequisiteArticleSearch in Solr</a>
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _prerequisiteArticleSearch(Promise<SearchList<LearnSkills>> promise);
+  protected abstract void _prerequisiteArticleSearch(Promise<SearchList<SpineDoc>> promise);
 
-  public SearchList<LearnSkills> getPrerequisiteArticleSearch() {
+  public SearchList<SpineDoc> getPrerequisiteArticleSearch() {
     return prerequisiteArticleSearch;
   }
 
-  public void setPrerequisiteArticleSearch(SearchList<LearnSkills> prerequisiteArticleSearch) {
+  public void setPrerequisiteArticleSearch(SearchList<SpineDoc> prerequisiteArticleSearch) {
     this.prerequisiteArticleSearch = prerequisiteArticleSearch;
   }
-  public static SearchList<LearnSkills> staticSetPrerequisiteArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<SpineDoc> staticSetPrerequisiteArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<LearnSkills>> prerequisiteArticleSearchPromise() {
-    Promise<SearchList<LearnSkills>> promise = Promise.promise();
-    Promise<SearchList<LearnSkills>> promise2 = Promise.promise();
+  protected Future<SearchList<SpineDoc>> prerequisiteArticleSearchPromise() {
+    Promise<SearchList<SpineDoc>> promise = Promise.promise();
+    Promise<SearchList<SpineDoc>> promise2 = Promise.promise();
     _prerequisiteArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && prerequisiteArticleSearch == null) {
@@ -1088,7 +1309,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity prerequisiteArticles
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:prerequisiteArticles">Find the entity prerequisiteArticles in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:prerequisiteArticles">Find the entity prerequisiteArticles in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1103,7 +1324,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setPrerequisiteArticles(String o) {
-    this.prerequisiteArticles = LearnSkills.staticSetPrerequisiteArticles(siteRequest_, o);
+    this.prerequisiteArticles = SpineDoc.staticSetPrerequisiteArticles(siteRequest_, o);
   }
   public static JsonArray staticSetPrerequisiteArticles(SiteRequest siteRequest_, String o) {
     if(o != null) {
@@ -1111,7 +1332,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     return null;
   }
-  protected LearnSkills prerequisiteArticlesInit() {
+  protected SpineDoc prerequisiteArticlesInit() {
     Wrap<JsonArray> prerequisiteArticlesWrap = new Wrap<JsonArray>().var("prerequisiteArticles");
     if(prerequisiteArticles == null) {
       _prerequisiteArticles(prerequisiteArticlesWrap);
@@ -1119,7 +1340,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setPrerequisiteArticles(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchPrerequisiteArticles(SiteRequest siteRequest_, JsonArray o) {
@@ -1131,7 +1352,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqPrerequisiteArticles(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchPrerequisiteArticles(siteRequest_, LearnSkills.staticSetPrerequisiteArticles(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchPrerequisiteArticles(siteRequest_, SpineDoc.staticSetPrerequisiteArticles(siteRequest_, o)).toString();
   }
 
 	////////////////////
@@ -1150,7 +1371,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity nextArticleIds
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:nextArticleIds">Find the entity nextArticleIds in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:nextArticleIds">Find the entity nextArticleIds in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1160,12 +1381,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return nextArticleIds;
   }
   public void setNextArticleIds(String o) {
-    this.nextArticleIds = LearnSkills.staticSetNextArticleIds(siteRequest_, o);
+    this.nextArticleIds = SpineDoc.staticSetNextArticleIds(siteRequest_, o);
   }
   public static String staticSetNextArticleIds(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills nextArticleIdsInit() {
+  protected SpineDoc nextArticleIdsInit() {
     Wrap<String> nextArticleIdsWrap = new Wrap<String>().var("nextArticleIds");
     if(nextArticleIds == null) {
       _nextArticleIds(nextArticleIdsWrap);
@@ -1173,7 +1394,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setNextArticleIds(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchNextArticleIds(SiteRequest siteRequest_, String o) {
@@ -1185,7 +1406,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqNextArticleIds(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchNextArticleIds(siteRequest_, LearnSkills.staticSetNextArticleIds(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchNextArticleIds(siteRequest_, SpineDoc.staticSetNextArticleIds(siteRequest_, o)).toString();
   }
 
   public String sqlNextArticleIds() {
@@ -1207,30 +1428,30 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<LearnSkills> nextArticleSearch;
+  protected SearchList<SpineDoc> nextArticleSearch;
 
   /**
    * <br> The entity nextArticleSearch
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:nextArticleSearch">Find the entity nextArticleSearch in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:nextArticleSearch">Find the entity nextArticleSearch in Solr</a>
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _nextArticleSearch(Promise<SearchList<LearnSkills>> promise);
+  protected abstract void _nextArticleSearch(Promise<SearchList<SpineDoc>> promise);
 
-  public SearchList<LearnSkills> getNextArticleSearch() {
+  public SearchList<SpineDoc> getNextArticleSearch() {
     return nextArticleSearch;
   }
 
-  public void setNextArticleSearch(SearchList<LearnSkills> nextArticleSearch) {
+  public void setNextArticleSearch(SearchList<SpineDoc> nextArticleSearch) {
     this.nextArticleSearch = nextArticleSearch;
   }
-  public static SearchList<LearnSkills> staticSetNextArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<SpineDoc> staticSetNextArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<LearnSkills>> nextArticleSearchPromise() {
-    Promise<SearchList<LearnSkills>> promise = Promise.promise();
-    Promise<SearchList<LearnSkills>> promise2 = Promise.promise();
+  protected Future<SearchList<SpineDoc>> nextArticleSearchPromise() {
+    Promise<SearchList<SpineDoc>> promise = Promise.promise();
+    Promise<SearchList<SpineDoc>> promise2 = Promise.promise();
     _nextArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && nextArticleSearch == null) {
@@ -1266,7 +1487,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity nextArticles
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:nextArticles">Find the entity nextArticles in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:nextArticles">Find the entity nextArticles in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1281,7 +1502,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setNextArticles(String o) {
-    this.nextArticles = LearnSkills.staticSetNextArticles(siteRequest_, o);
+    this.nextArticles = SpineDoc.staticSetNextArticles(siteRequest_, o);
   }
   public static JsonArray staticSetNextArticles(SiteRequest siteRequest_, String o) {
     if(o != null) {
@@ -1289,7 +1510,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     return null;
   }
-  protected LearnSkills nextArticlesInit() {
+  protected SpineDoc nextArticlesInit() {
     Wrap<JsonArray> nextArticlesWrap = new Wrap<JsonArray>().var("nextArticles");
     if(nextArticles == null) {
       _nextArticles(nextArticlesWrap);
@@ -1297,7 +1518,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setNextArticles(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchNextArticles(SiteRequest siteRequest_, JsonArray o) {
@@ -1309,7 +1530,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqNextArticles(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchNextArticles(siteRequest_, LearnSkills.staticSetNextArticles(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchNextArticles(siteRequest_, SpineDoc.staticSetNextArticles(siteRequest_, o)).toString();
   }
 
 	//////////////////
@@ -1328,7 +1549,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity labelsString
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1338,12 +1559,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return labelsString;
   }
   public void setLabelsString(String o) {
-    this.labelsString = LearnSkills.staticSetLabelsString(siteRequest_, o);
+    this.labelsString = SpineDoc.staticSetLabelsString(siteRequest_, o);
   }
   public static String staticSetLabelsString(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills labelsStringInit() {
+  protected SpineDoc labelsStringInit() {
     Wrap<String> labelsStringWrap = new Wrap<String>().var("labelsString");
     if(labelsString == null) {
       _labelsString(labelsStringWrap);
@@ -1351,7 +1572,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setLabelsString(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchLabelsString(SiteRequest siteRequest_, String o) {
@@ -1363,7 +1584,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqLabelsString(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchLabelsString(siteRequest_, LearnSkills.staticSetLabelsString(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchLabelsString(siteRequest_, SpineDoc.staticSetLabelsString(siteRequest_, o)).toString();
   }
 
   public String sqlLabelsString() {
@@ -1391,7 +1612,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity labels
    *  It is constructed before being initialized with the constructor by default. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
    * <br>
    * @param l is the entity already constructed. 
    **/
@@ -1406,23 +1627,23 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setLabels(String o) {
-    String l = LearnSkills.staticSetLabels(siteRequest_, o);
+    String l = SpineDoc.staticSetLabels(siteRequest_, o);
     if(l != null)
       addLabels(l);
   }
   public static String staticSetLabels(SiteRequest siteRequest_, String o) {
     return o;
   }
-  public LearnSkills addLabels(String...objects) {
+  public SpineDoc addLabels(String...objects) {
     for(String o : objects) {
       addLabels(o);
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
-  public LearnSkills addLabels(String o) {
+  public SpineDoc addLabels(String o) {
     if(o != null)
       this.labels.add(o);
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
   @JsonIgnore
   public void setLabels(JsonArray objects) {
@@ -1434,9 +1655,9 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       addLabels(o);
     }
   }
-  protected LearnSkills labelsInit() {
+  protected SpineDoc labelsInit() {
     _labels(labels);
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchLabels(SiteRequest siteRequest_, String o) {
@@ -1448,7 +1669,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqLabels(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchLabels(siteRequest_, LearnSkills.staticSetLabels(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchLabels(siteRequest_, SpineDoc.staticSetLabels(siteRequest_, o)).toString();
   }
 
   public String[] sqlLabels() {
@@ -1477,7 +1698,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity relatedArticleIds
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:relatedArticleIds">Find the entity relatedArticleIds in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:relatedArticleIds">Find the entity relatedArticleIds in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1487,12 +1708,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return relatedArticleIds;
   }
   public void setRelatedArticleIds(String o) {
-    this.relatedArticleIds = LearnSkills.staticSetRelatedArticleIds(siteRequest_, o);
+    this.relatedArticleIds = SpineDoc.staticSetRelatedArticleIds(siteRequest_, o);
   }
   public static String staticSetRelatedArticleIds(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected LearnSkills relatedArticleIdsInit() {
+  protected SpineDoc relatedArticleIdsInit() {
     Wrap<String> relatedArticleIdsWrap = new Wrap<String>().var("relatedArticleIds");
     if(relatedArticleIds == null) {
       _relatedArticleIds(relatedArticleIdsWrap);
@@ -1500,7 +1721,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setRelatedArticleIds(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchRelatedArticleIds(SiteRequest siteRequest_, String o) {
@@ -1512,7 +1733,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqRelatedArticleIds(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchRelatedArticleIds(siteRequest_, LearnSkills.staticSetRelatedArticleIds(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchRelatedArticleIds(siteRequest_, SpineDoc.staticSetRelatedArticleIds(siteRequest_, o)).toString();
   }
 
   public String sqlRelatedArticleIds() {
@@ -1534,30 +1755,30 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
-  protected SearchList<LearnSkills> relatedArticleSearch;
+  protected SearchList<SpineDoc> relatedArticleSearch;
 
   /**
    * <br> The entity relatedArticleSearch
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:relatedArticleSearch">Find the entity relatedArticleSearch in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:relatedArticleSearch">Find the entity relatedArticleSearch in Solr</a>
    * <br>
    * @param promise is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _relatedArticleSearch(Promise<SearchList<LearnSkills>> promise);
+  protected abstract void _relatedArticleSearch(Promise<SearchList<SpineDoc>> promise);
 
-  public SearchList<LearnSkills> getRelatedArticleSearch() {
+  public SearchList<SpineDoc> getRelatedArticleSearch() {
     return relatedArticleSearch;
   }
 
-  public void setRelatedArticleSearch(SearchList<LearnSkills> relatedArticleSearch) {
+  public void setRelatedArticleSearch(SearchList<SpineDoc> relatedArticleSearch) {
     this.relatedArticleSearch = relatedArticleSearch;
   }
-  public static SearchList<LearnSkills> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
+  public static SearchList<SpineDoc> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
     return null;
   }
-  protected Future<SearchList<LearnSkills>> relatedArticleSearchPromise() {
-    Promise<SearchList<LearnSkills>> promise = Promise.promise();
-    Promise<SearchList<LearnSkills>> promise2 = Promise.promise();
+  protected Future<SearchList<SpineDoc>> relatedArticleSearchPromise() {
+    Promise<SearchList<SpineDoc>> promise = Promise.promise();
+    Promise<SearchList<SpineDoc>> promise2 = Promise.promise();
     _relatedArticleSearch(promise2);
     promise2.future().onSuccess(o -> {
       if(o != null && relatedArticleSearch == null) {
@@ -1593,7 +1814,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /**
    * <br> The entity relatedArticles
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:relatedArticles">Find the entity relatedArticles in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:relatedArticles">Find the entity relatedArticles in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
@@ -1608,7 +1829,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
   @JsonIgnore
   public void setRelatedArticles(String o) {
-    this.relatedArticles = LearnSkills.staticSetRelatedArticles(siteRequest_, o);
+    this.relatedArticles = SpineDoc.staticSetRelatedArticles(siteRequest_, o);
   }
   public static JsonArray staticSetRelatedArticles(SiteRequest siteRequest_, String o) {
     if(o != null) {
@@ -1616,7 +1837,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     return null;
   }
-  protected LearnSkills relatedArticlesInit() {
+  protected SpineDoc relatedArticlesInit() {
     Wrap<JsonArray> relatedArticlesWrap = new Wrap<JsonArray>().var("relatedArticles");
     if(relatedArticles == null) {
       _relatedArticles(relatedArticlesWrap);
@@ -1624,7 +1845,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         setRelatedArticles(o);
       });
     }
-    return (LearnSkills)this;
+    return (SpineDoc)this;
   }
 
   public static String staticSearchRelatedArticles(SiteRequest siteRequest_, JsonArray o) {
@@ -1636,22 +1857,22 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String staticSearchFqRelatedArticles(SiteRequest siteRequest_, String o) {
-    return LearnSkills.staticSearchRelatedArticles(siteRequest_, LearnSkills.staticSetRelatedArticles(siteRequest_, o)).toString();
+    return SpineDoc.staticSearchRelatedArticles(siteRequest_, SpineDoc.staticSetRelatedArticles(siteRequest_, o)).toString();
   }
 
   //////////////
   // initDeep //
   //////////////
 
-  public Future<LearnSkillsGen<DEV>> promiseDeepLearnSkills(SiteRequest siteRequest_) {
+  public Future<SpineDocGen<DEV>> promiseDeepSpineDoc(SiteRequest siteRequest_) {
     setSiteRequest_(siteRequest_);
-    return promiseDeepLearnSkills();
+    return promiseDeepSpineDoc();
   }
 
-  public Future<LearnSkillsGen<DEV>> promiseDeepLearnSkills() {
-    Promise<LearnSkillsGen<DEV>> promise = Promise.promise();
+  public Future<SpineDocGen<DEV>> promiseDeepSpineDoc() {
+    Promise<SpineDocGen<DEV>> promise = Promise.promise();
     Promise<Void> promise2 = Promise.promise();
-    promiseLearnSkills(promise2);
+    promiseSpineDoc(promise2);
     promise2.future().onSuccess(a -> {
       super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
         promise.complete(this);
@@ -1664,16 +1885,19 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return promise.future();
   }
 
-  public Future<Void> promiseLearnSkills(Promise<Void> promise) {
+  public Future<Void> promiseSpineDoc(Promise<Void> promise) {
     Future.future(a -> a.complete()).compose(a -> {
       Promise<Void> promise2 = Promise.promise();
       try {
+        articleInit();
+        importanceInit();
+        courseNumInit();
+        lessonNumInit();
         nameInit();
         descriptionInit();
         authorNameInit();
         authorUrlInit();
         pageIdInit();
-        courseNumInit();
         pageVideoUrlInit();
         pageImageUriInit();
         pageImageWidthInit();
@@ -1749,15 +1973,15 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return promise.future();
   }
 
-  @Override public Future<? extends LearnSkillsGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-    return promiseDeepLearnSkills(siteRequest_);
+  @Override public Future<? extends SpineDocGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepSpineDoc(siteRequest_);
   }
 
   /////////////////
   // siteRequest //
   /////////////////
 
-  public void siteRequestLearnSkills(SiteRequest siteRequest_) {
+  public void siteRequestSpineDoc(SiteRequest siteRequest_) {
       super.siteRequestBaseResult(siteRequest_);
     if(prerequisiteArticleSearch != null)
       prerequisiteArticleSearch.setSiteRequest_(siteRequest_);
@@ -1768,7 +1992,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public void siteRequestForClass(SiteRequest siteRequest_) {
-    siteRequestLearnSkills(siteRequest_);
+    siteRequestSpineDoc(siteRequest_);
   }
 
   /////////////
@@ -1780,7 +2004,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     Object o = null;
     for(String v : vars) {
       if(o == null)
-        o = obtainLearnSkills(v);
+        o = obtainSpineDoc(v);
       else if(o instanceof BaseModel) {
         BaseModel baseModel = (BaseModel)o;
         o = baseModel.obtainForClass(v);
@@ -1792,55 +2016,61 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     return o;
   }
-  public Object obtainLearnSkills(String var) {
-    LearnSkills oLearnSkills = (LearnSkills)this;
+  public Object obtainSpineDoc(String var) {
+    SpineDoc oSpineDoc = (SpineDoc)this;
     switch(var) {
-      case "name":
-        return oLearnSkills.name;
-      case "description":
-        return oLearnSkills.description;
-      case "authorName":
-        return oLearnSkills.authorName;
-      case "authorUrl":
-        return oLearnSkills.authorUrl;
-      case "pageId":
-        return oLearnSkills.pageId;
+      case "article":
+        return oSpineDoc.article;
+      case "importance":
+        return oSpineDoc.importance;
       case "courseNum":
-        return oLearnSkills.courseNum;
+        return oSpineDoc.courseNum;
+      case "lessonNum":
+        return oSpineDoc.lessonNum;
+      case "name":
+        return oSpineDoc.name;
+      case "description":
+        return oSpineDoc.description;
+      case "authorName":
+        return oSpineDoc.authorName;
+      case "authorUrl":
+        return oSpineDoc.authorUrl;
+      case "pageId":
+        return oSpineDoc.pageId;
       case "pageVideoUrl":
-        return oLearnSkills.pageVideoUrl;
+        return oSpineDoc.pageVideoUrl;
       case "pageImageUri":
-        return oLearnSkills.pageImageUri;
+        return oSpineDoc.pageImageUri;
       case "pageImageWidth":
-        return oLearnSkills.pageImageWidth;
+        return oSpineDoc.pageImageWidth;
       case "pageImageHeight":
-        return oLearnSkills.pageImageHeight;
+        return oSpineDoc.pageImageHeight;
       case "pageImageType":
-        return oLearnSkills.pageImageType;
+        return oSpineDoc.pageImageType;
       case "pageImageAlt":
-        return oLearnSkills.pageImageAlt;
+        return oSpineDoc.pageImageAlt;
       case "prerequisiteArticleIds":
-        return oLearnSkills.prerequisiteArticleIds;
+        return oSpineDoc.prerequisiteArticleIds;
       case "prerequisiteArticleSearch":
-        return oLearnSkills.prerequisiteArticleSearch;
+        return oSpineDoc.prerequisiteArticleSearch;
       case "prerequisiteArticles":
-        return oLearnSkills.prerequisiteArticles;
+        return oSpineDoc.prerequisiteArticles;
       case "nextArticleIds":
-        return oLearnSkills.nextArticleIds;
+        return oSpineDoc.nextArticleIds;
       case "nextArticleSearch":
-        return oLearnSkills.nextArticleSearch;
+        return oSpineDoc.nextArticleSearch;
       case "nextArticles":
-        return oLearnSkills.nextArticles;
+        return oSpineDoc.nextArticles;
       case "labelsString":
-        return oLearnSkills.labelsString;
+        return oSpineDoc.labelsString;
       case "labels":
-        return oLearnSkills.labels;
+        return oSpineDoc.labels;
       case "relatedArticleIds":
-        return oLearnSkills.relatedArticleIds;
+        return oSpineDoc.relatedArticleIds;
       case "relatedArticleSearch":
-        return oLearnSkills.relatedArticleSearch;
+        return oSpineDoc.relatedArticleSearch;
       case "relatedArticles":
-        return oLearnSkills.relatedArticles;
+        return oSpineDoc.relatedArticles;
       default:
         return super.obtainBaseResult(var);
     }
@@ -1855,7 +2085,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     Object o = null;
     for(String v : vars) {
       if(o == null)
-        o = relateLearnSkills(v, val);
+        o = relateSpineDoc(v, val);
       else if(o instanceof BaseModel) {
         BaseModel baseModel = (BaseModel)o;
         o = baseModel.relateForClass(v, val);
@@ -1863,8 +2093,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     return o != null;
   }
-  public Object relateLearnSkills(String var, Object val) {
-    LearnSkills oLearnSkills = (LearnSkills)this;
+  public Object relateSpineDoc(String var, Object val) {
+    SpineDoc oSpineDoc = (SpineDoc)this;
     switch(var) {
       default:
         return super.relateBaseResult(var, val);
@@ -1875,51 +2105,57 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   // staticSet //
   ///////////////
 
-  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, LearnSkills o) {
-    return staticSetLearnSkills(entityVar,  siteRequest_, v, o);
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SpineDoc o) {
+    return staticSetSpineDoc(entityVar,  siteRequest_, v, o);
   }
-  public static Object staticSetLearnSkills(String entityVar, SiteRequest siteRequest_, String v, LearnSkills o) {
+  public static Object staticSetSpineDoc(String entityVar, SiteRequest siteRequest_, String v, SpineDoc o) {
     switch(entityVar) {
-    case "name":
-      return LearnSkills.staticSetName(siteRequest_, v);
-    case "description":
-      return LearnSkills.staticSetDescription(siteRequest_, v);
-    case "authorName":
-      return LearnSkills.staticSetAuthorName(siteRequest_, v);
-    case "authorUrl":
-      return LearnSkills.staticSetAuthorUrl(siteRequest_, v);
-    case "pageId":
-      return LearnSkills.staticSetPageId(siteRequest_, v);
+    case "article":
+      return SpineDoc.staticSetArticle(siteRequest_, v);
+    case "importance":
+      return SpineDoc.staticSetImportance(siteRequest_, v);
     case "courseNum":
-      return LearnSkills.staticSetCourseNum(siteRequest_, v);
+      return SpineDoc.staticSetCourseNum(siteRequest_, v);
+    case "lessonNum":
+      return SpineDoc.staticSetLessonNum(siteRequest_, v);
+    case "name":
+      return SpineDoc.staticSetName(siteRequest_, v);
+    case "description":
+      return SpineDoc.staticSetDescription(siteRequest_, v);
+    case "authorName":
+      return SpineDoc.staticSetAuthorName(siteRequest_, v);
+    case "authorUrl":
+      return SpineDoc.staticSetAuthorUrl(siteRequest_, v);
+    case "pageId":
+      return SpineDoc.staticSetPageId(siteRequest_, v);
     case "pageVideoUrl":
-      return LearnSkills.staticSetPageVideoUrl(siteRequest_, v);
+      return SpineDoc.staticSetPageVideoUrl(siteRequest_, v);
     case "pageImageUri":
-      return LearnSkills.staticSetPageImageUri(siteRequest_, v);
+      return SpineDoc.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
-      return LearnSkills.staticSetPageImageWidth(siteRequest_, v);
+      return SpineDoc.staticSetPageImageWidth(siteRequest_, v);
     case "pageImageHeight":
-      return LearnSkills.staticSetPageImageHeight(siteRequest_, v);
+      return SpineDoc.staticSetPageImageHeight(siteRequest_, v);
     case "pageImageType":
-      return LearnSkills.staticSetPageImageType(siteRequest_, v);
+      return SpineDoc.staticSetPageImageType(siteRequest_, v);
     case "pageImageAlt":
-      return LearnSkills.staticSetPageImageAlt(siteRequest_, v);
+      return SpineDoc.staticSetPageImageAlt(siteRequest_, v);
     case "prerequisiteArticleIds":
-      return LearnSkills.staticSetPrerequisiteArticleIds(siteRequest_, v);
+      return SpineDoc.staticSetPrerequisiteArticleIds(siteRequest_, v);
     case "prerequisiteArticles":
-      return LearnSkills.staticSetPrerequisiteArticles(siteRequest_, v);
+      return SpineDoc.staticSetPrerequisiteArticles(siteRequest_, v);
     case "nextArticleIds":
-      return LearnSkills.staticSetNextArticleIds(siteRequest_, v);
+      return SpineDoc.staticSetNextArticleIds(siteRequest_, v);
     case "nextArticles":
-      return LearnSkills.staticSetNextArticles(siteRequest_, v);
+      return SpineDoc.staticSetNextArticles(siteRequest_, v);
     case "labelsString":
-      return LearnSkills.staticSetLabelsString(siteRequest_, v);
+      return SpineDoc.staticSetLabelsString(siteRequest_, v);
     case "labels":
-      return LearnSkills.staticSetLabels(siteRequest_, v);
+      return SpineDoc.staticSetLabels(siteRequest_, v);
     case "relatedArticleIds":
-      return LearnSkills.staticSetRelatedArticleIds(siteRequest_, v);
+      return SpineDoc.staticSetRelatedArticleIds(siteRequest_, v);
     case "relatedArticles":
-      return LearnSkills.staticSetRelatedArticles(siteRequest_, v);
+      return SpineDoc.staticSetRelatedArticles(siteRequest_, v);
       default:
         return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
     }
@@ -1929,81 +2165,87 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   // staticSearch //
   //////////////////
 
-  public static Future<LearnSkills> fqLearnSkills(SiteRequest siteRequest, String var, Object val) {
-    Promise<LearnSkills> promise = Promise.promise();
+  public static Future<SpineDoc> fqSpineDoc(SiteRequest siteRequest, String var, Object val) {
+    Promise<SpineDoc> promise = Promise.promise();
     try {
       if(val == null) {
         promise.complete();
       } else {
-        SearchList<LearnSkills> searchList = new SearchList<LearnSkills>();
+        SearchList<SpineDoc> searchList = new SearchList<SpineDoc>();
         searchList.setStore(true);
         searchList.q("*:*");
-        searchList.setC(LearnSkills.class);
-        searchList.fq(String.format("%s:", LearnSkills.varIndexedLearnSkills(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.setC(SpineDoc.class);
+        searchList.fq(String.format("%s:", SpineDoc.varIndexedSpineDoc(var)) + SearchTool.escapeQueryChars(val.toString()));
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
           try {
             promise.complete(searchList.getList().stream().findFirst().orElse(null));
           } catch(Throwable ex) {
-            LOG.error("Error while querying the Learn cloud developer skills", ex);
+            LOG.error("Error while querying the SPINE doc", ex);
             promise.fail(ex);
           }
         }).onFailure(ex -> {
-          LOG.error("Error while querying the Learn cloud developer skills", ex);
+          LOG.error("Error while querying the SPINE doc", ex);
           promise.fail(ex);
         });
       }
     } catch(Throwable ex) {
-      LOG.error("Error while querying the Learn cloud developer skills", ex);
+      LOG.error("Error while querying the SPINE doc", ex);
       promise.fail(ex);
     }
     return promise.future();
   }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-    return staticSearchLearnSkills(entityVar,  siteRequest_, o);
+    return staticSearchSpineDoc(entityVar,  siteRequest_, o);
   }
-  public static Object staticSearchLearnSkills(String entityVar, SiteRequest siteRequest_, Object o) {
+  public static Object staticSearchSpineDoc(String entityVar, SiteRequest siteRequest_, Object o) {
     switch(entityVar) {
-    case "name":
-      return LearnSkills.staticSearchName(siteRequest_, (String)o);
-    case "description":
-      return LearnSkills.staticSearchDescription(siteRequest_, (String)o);
-    case "authorName":
-      return LearnSkills.staticSearchAuthorName(siteRequest_, (String)o);
-    case "authorUrl":
-      return LearnSkills.staticSearchAuthorUrl(siteRequest_, (String)o);
-    case "pageId":
-      return LearnSkills.staticSearchPageId(siteRequest_, (String)o);
+    case "article":
+      return SpineDoc.staticSearchArticle(siteRequest_, (Boolean)o);
+    case "importance":
+      return SpineDoc.staticSearchImportance(siteRequest_, (BigDecimal)o);
     case "courseNum":
-      return LearnSkills.staticSearchCourseNum(siteRequest_, (Integer)o);
+      return SpineDoc.staticSearchCourseNum(siteRequest_, (Integer)o);
+    case "lessonNum":
+      return SpineDoc.staticSearchLessonNum(siteRequest_, (Integer)o);
+    case "name":
+      return SpineDoc.staticSearchName(siteRequest_, (String)o);
+    case "description":
+      return SpineDoc.staticSearchDescription(siteRequest_, (String)o);
+    case "authorName":
+      return SpineDoc.staticSearchAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return SpineDoc.staticSearchAuthorUrl(siteRequest_, (String)o);
+    case "pageId":
+      return SpineDoc.staticSearchPageId(siteRequest_, (String)o);
     case "pageVideoUrl":
-      return LearnSkills.staticSearchPageVideoUrl(siteRequest_, (String)o);
+      return SpineDoc.staticSearchPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
-      return LearnSkills.staticSearchPageImageUri(siteRequest_, (String)o);
+      return SpineDoc.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
-      return LearnSkills.staticSearchPageImageWidth(siteRequest_, (Integer)o);
+      return SpineDoc.staticSearchPageImageWidth(siteRequest_, (Integer)o);
     case "pageImageHeight":
-      return LearnSkills.staticSearchPageImageHeight(siteRequest_, (Integer)o);
+      return SpineDoc.staticSearchPageImageHeight(siteRequest_, (Integer)o);
     case "pageImageType":
-      return LearnSkills.staticSearchPageImageType(siteRequest_, (String)o);
+      return SpineDoc.staticSearchPageImageType(siteRequest_, (String)o);
     case "pageImageAlt":
-      return LearnSkills.staticSearchPageImageAlt(siteRequest_, (String)o);
+      return SpineDoc.staticSearchPageImageAlt(siteRequest_, (String)o);
     case "prerequisiteArticleIds":
-      return LearnSkills.staticSearchPrerequisiteArticleIds(siteRequest_, (String)o);
+      return SpineDoc.staticSearchPrerequisiteArticleIds(siteRequest_, (String)o);
     case "prerequisiteArticles":
-      return LearnSkills.staticSearchPrerequisiteArticles(siteRequest_, (JsonArray)o);
+      return SpineDoc.staticSearchPrerequisiteArticles(siteRequest_, (JsonArray)o);
     case "nextArticleIds":
-      return LearnSkills.staticSearchNextArticleIds(siteRequest_, (String)o);
+      return SpineDoc.staticSearchNextArticleIds(siteRequest_, (String)o);
     case "nextArticles":
-      return LearnSkills.staticSearchNextArticles(siteRequest_, (JsonArray)o);
+      return SpineDoc.staticSearchNextArticles(siteRequest_, (JsonArray)o);
     case "labelsString":
-      return LearnSkills.staticSearchLabelsString(siteRequest_, (String)o);
+      return SpineDoc.staticSearchLabelsString(siteRequest_, (String)o);
     case "labels":
-      return LearnSkills.staticSearchLabels(siteRequest_, (String)o);
+      return SpineDoc.staticSearchLabels(siteRequest_, (String)o);
     case "relatedArticleIds":
-      return LearnSkills.staticSearchRelatedArticleIds(siteRequest_, (String)o);
+      return SpineDoc.staticSearchRelatedArticleIds(siteRequest_, (String)o);
     case "relatedArticles":
-      return LearnSkills.staticSearchRelatedArticles(siteRequest_, (JsonArray)o);
+      return SpineDoc.staticSearchRelatedArticles(siteRequest_, (JsonArray)o);
       default:
         return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
     }
@@ -2014,50 +2256,56 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   ///////////////////
 
   public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-    return staticSearchStrLearnSkills(entityVar,  siteRequest_, o);
+    return staticSearchStrSpineDoc(entityVar,  siteRequest_, o);
   }
-  public static String staticSearchStrLearnSkills(String entityVar, SiteRequest siteRequest_, Object o) {
+  public static String staticSearchStrSpineDoc(String entityVar, SiteRequest siteRequest_, Object o) {
     switch(entityVar) {
-    case "name":
-      return LearnSkills.staticSearchStrName(siteRequest_, (String)o);
-    case "description":
-      return LearnSkills.staticSearchStrDescription(siteRequest_, (String)o);
-    case "authorName":
-      return LearnSkills.staticSearchStrAuthorName(siteRequest_, (String)o);
-    case "authorUrl":
-      return LearnSkills.staticSearchStrAuthorUrl(siteRequest_, (String)o);
-    case "pageId":
-      return LearnSkills.staticSearchStrPageId(siteRequest_, (String)o);
+    case "article":
+      return SpineDoc.staticSearchStrArticle(siteRequest_, (Boolean)o);
+    case "importance":
+      return SpineDoc.staticSearchStrImportance(siteRequest_, (String)o);
     case "courseNum":
-      return LearnSkills.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+      return SpineDoc.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+    case "lessonNum":
+      return SpineDoc.staticSearchStrLessonNum(siteRequest_, (Integer)o);
+    case "name":
+      return SpineDoc.staticSearchStrName(siteRequest_, (String)o);
+    case "description":
+      return SpineDoc.staticSearchStrDescription(siteRequest_, (String)o);
+    case "authorName":
+      return SpineDoc.staticSearchStrAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return SpineDoc.staticSearchStrAuthorUrl(siteRequest_, (String)o);
+    case "pageId":
+      return SpineDoc.staticSearchStrPageId(siteRequest_, (String)o);
     case "pageVideoUrl":
-      return LearnSkills.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
     case "pageImageUri":
-      return LearnSkills.staticSearchStrPageImageUri(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
-      return LearnSkills.staticSearchStrPageImageWidth(siteRequest_, (Integer)o);
+      return SpineDoc.staticSearchStrPageImageWidth(siteRequest_, (Integer)o);
     case "pageImageHeight":
-      return LearnSkills.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
+      return SpineDoc.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
     case "pageImageType":
-      return LearnSkills.staticSearchStrPageImageType(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrPageImageType(siteRequest_, (String)o);
     case "pageImageAlt":
-      return LearnSkills.staticSearchStrPageImageAlt(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrPageImageAlt(siteRequest_, (String)o);
     case "prerequisiteArticleIds":
-      return LearnSkills.staticSearchStrPrerequisiteArticleIds(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrPrerequisiteArticleIds(siteRequest_, (String)o);
     case "prerequisiteArticles":
-      return LearnSkills.staticSearchStrPrerequisiteArticles(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrPrerequisiteArticles(siteRequest_, (String)o);
     case "nextArticleIds":
-      return LearnSkills.staticSearchStrNextArticleIds(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrNextArticleIds(siteRequest_, (String)o);
     case "nextArticles":
-      return LearnSkills.staticSearchStrNextArticles(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrNextArticles(siteRequest_, (String)o);
     case "labelsString":
-      return LearnSkills.staticSearchStrLabelsString(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrLabelsString(siteRequest_, (String)o);
     case "labels":
-      return LearnSkills.staticSearchStrLabels(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrLabels(siteRequest_, (String)o);
     case "relatedArticleIds":
-      return LearnSkills.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
     case "relatedArticles":
-      return LearnSkills.staticSearchStrRelatedArticles(siteRequest_, (String)o);
+      return SpineDoc.staticSearchStrRelatedArticles(siteRequest_, (String)o);
       default:
         return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
     }
@@ -2068,50 +2316,56 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   //////////////////
 
   public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-    return staticSearchFqLearnSkills(entityVar,  siteRequest_, o);
+    return staticSearchFqSpineDoc(entityVar,  siteRequest_, o);
   }
-  public static String staticSearchFqLearnSkills(String entityVar, SiteRequest siteRequest_, String o) {
+  public static String staticSearchFqSpineDoc(String entityVar, SiteRequest siteRequest_, String o) {
     switch(entityVar) {
-    case "name":
-      return LearnSkills.staticSearchFqName(siteRequest_, o);
-    case "description":
-      return LearnSkills.staticSearchFqDescription(siteRequest_, o);
-    case "authorName":
-      return LearnSkills.staticSearchFqAuthorName(siteRequest_, o);
-    case "authorUrl":
-      return LearnSkills.staticSearchFqAuthorUrl(siteRequest_, o);
-    case "pageId":
-      return LearnSkills.staticSearchFqPageId(siteRequest_, o);
+    case "article":
+      return SpineDoc.staticSearchFqArticle(siteRequest_, o);
+    case "importance":
+      return SpineDoc.staticSearchFqImportance(siteRequest_, o);
     case "courseNum":
-      return LearnSkills.staticSearchFqCourseNum(siteRequest_, o);
+      return SpineDoc.staticSearchFqCourseNum(siteRequest_, o);
+    case "lessonNum":
+      return SpineDoc.staticSearchFqLessonNum(siteRequest_, o);
+    case "name":
+      return SpineDoc.staticSearchFqName(siteRequest_, o);
+    case "description":
+      return SpineDoc.staticSearchFqDescription(siteRequest_, o);
+    case "authorName":
+      return SpineDoc.staticSearchFqAuthorName(siteRequest_, o);
+    case "authorUrl":
+      return SpineDoc.staticSearchFqAuthorUrl(siteRequest_, o);
+    case "pageId":
+      return SpineDoc.staticSearchFqPageId(siteRequest_, o);
     case "pageVideoUrl":
-      return LearnSkills.staticSearchFqPageVideoUrl(siteRequest_, o);
+      return SpineDoc.staticSearchFqPageVideoUrl(siteRequest_, o);
     case "pageImageUri":
-      return LearnSkills.staticSearchFqPageImageUri(siteRequest_, o);
+      return SpineDoc.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
-      return LearnSkills.staticSearchFqPageImageWidth(siteRequest_, o);
+      return SpineDoc.staticSearchFqPageImageWidth(siteRequest_, o);
     case "pageImageHeight":
-      return LearnSkills.staticSearchFqPageImageHeight(siteRequest_, o);
+      return SpineDoc.staticSearchFqPageImageHeight(siteRequest_, o);
     case "pageImageType":
-      return LearnSkills.staticSearchFqPageImageType(siteRequest_, o);
+      return SpineDoc.staticSearchFqPageImageType(siteRequest_, o);
     case "pageImageAlt":
-      return LearnSkills.staticSearchFqPageImageAlt(siteRequest_, o);
+      return SpineDoc.staticSearchFqPageImageAlt(siteRequest_, o);
     case "prerequisiteArticleIds":
-      return LearnSkills.staticSearchFqPrerequisiteArticleIds(siteRequest_, o);
+      return SpineDoc.staticSearchFqPrerequisiteArticleIds(siteRequest_, o);
     case "prerequisiteArticles":
-      return LearnSkills.staticSearchFqPrerequisiteArticles(siteRequest_, o);
+      return SpineDoc.staticSearchFqPrerequisiteArticles(siteRequest_, o);
     case "nextArticleIds":
-      return LearnSkills.staticSearchFqNextArticleIds(siteRequest_, o);
+      return SpineDoc.staticSearchFqNextArticleIds(siteRequest_, o);
     case "nextArticles":
-      return LearnSkills.staticSearchFqNextArticles(siteRequest_, o);
+      return SpineDoc.staticSearchFqNextArticles(siteRequest_, o);
     case "labelsString":
-      return LearnSkills.staticSearchFqLabelsString(siteRequest_, o);
+      return SpineDoc.staticSearchFqLabelsString(siteRequest_, o);
     case "labels":
-      return LearnSkills.staticSearchFqLabels(siteRequest_, o);
+      return SpineDoc.staticSearchFqLabels(siteRequest_, o);
     case "relatedArticleIds":
-      return LearnSkills.staticSearchFqRelatedArticleIds(siteRequest_, o);
+      return SpineDoc.staticSearchFqRelatedArticleIds(siteRequest_, o);
     case "relatedArticles":
-      return LearnSkills.staticSearchFqRelatedArticles(siteRequest_, o);
+      return SpineDoc.staticSearchFqRelatedArticles(siteRequest_, o);
       default:
         return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
     }
@@ -2127,7 +2381,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     if(val != null) {
       for(String v : vars) {
         if(o == null)
-          o = persistLearnSkills(v, val);
+          o = persistSpineDoc(v, val);
         else if(o instanceof BaseModel) {
           BaseModel oBaseModel = (BaseModel)o;
           o = oBaseModel.persistForClass(v, val);
@@ -2136,9 +2390,35 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     return o != null;
   }
-  public Object persistLearnSkills(String var, Object val) {
+  public Object persistSpineDoc(String var, Object val) {
     String varLower = var.toLowerCase();
-      if("name".equals(varLower)) {
+      if("importance".equals(varLower)) {
+        if(val instanceof String) {
+          setImportance((String)val);
+        } else if(val instanceof Number) {
+          setImportance(new BigDecimal(((Number)val).doubleValue()));
+        } else if(val instanceof BigDecimal) {
+          setImportance((BigDecimal)val);
+        }
+        saves.add("importance");
+        return val;
+      } else if("coursenum".equals(varLower)) {
+        if(val instanceof Integer) {
+          setCourseNum((Integer)val);
+        } else {
+          setCourseNum(val == null ? null : val.toString());
+        }
+        saves.add("courseNum");
+        return val;
+      } else if("lessonnum".equals(varLower)) {
+        if(val instanceof Integer) {
+          setLessonNum((Integer)val);
+        } else {
+          setLessonNum(val == null ? null : val.toString());
+        }
+        saves.add("lessonNum");
+        return val;
+      } else if("name".equals(varLower)) {
         if(val instanceof String) {
           setName((String)val);
         }
@@ -2167,14 +2447,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
           setPageId((String)val);
         }
         saves.add("pageId");
-        return val;
-      } else if("coursenum".equals(varLower)) {
-        if(val instanceof Integer) {
-          setCourseNum((Integer)val);
-        } else {
-          setCourseNum(val == null ? null : val.toString());
-        }
-        saves.add("courseNum");
         return val;
       } else if("pagevideourl".equals(varLower)) {
         if(val instanceof String) {
@@ -2240,120 +2512,132 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /////////////
 
   @Override public void populateForClass(SolrResponse.Doc doc) {
-    populateLearnSkills(doc);
+    populateSpineDoc(doc);
   }
-  public void populateLearnSkills(SolrResponse.Doc doc) {
-    LearnSkills oLearnSkills = (LearnSkills)this;
+  public void populateSpineDoc(SolrResponse.Doc doc) {
+    SpineDoc oSpineDoc = (SpineDoc)this;
     saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
     if(saves != null) {
 
-      if(saves.contains("name")) {
-        String name = (String)doc.get("name_docvalues_string");
-        if(name != null)
-          oLearnSkills.setName(name);
-      }
-
-      if(saves.contains("description")) {
-        String description = (String)doc.get("description_docvalues_string");
-        if(description != null)
-          oLearnSkills.setDescription(description);
-      }
-
-      if(saves.contains("authorName")) {
-        String authorName = (String)doc.get("authorName_docvalues_string");
-        if(authorName != null)
-          oLearnSkills.setAuthorName(authorName);
-      }
-
-      if(saves.contains("authorUrl")) {
-        String authorUrl = (String)doc.get("authorUrl_docvalues_string");
-        if(authorUrl != null)
-          oLearnSkills.setAuthorUrl(authorUrl);
-      }
-
-      if(saves.contains("pageId")) {
-        String pageId = (String)doc.get("pageId_docvalues_string");
-        if(pageId != null)
-          oLearnSkills.setPageId(pageId);
+      if(saves.contains("importance")) {
+        String importance = (String)doc.get("importance_docvalues_string");
+        if(importance != null)
+          oSpineDoc.setImportance(importance);
       }
 
       if(saves.contains("courseNum")) {
         Integer courseNum = (Integer)doc.get("courseNum_docvalues_int");
         if(courseNum != null)
-          oLearnSkills.setCourseNum(courseNum);
+          oSpineDoc.setCourseNum(courseNum);
+      }
+
+      if(saves.contains("lessonNum")) {
+        Integer lessonNum = (Integer)doc.get("lessonNum_docvalues_int");
+        if(lessonNum != null)
+          oSpineDoc.setLessonNum(lessonNum);
+      }
+
+      if(saves.contains("name")) {
+        String name = (String)doc.get("name_docvalues_string");
+        if(name != null)
+          oSpineDoc.setName(name);
+      }
+
+      if(saves.contains("description")) {
+        String description = (String)doc.get("description_docvalues_string");
+        if(description != null)
+          oSpineDoc.setDescription(description);
+      }
+
+      if(saves.contains("authorName")) {
+        String authorName = (String)doc.get("authorName_docvalues_string");
+        if(authorName != null)
+          oSpineDoc.setAuthorName(authorName);
+      }
+
+      if(saves.contains("authorUrl")) {
+        String authorUrl = (String)doc.get("authorUrl_docvalues_string");
+        if(authorUrl != null)
+          oSpineDoc.setAuthorUrl(authorUrl);
+      }
+
+      if(saves.contains("pageId")) {
+        String pageId = (String)doc.get("pageId_docvalues_string");
+        if(pageId != null)
+          oSpineDoc.setPageId(pageId);
       }
 
       if(saves.contains("pageVideoUrl")) {
         String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
         if(pageVideoUrl != null)
-          oLearnSkills.setPageVideoUrl(pageVideoUrl);
+          oSpineDoc.setPageVideoUrl(pageVideoUrl);
       }
 
       if(saves.contains("pageImageUri")) {
         String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
         if(pageImageUri != null)
-          oLearnSkills.setPageImageUri(pageImageUri);
+          oSpineDoc.setPageImageUri(pageImageUri);
       }
 
       if(saves.contains("pageImageWidth")) {
         Integer pageImageWidth = (Integer)doc.get("pageImageWidth_docvalues_int");
         if(pageImageWidth != null)
-          oLearnSkills.setPageImageWidth(pageImageWidth);
+          oSpineDoc.setPageImageWidth(pageImageWidth);
       }
 
       if(saves.contains("pageImageHeight")) {
         Integer pageImageHeight = (Integer)doc.get("pageImageHeight_docvalues_int");
         if(pageImageHeight != null)
-          oLearnSkills.setPageImageHeight(pageImageHeight);
+          oSpineDoc.setPageImageHeight(pageImageHeight);
       }
 
       if(saves.contains("pageImageType")) {
         String pageImageType = (String)doc.get("pageImageType_docvalues_string");
         if(pageImageType != null)
-          oLearnSkills.setPageImageType(pageImageType);
+          oSpineDoc.setPageImageType(pageImageType);
       }
 
       if(saves.contains("pageImageAlt")) {
         String pageImageAlt = (String)doc.get("pageImageAlt_docvalues_string");
         if(pageImageAlt != null)
-          oLearnSkills.setPageImageAlt(pageImageAlt);
+          oSpineDoc.setPageImageAlt(pageImageAlt);
       }
 
       if(saves.contains("prerequisiteArticleIds")) {
         String prerequisiteArticleIds = (String)doc.get("prerequisiteArticleIds_docvalues_string");
         if(prerequisiteArticleIds != null)
-          oLearnSkills.setPrerequisiteArticleIds(prerequisiteArticleIds);
+          oSpineDoc.setPrerequisiteArticleIds(prerequisiteArticleIds);
       }
 
       if(saves.contains("prerequisiteArticles")) {
         String prerequisiteArticles = (String)doc.get("prerequisiteArticles_stored_string");
         if(prerequisiteArticles != null)
-          oLearnSkills.setPrerequisiteArticles(prerequisiteArticles);
+          oSpineDoc.setPrerequisiteArticles(prerequisiteArticles);
       }
 
       if(saves.contains("nextArticleIds")) {
         String nextArticleIds = (String)doc.get("nextArticleIds_docvalues_string");
         if(nextArticleIds != null)
-          oLearnSkills.setNextArticleIds(nextArticleIds);
+          oSpineDoc.setNextArticleIds(nextArticleIds);
       }
 
       if(saves.contains("nextArticles")) {
         String nextArticles = (String)doc.get("nextArticles_stored_string");
         if(nextArticles != null)
-          oLearnSkills.setNextArticles(nextArticles);
+          oSpineDoc.setNextArticles(nextArticles);
       }
 
       if(saves.contains("labelsString")) {
         String labelsString = (String)doc.get("labelsString_docvalues_string");
         if(labelsString != null)
-          oLearnSkills.setLabelsString(labelsString);
+          oSpineDoc.setLabelsString(labelsString);
       }
 
       if(saves.contains("labels")) {
         List<String> labels = (List<String>)doc.get("labels_docvalues_strings");
         if(labels != null) {
           labels.stream().forEach( v -> {
-            oLearnSkills.labels.add(LearnSkills.staticSetLabels(siteRequest_, v));
+            oSpineDoc.labels.add(SpineDoc.staticSetLabels(siteRequest_, v));
           });
         }
       }
@@ -2361,20 +2645,30 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       if(saves.contains("relatedArticleIds")) {
         String relatedArticleIds = (String)doc.get("relatedArticleIds_docvalues_string");
         if(relatedArticleIds != null)
-          oLearnSkills.setRelatedArticleIds(relatedArticleIds);
+          oSpineDoc.setRelatedArticleIds(relatedArticleIds);
       }
 
       if(saves.contains("relatedArticles")) {
         String relatedArticles = (String)doc.get("relatedArticles_stored_string");
         if(relatedArticles != null)
-          oLearnSkills.setRelatedArticles(relatedArticles);
+          oSpineDoc.setRelatedArticles(relatedArticles);
       }
     }
 
     super.populateBaseResult(doc);
   }
 
-  public void indexLearnSkills(JsonObject doc) {
+  public void indexSpineDoc(JsonObject doc) {
+    if(importance != null) {
+      doc.put("importance_docvalues_string", importance.toPlainString());
+      doc.put("importance_docvalues_double", importance.doubleValue());
+    }
+    if(courseNum != null) {
+      doc.put("courseNum_docvalues_int", courseNum);
+    }
+    if(lessonNum != null) {
+      doc.put("lessonNum_docvalues_int", lessonNum);
+    }
     if(name != null) {
       doc.put("name_docvalues_string", name);
     }
@@ -2389,9 +2683,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);
-    }
-    if(courseNum != null) {
-      doc.put("courseNum_docvalues_int", courseNum);
     }
     if(pageVideoUrl != null) {
       doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
@@ -2430,7 +2721,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       JsonArray l = new JsonArray();
       doc.put("labels_docvalues_strings", l);
       for(String o : labels) {
-        l.add(LearnSkills.staticSearchLabels(siteRequest_, o));
+        l.add(SpineDoc.staticSearchLabels(siteRequest_, o));
       }
     }
     if(relatedArticleIds != null) {
@@ -2443,8 +2734,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
 	}
 
-  public static String varStoredLearnSkills(String entityVar) {
+  public static String varStoredSpineDoc(String entityVar) {
     switch(entityVar) {
+      case "importance":
+        return "importance_docvalues_string";
+      case "courseNum":
+        return "courseNum_docvalues_int";
+      case "lessonNum":
+        return "lessonNum_docvalues_int";
       case "name":
         return "name_docvalues_string";
       case "description":
@@ -2455,8 +2752,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
-      case "courseNum":
-        return "courseNum_docvalues_int";
       case "pageVideoUrl":
         return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
@@ -2490,8 +2785,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static String varIndexedLearnSkills(String entityVar) {
+  public static String varIndexedSpineDoc(String entityVar) {
     switch(entityVar) {
+      case "importance":
+        return "importance_docvalues_string";
+      case "courseNum":
+        return "courseNum_docvalues_int";
+      case "lessonNum":
+        return "lessonNum_docvalues_int";
       case "name":
         return "name_docvalues_string";
       case "description":
@@ -2502,8 +2803,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
-      case "courseNum":
-        return "courseNum_docvalues_int";
       case "pageVideoUrl":
         return "pageVideoUrl_docvalues_string";
       case "pageImageUri":
@@ -2531,8 +2830,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static String searchVarLearnSkills(String searchVar) {
+  public static String searchVarSpineDoc(String searchVar) {
     switch(searchVar) {
+      case "importance_docvalues_string":
+        return "importance";
+      case "courseNum_docvalues_int":
+        return "courseNum";
+      case "lessonNum_docvalues_int":
+        return "lessonNum";
       case "name_docvalues_string":
         return "name";
       case "description_docvalues_string":
@@ -2543,8 +2848,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "authorUrl";
       case "pageId_docvalues_string":
         return "pageId";
-      case "courseNum_docvalues_int":
-        return "courseNum";
       case "pageVideoUrl_docvalues_string":
         return "pageVideoUrl";
       case "pageImageUri_docvalues_string":
@@ -2572,14 +2875,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static String varSearchLearnSkills(String entityVar) {
+  public static String varSearchSpineDoc(String entityVar) {
     switch(entityVar) {
       default:
         return BaseResult.varSearchBaseResult(entityVar);
     }
   }
 
-  public static String varSuggestedLearnSkills(String entityVar) {
+  public static String varSuggestedSpineDoc(String entityVar) {
     switch(entityVar) {
       default:
         return BaseResult.varSuggestedBaseResult(entityVar);
@@ -2591,34 +2894,36 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   /////////////
 
   @Override public void storeForClass(SolrResponse.Doc doc) {
-    storeLearnSkills(doc);
+    storeSpineDoc(doc);
   }
-  public void storeLearnSkills(SolrResponse.Doc doc) {
-    LearnSkills oLearnSkills = (LearnSkills)this;
-    SiteRequest siteRequest = oLearnSkills.getSiteRequest_();
+  public void storeSpineDoc(SolrResponse.Doc doc) {
+    SpineDoc oSpineDoc = (SpineDoc)this;
+    SiteRequest siteRequest = oSpineDoc.getSiteRequest_();
 
-    oLearnSkills.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPrerequisiteArticleIds(Optional.ofNullable(doc.get("prerequisiteArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setPrerequisiteArticles(Optional.ofNullable(doc.get("prerequisiteArticles_stored_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setNextArticleIds(Optional.ofNullable(doc.get("nextArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setNextArticles(Optional.ofNullable(doc.get("nextArticles_stored_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setImportance(Optional.ofNullable(doc.get("importance_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setLessonNum(Optional.ofNullable(doc.get("lessonNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPrerequisiteArticleIds(Optional.ofNullable(doc.get("prerequisiteArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setPrerequisiteArticles(Optional.ofNullable(doc.get("prerequisiteArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setNextArticleIds(Optional.ofNullable(doc.get("nextArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setNextArticles(Optional.ofNullable(doc.get("nextArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
     Optional.ofNullable((List<?>)doc.get("labels_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
-      oLearnSkills.addLabels(LearnSkills.staticSetLabels(siteRequest, v.toString()));
+      oSpineDoc.addLabels(SpineDoc.staticSetLabels(siteRequest, v.toString()));
     });
-    oLearnSkills.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oLearnSkills.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
 
     super.storeBaseResult(doc);
   }
@@ -2627,11 +2932,17 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   // apiRequest //
   //////////////////
 
-  public void apiRequestLearnSkills() {
+  public void apiRequestSpineDoc() {
     ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
     Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-    if(o != null && o instanceof LearnSkills) {
-      LearnSkills original = (LearnSkills)o;
+    if(o != null && o instanceof SpineDoc) {
+      SpineDoc original = (SpineDoc)o;
+      if(!Objects.equals(importance, original.getImportance()) && importance != null && original.getImportance() != null && importance.compareTo(original.getImportance()) != 0)
+        apiRequest.addVars("importance");
+      if(!Objects.equals(courseNum, original.getCourseNum()))
+        apiRequest.addVars("courseNum");
+      if(!Objects.equals(lessonNum, original.getLessonNum()))
+        apiRequest.addVars("lessonNum");
       if(!Objects.equals(name, original.getName()))
         apiRequest.addVars("name");
       if(!Objects.equals(description, original.getDescription()))
@@ -2642,8 +2953,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         apiRequest.addVars("authorUrl");
       if(!Objects.equals(pageId, original.getPageId()))
         apiRequest.addVars("pageId");
-      if(!Objects.equals(courseNum, original.getCourseNum()))
-        apiRequest.addVars("courseNum");
       if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
         apiRequest.addVars("pageVideoUrl");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
@@ -2683,12 +2992,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   @Override public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(super.toString());
+    sb.append(Optional.ofNullable(importance).map(v -> "importance: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(lessonNum).map(v -> "lessonNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-    sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
@@ -2706,13 +3017,21 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return sb.toString();
   }
 
-  public static final String CLASS_SIMPLE_NAME = "LearnSkills";
-  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.learnskills.LearnSkills";
-  public static final String CLASS_AUTH_RESOURCE = "LEARNSKILLS";
-  public static final String CLASS_API_ADDRESS_LearnSkills = "computate.org-enUS-LearnSkills";
+  public static final String CLASS_SIMPLE_NAME = "SpineDoc";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.spinedoc.SpineDoc";
+  public static final String CLASS_AUTH_RESOURCE = "SPINEDOC";
+  public static final String CLASS_API_ADDRESS_SpineDoc = "computate.org-enUS-SpineDoc";
   public static String getClassApiAddress() {
-    return CLASS_API_ADDRESS_LearnSkills;
+    return CLASS_API_ADDRESS_SpineDoc;
   }
+  public static final String VAR_article = "article";
+  public static final String SET_article = "setArticle";
+  public static final String VAR_importance = "importance";
+  public static final String SET_importance = "setImportance";
+  public static final String VAR_courseNum = "courseNum";
+  public static final String SET_courseNum = "setCourseNum";
+  public static final String VAR_lessonNum = "lessonNum";
+  public static final String SET_lessonNum = "setLessonNum";
   public static final String VAR_name = "name";
   public static final String SET_name = "setName";
   public static final String VAR_description = "description";
@@ -2723,8 +3042,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   public static final String SET_authorUrl = "setAuthorUrl";
   public static final String VAR_pageId = "pageId";
   public static final String SET_pageId = "setPageId";
-  public static final String VAR_courseNum = "courseNum";
-  public static final String SET_courseNum = "setCourseNum";
   public static final String VAR_pageVideoUrl = "pageVideoUrl";
   public static final String SET_pageVideoUrl = "setPageVideoUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
@@ -2761,23 +3078,23 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   public static final String SET_relatedArticles = "setRelatedArticles";
 
   public static List<String> varsQForClass() {
-    return LearnSkills.varsQLearnSkills(new ArrayList<String>());
+    return SpineDoc.varsQSpineDoc(new ArrayList<String>());
   }
-  public static List<String> varsQLearnSkills(List<String> vars) {
+  public static List<String> varsQSpineDoc(List<String> vars) {
     BaseResult.varsQBaseResult(vars);
     return vars;
   }
 
   public static List<String> varsFqForClass() {
-    return LearnSkills.varsFqLearnSkills(new ArrayList<String>());
+    return SpineDoc.varsFqSpineDoc(new ArrayList<String>());
   }
-  public static List<String> varsFqLearnSkills(List<String> vars) {
-    vars.add(VAR_name);
-    vars.add(VAR_description);
+  public static List<String> varsFqSpineDoc(List<String> vars) {
+    vars.add(VAR_importance);
+    vars.add(VAR_courseNum);
+    vars.add(VAR_lessonNum);
     vars.add(VAR_authorName);
     vars.add(VAR_authorUrl);
     vars.add(VAR_pageId);
-    vars.add(VAR_courseNum);
     vars.add(VAR_pageVideoUrl);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
@@ -2785,20 +3102,25 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static List<String> varsRangeForClass() {
-    return LearnSkills.varsRangeLearnSkills(new ArrayList<String>());
+    return SpineDoc.varsRangeSpineDoc(new ArrayList<String>());
   }
-  public static List<String> varsRangeLearnSkills(List<String> vars) {
+  public static List<String> varsRangeSpineDoc(List<String> vars) {
+    vars.add(VAR_importance);
     vars.add(VAR_courseNum);
+    vars.add(VAR_lessonNum);
     BaseResult.varsRangeBaseResult(vars);
     return vars;
   }
 
-  public static final String DISPLAY_NAME_name = "course name";
-  public static final String DISPLAY_NAME_description = "course description";
+  public static final String DISPLAY_NAME_article = "";
+  public static final String DISPLAY_NAME_importance = "importance";
+  public static final String DISPLAY_NAME_courseNum = "course number";
+  public static final String DISPLAY_NAME_lessonNum = "lesson number";
+  public static final String DISPLAY_NAME_name = "title";
+  public static final String DISPLAY_NAME_description = "description";
   public static final String DISPLAY_NAME_authorName = "author name";
   public static final String DISPLAY_NAME_authorUrl = "author URL";
   public static final String DISPLAY_NAME_pageId = "Page ID";
-  public static final String DISPLAY_NAME_courseNum = "Course Number";
   public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
@@ -2834,24 +3156,37 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
   @Override
   public String classNameAdjectiveSingularForClass() {
-    return LearnSkills.NameAdjectiveSingular_enUS;
+    return SpineDoc.NameAdjectiveSingular_enUS;
+  }
+
+  @Override
+  public String descriptionForClass() {
+    return description;
   }
 
   @Override
   public String enUSStringFormatUrlEditPageForClass() {
-    return "%s/en-us/edit/skills/%s";
+    return "%s/en-us/edit/spine-doc/%s";
   }
 
   @Override
   public String enUSStringFormatUrlDisplayPageForClass() {
-    return "%s/en-us/learn/skills/%s";
+    return "%s/en-us/learn/spine-doc/%s";
   }
 
   public static String varJsonForClass(String var, Boolean patch) {
-    return LearnSkills.varJsonLearnSkills(var, patch);
+    return SpineDoc.varJsonSpineDoc(var, patch);
   }
-  public static String varJsonLearnSkills(String var, Boolean patch) {
+  public static String varJsonSpineDoc(String var, Boolean patch) {
     switch(var) {
+    case VAR_article:
+      return patch ? SET_article : VAR_article;
+    case VAR_importance:
+      return patch ? SET_importance : VAR_importance;
+    case VAR_courseNum:
+      return patch ? SET_courseNum : VAR_courseNum;
+    case VAR_lessonNum:
+      return patch ? SET_lessonNum : VAR_lessonNum;
     case VAR_name:
       return patch ? SET_name : VAR_name;
     case VAR_description:
@@ -2862,8 +3197,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return patch ? SET_authorUrl : VAR_authorUrl;
     case VAR_pageId:
       return patch ? SET_pageId : VAR_pageId;
-    case VAR_courseNum:
-      return patch ? SET_courseNum : VAR_courseNum;
     case VAR_pageVideoUrl:
       return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
     case VAR_pageImageUri:
@@ -2904,10 +3237,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   }
 
   public static String displayNameForClass(String var) {
-    return LearnSkills.displayNameLearnSkills(var);
+    return SpineDoc.displayNameSpineDoc(var);
   }
-  public static String displayNameLearnSkills(String var) {
+  public static String displayNameSpineDoc(String var) {
     switch(var) {
+    case VAR_article:
+      return DISPLAY_NAME_article;
+    case VAR_importance:
+      return DISPLAY_NAME_importance;
+    case VAR_courseNum:
+      return DISPLAY_NAME_courseNum;
+    case VAR_lessonNum:
+      return DISPLAY_NAME_lessonNum;
     case VAR_name:
       return DISPLAY_NAME_name;
     case VAR_description:
@@ -2918,8 +3259,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return DISPLAY_NAME_authorUrl;
     case VAR_pageId:
       return DISPLAY_NAME_pageId;
-    case VAR_courseNum:
-      return DISPLAY_NAME_courseNum;
     case VAR_pageVideoUrl:
       return DISPLAY_NAME_pageVideoUrl;
     case VAR_pageImageUri:
@@ -2959,22 +3298,26 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static String descriptionLearnSkills(String var) {
+  public static String descriptionSpineDoc(String var) {
     if(var == null)
       return null;
     switch(var) {
+    case VAR_importance:
+      return "The importance of this page. ";
+    case VAR_courseNum:
+      return "The course number for this page. ";
+    case VAR_lessonNum:
+      return "The lesson number for this page. ";
     case VAR_name:
-      return "The course name. ";
+      return "The name of this page. ";
     case VAR_description:
-      return "The course description. ";
+      return "The description of this page. ";
     case VAR_authorName:
       return "The author name";
     case VAR_authorUrl:
       return "The author URL";
     case VAR_pageId:
       return "The ID for this page. ";
-    case VAR_courseNum:
-      return "The course number for this page. ";
     case VAR_pageVideoUrl:
       return "The video URL for this page. ";
     case VAR_pageImageUri:
@@ -3008,8 +3351,16 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static String classSimpleNameLearnSkills(String var) {
+  public static String classSimpleNameSpineDoc(String var) {
     switch(var) {
+    case VAR_article:
+      return "Boolean";
+    case VAR_importance:
+      return "BigDecimal";
+    case VAR_courseNum:
+      return "Integer";
+    case VAR_lessonNum:
+      return "Integer";
     case VAR_name:
       return "String";
     case VAR_description:
@@ -3020,8 +3371,6 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return "String";
     case VAR_pageId:
       return "String";
-    case VAR_courseNum:
-      return "Integer";
     case VAR_pageVideoUrl:
       return "String";
     case VAR_pageImageUri:
@@ -3061,7 +3410,7 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer htmColumnLearnSkills(String var) {
+  public static Integer htmColumnSpineDoc(String var) {
     switch(var) {
     case VAR_name:
       return 1;
@@ -3072,12 +3421,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer htmRowLearnSkills(String var) {
+  public static Integer htmRowSpineDoc(String var) {
     switch(var) {
-    case VAR_name:
-      return 3;
-    case VAR_description:
-      return 3;
     case VAR_authorName:
       return 3;
     case VAR_authorUrl:
@@ -3091,12 +3436,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer htmCellLearnSkills(String var) {
+  public static Integer htmCellSpineDoc(String var) {
     switch(var) {
-    case VAR_name:
-      return 1;
-    case VAR_description:
-      return 2;
     case VAR_authorName:
       return 3;
     case VAR_authorUrl:
@@ -3110,28 +3451,28 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     }
   }
 
-  public static Integer lengthMinLearnSkills(String var) {
+  public static Integer lengthMinSpineDoc(String var) {
     switch(var) {
       default:
         return BaseResult.lengthMinBaseResult(var);
     }
   }
 
-  public static Integer lengthMaxLearnSkills(String var) {
+  public static Integer lengthMaxSpineDoc(String var) {
     switch(var) {
       default:
         return BaseResult.lengthMaxBaseResult(var);
     }
   }
 
-  public static Integer maxLearnSkills(String var) {
+  public static Integer maxSpineDoc(String var) {
     switch(var) {
       default:
         return BaseResult.maxBaseResult(var);
     }
   }
 
-  public static Integer minLearnSkills(String var) {
+  public static Integer minSpineDoc(String var) {
     switch(var) {
       default:
         return BaseResult.minBaseResult(var);

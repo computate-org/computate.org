@@ -1511,11 +1511,6 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
   public void searchpageComputateDeveloperPageInit(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1616,19 +1611,24 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           Promise<Void> promise1 = Promise.promise();
           searchpageComputateDeveloperPageInit(ctx, page, listComputateDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageComputateDeveloper failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageComputateDeveloper failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageComputateDeveloper failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1771,12 +1771,6 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
   public void editpageComputateDeveloperPageInit(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1877,19 +1871,24 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           Promise<Void> promise1 = Promise.promise();
           editpageComputateDeveloperPageInit(ctx, page, listComputateDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageComputateDeveloper failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageComputateDeveloper failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageComputateDeveloper failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2032,12 +2031,6 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
   public void userpageComputateDeveloperPageInit(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -2138,19 +2131,24 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           Promise<Void> promise1 = Promise.promise();
           userpageComputateDeveloperPageInit(ctx, page, listComputateDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateUserPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200UserPageComputateDeveloper failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateUserPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200UserPageComputateDeveloper failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200UserPageComputateDeveloper failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2904,13 +2902,14 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       o.persistForClass(ComputateDeveloper.VAR_lessonNum, ComputateDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(ComputateDeveloper.VAR_lessonNum)));
       o.persistForClass(ComputateDeveloper.VAR_authorName, ComputateDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(ComputateDeveloper.VAR_authorName)));
       o.persistForClass(ComputateDeveloper.VAR_authorUrl, ComputateDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(ComputateDeveloper.VAR_authorUrl)));
-      o.persistForClass(ComputateDeveloper.VAR_pageImageUri, ComputateDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageUri)));
+      o.persistForClass(ComputateDeveloper.VAR_pageVideoUrl, ComputateDeveloper.staticSetPageVideoUrl(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageVideoUrl)));
       o.persistForClass(ComputateDeveloper.VAR_objectTitle, ComputateDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(ComputateDeveloper.VAR_objectTitle)));
+      o.persistForClass(ComputateDeveloper.VAR_pageImageUri, ComputateDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageUri)));
       o.persistForClass(ComputateDeveloper.VAR_displayPage, ComputateDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_displayPage)));
       o.persistForClass(ComputateDeveloper.VAR_editPage, ComputateDeveloper.staticSetEditPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_editPage)));
       o.persistForClass(ComputateDeveloper.VAR_userPage, ComputateDeveloper.staticSetUserPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_userPage)));
-      o.persistForClass(ComputateDeveloper.VAR_pageImageAlt, ComputateDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageAlt)));
       o.persistForClass(ComputateDeveloper.VAR_download, ComputateDeveloper.staticSetDownload(siteRequest2, (String)result.get(ComputateDeveloper.VAR_download)));
+      o.persistForClass(ComputateDeveloper.VAR_pageImageAlt, ComputateDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageAlt)));
       o.persistForClass(ComputateDeveloper.VAR_prerequisiteArticleIds, ComputateDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_prerequisiteArticleIds)));
       o.persistForClass(ComputateDeveloper.VAR_solrId, ComputateDeveloper.staticSetSolrId(siteRequest2, (String)result.get(ComputateDeveloper.VAR_solrId)));
       o.persistForClass(ComputateDeveloper.VAR_nextArticleIds, ComputateDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_nextArticleIds)));

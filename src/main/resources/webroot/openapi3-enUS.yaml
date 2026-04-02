@@ -13096,6 +13096,945 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DisplayPageSpineProgrammingResponse'
+  /en-us/api/spine-doc:
+    get:
+      operationId: searchSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchSpineDocResponse'
+    patch:
+      operationId: patchSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSpineDocRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PATCHSpineDocResponse'
+    post:
+      operationId: postSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSpineDocRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/POSTSpineDocResponse'
+    delete:
+      operationId: deletefilterSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterSpineDocResponse'
+  /en-us/api/spine-doc-import:
+    put:
+      operationId: putimportSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTImportSpineDocRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PUTImportSpineDocResponse'
+  /en-us/api/spine-doc/{pageId}:
+    get:
+      operationId: getSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GETSpineDocResponse'
+    delete:
+      operationId: deleteSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETESpineDocResponse'
+  /en-us/edit/spine-doc/{pageId}:
+    get:
+      operationId: editpageSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EditPageSpineDocResponse'
+  /en-us/learn/spine-doc/{pageId}:
+    get:
+      operationId: displaypageSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DisplayPageSpineDocResponse'
+  /en-us/search/spine-doc:
+    get:
+      operationId: searchpageSpineDoc
+      x-vertx-event-bus: computate.org-enUS-SpineDoc
+      description: >+
+      summary: >+
+      tags:
+        - SPINE docs
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchPageSpineDocResponse'
   /en-us/api/switch-to-linux:
     get:
       operationId: searchSwitchToLinux
@@ -19277,6 +20216,71 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/DisplayPageSpineProgrammingResponse'
+    SearchSpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSpineDocResponse'
+    PATCHSpineDocRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSpineDocRequest'
+    PATCHSpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSpineDocResponse'
+    POSTSpineDocRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSpineDocRequest'
+    POSTSpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSpineDocResponse'
+    DELETEFilterSpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterSpineDocResponse'
+    PUTImportSpineDocRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PUTImportSpineDocRequest'
+    PUTImportSpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PUTImportSpineDocResponse'
+    GETSpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSpineDocResponse'
+    DELETESpineDocResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESpineDocResponse'
+    EditPageSpineDocResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/EditPageSpineDocResponse'
+    DisplayPageSpineDocResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DisplayPageSpineDocResponse'
+    SearchPageSpineDocResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSpineDocResponse'
     SearchSwitchToLinuxResponse:
       content:
         application/json; charset=utf-8:
@@ -19670,6 +20674,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -19768,6 +20774,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -19977,6 +20990,13 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -20150,6 +21170,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -20214,6 +21236,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -20277,6 +21301,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -20347,6 +21373,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -20410,6 +21438,8 @@ components:
                   displayPage:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -20475,6 +21505,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -20538,6 +21570,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -20630,6 +21664,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -20716,6 +21752,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -20851,6 +21894,13 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -20940,6 +21990,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -20982,6 +22034,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -21023,6 +22077,8 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -21071,6 +22127,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -21112,6 +22170,8 @@ components:
                   downloadUri:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -21155,6 +22215,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -21196,6 +22258,8 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -21260,6 +22324,8 @@ components:
                   displayPage:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -21359,6 +22425,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -21568,6 +22641,13 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -21741,6 +22821,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -21805,6 +22887,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -21868,6 +22952,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -21938,6 +23024,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -22001,6 +23089,8 @@ components:
                   displayPage:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -22066,6 +23156,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -22129,6 +23221,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -22221,6 +23315,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -22327,6 +23423,13 @@ components:
             removeAuthorUrl:
               type: string
             removeAllAuthorUrl:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -22543,6 +23646,13 @@ components:
               type: string
             removeAllAuthorUrl:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -22718,6 +23828,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -22784,6 +23896,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -22849,6 +23963,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -22921,6 +24037,8 @@ components:
                     type: string
                   authorUrl:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -22986,6 +24104,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -23053,6 +24173,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -23118,6 +24240,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -23204,6 +24328,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -23310,6 +24436,13 @@ components:
             removeAuthorUrl:
               type: string
             removeAllAuthorUrl:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -23526,6 +24659,13 @@ components:
               type: string
             removeAllAuthorUrl:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -23701,6 +24841,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -23767,6 +24909,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -23832,6 +24976,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -23904,6 +25050,8 @@ components:
                     type: string
                   authorUrl:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -23969,6 +25117,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -24036,6 +25186,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -24101,6 +25253,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -24190,6 +25344,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -24296,6 +25452,13 @@ components:
             removeAuthorUrl:
               type: string
             removeAllAuthorUrl:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -24512,6 +25675,13 @@ components:
               type: string
             removeAllAuthorUrl:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -24687,6 +25857,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -24753,6 +25925,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -24818,6 +25992,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -24890,6 +26066,8 @@ components:
                     type: string
                   authorUrl:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -24955,6 +26133,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -25022,6 +26202,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -25087,6 +26269,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -25176,6 +26360,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -25282,6 +26468,13 @@ components:
             removeAuthorUrl:
               type: string
             removeAllAuthorUrl:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -25498,6 +26691,13 @@ components:
               type: string
             removeAllAuthorUrl:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -25673,6 +26873,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -25739,6 +26941,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -25804,6 +27008,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -25876,6 +27082,8 @@ components:
                     type: string
                   authorUrl:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -25941,6 +27149,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -26008,6 +27218,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -26073,6 +27285,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -26162,6 +27376,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -26268,6 +27484,13 @@ components:
             removeAuthorUrl:
               type: string
             removeAllAuthorUrl:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -26484,6 +27707,13 @@ components:
               type: string
             removeAllAuthorUrl:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -26659,6 +27889,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -26725,6 +27957,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -26790,6 +28024,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -26862,6 +28098,8 @@ components:
                     type: string
                   authorUrl:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -26927,6 +28165,8 @@ components:
                   authorName:
                     type: string
                   authorUrl:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -26994,6 +28234,8 @@ components:
               type: string
             authorUrl:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -27059,6 +28301,8 @@ components:
             authorName:
               type: string
             authorUrl:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -27686,6 +28930,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -27784,6 +29030,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -27993,6 +29246,13 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -28166,6 +29426,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -28230,6 +29492,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -28293,6 +29557,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -28363,6 +29629,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -28426,6 +29694,8 @@ components:
                   displayPage:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -28491,6 +29761,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -28554,6 +29826,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -28645,6 +29919,8 @@ components:
                   downloadUrl:
                     type: string
                   solutionNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -28740,6 +30016,13 @@ components:
             removeSolutionNum:
               type: string
             removeAllSolutionNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -28906,6 +30189,13 @@ components:
               type: string
             removeAllSolutionNum:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -29026,6 +30316,8 @@ components:
               type: string
             solutionNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -29076,6 +30368,8 @@ components:
               type: string
             solutionNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -29125,6 +30419,8 @@ components:
             downloadUrl:
               type: string
             solutionNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -29181,6 +30477,8 @@ components:
                     type: string
                   solutionNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -29230,6 +30528,8 @@ components:
                   downloadUrl:
                     type: string
                   solutionNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -29281,6 +30581,8 @@ components:
               type: string
             solutionNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -29330,6 +30632,8 @@ components:
             downloadUrl:
               type: string
             solutionNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -29431,6 +30735,13 @@ components:
             removeSolutionNum:
               type: string
             removeAllSolutionNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -29596,6 +30907,13 @@ components:
             removeSolutionNum:
               type: string
             removeAllSolutionNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -30036,6 +31354,8 @@ components:
                     type: string
                   pageId:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -30148,6 +31468,13 @@ components:
             removePageId:
               type: string
             removeAllPageId:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -30371,6 +31698,13 @@ components:
               type: string
             removeAllPageId:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -30548,6 +31882,8 @@ components:
               type: string
             pageId:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -30616,6 +31952,8 @@ components:
               type: string
             pageId:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -30683,6 +32021,8 @@ components:
             authorUrl:
               type: string
             pageId:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -30757,6 +32097,8 @@ components:
                     type: string
                   pageId:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -30824,6 +32166,8 @@ components:
                   authorUrl:
                     type: string
                   pageId:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -30893,6 +32237,8 @@ components:
               type: string
             pageId:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -30961,6 +32307,8 @@ components:
               type: string
             pageId:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -31016,6 +32364,1052 @@ components:
     DisplayPageSpineProgrammingResponse:
       allOf:
         - type: string
+    SearchSpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+            startNum:
+              type: integer
+              minimum: 0
+            foundNum:
+              type: integer
+              minimum: 0
+            returnedNum:
+              type: integer
+              minimum: 0
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  article:
+                    type: boolean
+                  importance:
+                    type: string
+                  courseNum:
+                    type: string
+                  lessonNum:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
+                  pageId:
+                    type: string
+                  pageVideoUrl:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  prerequisiteArticleIds:
+                    type: string
+                  prerequisiteArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  nextArticleIds:
+                    type: string
+                  nextArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+    PATCHSpineDocRequest:
+      allOf:
+        - type: object
+          properties:
+            setArticle:
+              type: boolean
+              nullable: true
+            removeArticle:
+              type: boolean
+            removeAllArticle:
+              type: boolean
+            setImportance:
+              type: string
+              nullable: true
+            removeImportance:
+              type: string
+            removeAllImportance:
+              type: string
+            setCourseNum:
+              type: string
+              nullable: true
+            removeCourseNum:
+              type: string
+            removeAllCourseNum:
+              type: string
+            setLessonNum:
+              type: string
+              nullable: true
+            removeLessonNum:
+              type: string
+            removeAllLessonNum:
+              type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setPrerequisiteArticleIds:
+              type: string
+              nullable: true
+            removePrerequisiteArticleIds:
+              type: string
+            removeAllPrerequisiteArticleIds:
+              type: string
+            setPrerequisiteArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removePrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllPrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setNextArticleIds:
+              type: string
+              nullable: true
+            removeNextArticleIds:
+              type: string
+            removeAllNextArticleIds:
+              type: string
+            setNextArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    PATCHSpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+            setArticle:
+              type: boolean
+              nullable: true
+            removeArticle:
+              type: boolean
+            removeAllArticle:
+              type: boolean
+            setImportance:
+              type: string
+              nullable: true
+            removeImportance:
+              type: string
+            removeAllImportance:
+              type: string
+            setCourseNum:
+              type: string
+              nullable: true
+            removeCourseNum:
+              type: string
+            removeAllCourseNum:
+              type: string
+            setLessonNum:
+              type: string
+              nullable: true
+            removeLessonNum:
+              type: string
+            removeAllLessonNum:
+              type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setPrerequisiteArticleIds:
+              type: string
+              nullable: true
+            removePrerequisiteArticleIds:
+              type: string
+            removeAllPrerequisiteArticleIds:
+              type: string
+            setPrerequisiteArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removePrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllPrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setNextArticleIds:
+              type: string
+              nullable: true
+            removeNextArticleIds:
+              type: string
+            removeAllNextArticleIds:
+              type: string
+            setNextArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    POSTSpineDocRequest:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageVideoUrl:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    POSTSpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageVideoUrl:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    DELETEFilterSpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageVideoUrl:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    PUTImportSpineDocRequest:
+      allOf:
+        - type: object
+          properties:
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  article:
+                    type: boolean
+                  importance:
+                    type: string
+                  courseNum:
+                    type: string
+                  lessonNum:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
+                  pageId:
+                    type: string
+                  pageVideoUrl:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  prerequisiteArticleIds:
+                    type: string
+                  prerequisiteArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  nextArticleIds:
+                    type: string
+                  nextArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+    PUTImportSpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+                  article:
+                    type: boolean
+                  importance:
+                    type: string
+                  courseNum:
+                    type: string
+                  lessonNum:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
+                  pageId:
+                    type: string
+                  pageVideoUrl:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  prerequisiteArticleIds:
+                    type: string
+                  prerequisiteArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  nextArticleIds:
+                    type: string
+                  nextArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+    GETSpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageVideoUrl:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    DELETESpineDocResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageVideoUrl:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    EditPageSpineDocResponse:
+      allOf:
+        - type: string
+    DisplayPageSpineDocResponse:
+      allOf:
+        - type: string
+    SearchPageSpineDocResponse:
+      allOf:
+        - type: string
     SearchSwitchToLinuxResponse:
       allOf:
         - type: object
@@ -31047,6 +33441,8 @@ components:
                   displayPage:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -31146,6 +33542,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -31355,6 +33758,13 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -31528,6 +33938,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -31592,6 +34004,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -31655,6 +34069,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -31725,6 +34141,8 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -31788,6 +34206,8 @@ components:
                   displayPage:
                     type: string
                   courseNum:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -31853,6 +34273,8 @@ components:
               type: string
             courseNum:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -31916,6 +34338,8 @@ components:
             displayPage:
               type: string
             courseNum:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -32854,6 +35278,8 @@ components:
                     type: string
                   h2:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -33050,6 +35476,13 @@ components:
             removeH2:
               type: string
             removeAllH2:
+              type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
               type: string
             setPageImageUri:
               type: string
@@ -33357,6 +35790,13 @@ components:
               type: string
             removeAllH2:
               type: string
+            setPageVideoUrl:
+              type: string
+              nullable: true
+            removePageVideoUrl:
+              type: string
+            removeAllPageVideoUrl:
+              type: string
             setPageImageUri:
               type: string
               nullable: true
@@ -33558,6 +35998,8 @@ components:
               type: string
             h2:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -33650,6 +36092,8 @@ components:
               type: string
             h2:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -33741,6 +36185,8 @@ components:
             h1:
               type: string
             h2:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string
@@ -33839,6 +36285,8 @@ components:
                     type: string
                   h2:
                     type: string
+                  pageVideoUrl:
+                    type: string
                   pageImageUri:
                     type: string
                   pageImageWidth:
@@ -33930,6 +36378,8 @@ components:
                   h1:
                     type: string
                   h2:
+                    type: string
+                  pageVideoUrl:
                     type: string
                   pageImageUri:
                     type: string
@@ -34023,6 +36473,8 @@ components:
               type: string
             h2:
               type: string
+            pageVideoUrl:
+              type: string
             pageImageUri:
               type: string
             pageImageWidth:
@@ -34114,6 +36566,8 @@ components:
             h1:
               type: string
             h2:
+              type: string
+            pageVideoUrl:
               type: string
             pageImageUri:
               type: string

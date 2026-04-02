@@ -1511,11 +1511,6 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
   public void searchpageDeveloperComputerMinionPageInit(JsonObject ctx, DeveloperComputerMinionPage page, SearchList<DeveloperComputerMinion> listDeveloperComputerMinion, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/dcm"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/dcm"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1616,19 +1611,24 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
           Promise<Void> promise1 = Promise.promise();
           searchpageDeveloperComputerMinionPageInit(ctx, page, listDeveloperComputerMinion, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageDeveloperComputerMinion(ctx, page, listDeveloperComputerMinion, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageDeveloperComputerMinion failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageDeveloperComputerMinion(ctx, page, listDeveloperComputerMinion, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageDeveloperComputerMinion failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageDeveloperComputerMinion failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1771,12 +1771,6 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
   public void editpageDeveloperComputerMinionPageInit(JsonObject ctx, DeveloperComputerMinionPage page, SearchList<DeveloperComputerMinion> listDeveloperComputerMinion, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/dcm"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1877,19 +1871,24 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
           Promise<Void> promise1 = Promise.promise();
           editpageDeveloperComputerMinionPageInit(ctx, page, listDeveloperComputerMinion, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageDeveloperComputerMinion(ctx, page, listDeveloperComputerMinion, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageDeveloperComputerMinion failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageDeveloperComputerMinion(ctx, page, listDeveloperComputerMinion, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageDeveloperComputerMinion failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageDeveloperComputerMinion failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2032,12 +2031,6 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
   public void userpageDeveloperComputerMinionPageInit(JsonObject ctx, DeveloperComputerMinionPage page, SearchList<DeveloperComputerMinion> listDeveloperComputerMinion, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/dcm"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -2138,19 +2131,24 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
           Promise<Void> promise1 = Promise.promise();
           userpageDeveloperComputerMinionPageInit(ctx, page, listDeveloperComputerMinion, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateUserPageDeveloperComputerMinion(ctx, page, listDeveloperComputerMinion, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200UserPageDeveloperComputerMinion failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateUserPageDeveloperComputerMinion(ctx, page, listDeveloperComputerMinion, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200UserPageDeveloperComputerMinion failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200UserPageDeveloperComputerMinion failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2904,13 +2902,14 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
       o.persistForClass(DeveloperComputerMinion.VAR_lessonNum, DeveloperComputerMinion.staticSetLessonNum(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_lessonNum)));
       o.persistForClass(DeveloperComputerMinion.VAR_authorName, DeveloperComputerMinion.staticSetAuthorName(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_authorName)));
       o.persistForClass(DeveloperComputerMinion.VAR_authorUrl, DeveloperComputerMinion.staticSetAuthorUrl(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_authorUrl)));
-      o.persistForClass(DeveloperComputerMinion.VAR_pageImageUri, DeveloperComputerMinion.staticSetPageImageUri(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_pageImageUri)));
+      o.persistForClass(DeveloperComputerMinion.VAR_pageVideoUrl, DeveloperComputerMinion.staticSetPageVideoUrl(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_pageVideoUrl)));
       o.persistForClass(DeveloperComputerMinion.VAR_objectTitle, DeveloperComputerMinion.staticSetObjectTitle(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_objectTitle)));
+      o.persistForClass(DeveloperComputerMinion.VAR_pageImageUri, DeveloperComputerMinion.staticSetPageImageUri(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_pageImageUri)));
       o.persistForClass(DeveloperComputerMinion.VAR_displayPage, DeveloperComputerMinion.staticSetDisplayPage(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_displayPage)));
       o.persistForClass(DeveloperComputerMinion.VAR_editPage, DeveloperComputerMinion.staticSetEditPage(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_editPage)));
       o.persistForClass(DeveloperComputerMinion.VAR_userPage, DeveloperComputerMinion.staticSetUserPage(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_userPage)));
-      o.persistForClass(DeveloperComputerMinion.VAR_pageImageAlt, DeveloperComputerMinion.staticSetPageImageAlt(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_pageImageAlt)));
       o.persistForClass(DeveloperComputerMinion.VAR_download, DeveloperComputerMinion.staticSetDownload(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_download)));
+      o.persistForClass(DeveloperComputerMinion.VAR_pageImageAlt, DeveloperComputerMinion.staticSetPageImageAlt(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_pageImageAlt)));
       o.persistForClass(DeveloperComputerMinion.VAR_prerequisiteArticleIds, DeveloperComputerMinion.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_prerequisiteArticleIds)));
       o.persistForClass(DeveloperComputerMinion.VAR_solrId, DeveloperComputerMinion.staticSetSolrId(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_solrId)));
       o.persistForClass(DeveloperComputerMinion.VAR_nextArticleIds, DeveloperComputerMinion.staticSetNextArticleIds(siteRequest2, (String)result.get(DeveloperComputerMinion.VAR_nextArticleIds)));

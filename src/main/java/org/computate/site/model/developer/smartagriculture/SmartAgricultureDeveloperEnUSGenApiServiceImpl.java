@@ -2902,13 +2902,14 @@ public class SmartAgricultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       o.persistForClass(SmartAgricultureDeveloper.VAR_lessonNum, SmartAgricultureDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_lessonNum)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_authorName, SmartAgricultureDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_authorName)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_authorUrl, SmartAgricultureDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_authorUrl)));
-      o.persistForClass(SmartAgricultureDeveloper.VAR_pageImageUri, SmartAgricultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageImageUri)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_pageVideoUrl, SmartAgricultureDeveloper.staticSetPageVideoUrl(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageVideoUrl)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_objectTitle, SmartAgricultureDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_objectTitle)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_pageImageUri, SmartAgricultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageImageUri)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_displayPage, SmartAgricultureDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_displayPage)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_editPage, SmartAgricultureDeveloper.staticSetEditPage(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_editPage)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_userPage, SmartAgricultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_userPage)));
-      o.persistForClass(SmartAgricultureDeveloper.VAR_pageImageAlt, SmartAgricultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageImageAlt)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_download, SmartAgricultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_download)));
+      o.persistForClass(SmartAgricultureDeveloper.VAR_pageImageAlt, SmartAgricultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_pageImageAlt)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_prerequisiteArticleIds, SmartAgricultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_prerequisiteArticleIds)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_solrId, SmartAgricultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_solrId)));
       o.persistForClass(SmartAgricultureDeveloper.VAR_nextArticleIds, SmartAgricultureDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(SmartAgricultureDeveloper.VAR_nextArticleIds)));
