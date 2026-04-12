@@ -92,7 +92,22 @@ import io.vertx.core.Future;
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the SpineDocGenPage class will inherit the helpful inherited class comments from the super class SpineDocGenPageGen. 
  * </p>
- * <h2>Rows: null</h2>
+ * <h2>
+ *   Rows: 10
+ * </h2>
+ * <h2>
+ *   Order: 1
+ * </h2>
+ * <p>
+ *   This class contains a comment <kbd>Order: 1</kbd>, 
+ *   which means this class will be sorted by the given number 1 
+ *   ascending when code that relates to multiple classes at the same time is generated. 
+ * </p>
+ * <p>
+ *   You can add a class comment <kbd>Order: </kbd>, followed by an Integer to sort this class compared to other classes in the project. 
+ *   There is code that is generated that queries several classes and writes code for each class in a sequence. 
+ *   The <kbd>Order</kbd> comment allows you to define which order the class code is generated. 
+ * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
  * <h2>SuperPage.enUS: null</h2>
