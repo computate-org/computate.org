@@ -96,6 +96,94 @@ public class SpineDoc extends SpineDocGen<BaseResult> {
    * DocValues: true
    * Persist: true
    * Facet: true
+   * DisplayName: comment var
+   * Description: What comment var the doc refers to. 
+   */
+  protected void _commentVar(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: Java type
+   * Description: What Java type the doc refers to: class, method, field, consructor. 
+   */
+  protected void _javaType(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: Value type
+   * Description: What Java Class the value of this doc would be in Java. 
+   */
+  protected void _javaClass(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: since version
+   * Description: What version introduced the SPINE comment. 
+   */
+  protected void _sinceVersion(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: support status
+   * Description: The support status of this SPINE comment. 
+   */
+  protected void _supportStatus(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: example value
+   * Description: The example value to show for this SPINE comment. 
+   */
+  protected void _exampleValue(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: example code
+   * Description: The example code to show for this SPINE comment. 
+   */
+  protected void _exampleCode(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: copy code
+   * Description: The code to copy for this SPINE comment. 
+   */
+  protected void _copyCode(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
    * DisplayName: course number
    * Description: The course number for this page. 
    */

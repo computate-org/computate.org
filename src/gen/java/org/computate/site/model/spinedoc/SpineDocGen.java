@@ -363,6 +363,502 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     return Optional.ofNullable(importance).map(v -> v.toString()).orElse(null);
   }
 
+	////////////////
+  // commentVar //
+	////////////////
+
+
+  /**
+   *  The entity commentVar
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String commentVar;
+
+  /**
+   * <br> The entity commentVar
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:commentVar">Find the entity commentVar in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _commentVar(Wrap<String> w);
+
+  public String getCommentVar() {
+    return commentVar;
+  }
+  public void setCommentVar(String o) {
+    this.commentVar = SpineDoc.staticSetCommentVar(siteRequest_, o);
+  }
+  public static String staticSetCommentVar(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc commentVarInit() {
+    Wrap<String> commentVarWrap = new Wrap<String>().var("commentVar");
+    if(commentVar == null) {
+      _commentVar(commentVarWrap);
+      Optional.ofNullable(commentVarWrap.getO()).ifPresent(o -> {
+        setCommentVar(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchCommentVar(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrCommentVar(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqCommentVar(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchCommentVar(siteRequest_, SpineDoc.staticSetCommentVar(siteRequest_, o)).toString();
+  }
+
+  public String sqlCommentVar() {
+    return commentVar;
+  }
+
+  public static String staticJsonCommentVar(String commentVar) {
+    return commentVar;
+  }
+
+	//////////////
+  // javaType //
+	//////////////
+
+
+  /**
+   *  The entity javaType
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String javaType;
+
+  /**
+   * <br> The entity javaType
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:javaType">Find the entity javaType in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _javaType(Wrap<String> w);
+
+  public String getJavaType() {
+    return javaType;
+  }
+  public void setJavaType(String o) {
+    this.javaType = SpineDoc.staticSetJavaType(siteRequest_, o);
+  }
+  public static String staticSetJavaType(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc javaTypeInit() {
+    Wrap<String> javaTypeWrap = new Wrap<String>().var("javaType");
+    if(javaType == null) {
+      _javaType(javaTypeWrap);
+      Optional.ofNullable(javaTypeWrap.getO()).ifPresent(o -> {
+        setJavaType(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchJavaType(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrJavaType(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqJavaType(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchJavaType(siteRequest_, SpineDoc.staticSetJavaType(siteRequest_, o)).toString();
+  }
+
+  public String sqlJavaType() {
+    return javaType;
+  }
+
+  public static String staticJsonJavaType(String javaType) {
+    return javaType;
+  }
+
+	///////////////
+  // javaClass //
+	///////////////
+
+
+  /**
+   *  The entity javaClass
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String javaClass;
+
+  /**
+   * <br> The entity javaClass
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:javaClass">Find the entity javaClass in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _javaClass(Wrap<String> w);
+
+  public String getJavaClass() {
+    return javaClass;
+  }
+  public void setJavaClass(String o) {
+    this.javaClass = SpineDoc.staticSetJavaClass(siteRequest_, o);
+  }
+  public static String staticSetJavaClass(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc javaClassInit() {
+    Wrap<String> javaClassWrap = new Wrap<String>().var("javaClass");
+    if(javaClass == null) {
+      _javaClass(javaClassWrap);
+      Optional.ofNullable(javaClassWrap.getO()).ifPresent(o -> {
+        setJavaClass(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchJavaClass(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrJavaClass(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqJavaClass(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchJavaClass(siteRequest_, SpineDoc.staticSetJavaClass(siteRequest_, o)).toString();
+  }
+
+  public String sqlJavaClass() {
+    return javaClass;
+  }
+
+  public static String staticJsonJavaClass(String javaClass) {
+    return javaClass;
+  }
+
+	//////////////////
+  // sinceVersion //
+	//////////////////
+
+
+  /**
+   *  The entity sinceVersion
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String sinceVersion;
+
+  /**
+   * <br> The entity sinceVersion
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:sinceVersion">Find the entity sinceVersion in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _sinceVersion(Wrap<String> w);
+
+  public String getSinceVersion() {
+    return sinceVersion;
+  }
+  public void setSinceVersion(String o) {
+    this.sinceVersion = SpineDoc.staticSetSinceVersion(siteRequest_, o);
+  }
+  public static String staticSetSinceVersion(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc sinceVersionInit() {
+    Wrap<String> sinceVersionWrap = new Wrap<String>().var("sinceVersion");
+    if(sinceVersion == null) {
+      _sinceVersion(sinceVersionWrap);
+      Optional.ofNullable(sinceVersionWrap.getO()).ifPresent(o -> {
+        setSinceVersion(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchSinceVersion(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrSinceVersion(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqSinceVersion(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchSinceVersion(siteRequest_, SpineDoc.staticSetSinceVersion(siteRequest_, o)).toString();
+  }
+
+  public String sqlSinceVersion() {
+    return sinceVersion;
+  }
+
+  public static String staticJsonSinceVersion(String sinceVersion) {
+    return sinceVersion;
+  }
+
+	///////////////////
+  // supportStatus //
+	///////////////////
+
+
+  /**
+   *  The entity supportStatus
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String supportStatus;
+
+  /**
+   * <br> The entity supportStatus
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:supportStatus">Find the entity supportStatus in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _supportStatus(Wrap<String> w);
+
+  public String getSupportStatus() {
+    return supportStatus;
+  }
+  public void setSupportStatus(String o) {
+    this.supportStatus = SpineDoc.staticSetSupportStatus(siteRequest_, o);
+  }
+  public static String staticSetSupportStatus(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc supportStatusInit() {
+    Wrap<String> supportStatusWrap = new Wrap<String>().var("supportStatus");
+    if(supportStatus == null) {
+      _supportStatus(supportStatusWrap);
+      Optional.ofNullable(supportStatusWrap.getO()).ifPresent(o -> {
+        setSupportStatus(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchSupportStatus(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrSupportStatus(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqSupportStatus(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchSupportStatus(siteRequest_, SpineDoc.staticSetSupportStatus(siteRequest_, o)).toString();
+  }
+
+  public String sqlSupportStatus() {
+    return supportStatus;
+  }
+
+  public static String staticJsonSupportStatus(String supportStatus) {
+    return supportStatus;
+  }
+
+	//////////////////
+  // exampleValue //
+	//////////////////
+
+
+  /**
+   *  The entity exampleValue
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String exampleValue;
+
+  /**
+   * <br> The entity exampleValue
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:exampleValue">Find the entity exampleValue in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _exampleValue(Wrap<String> w);
+
+  public String getExampleValue() {
+    return exampleValue;
+  }
+  public void setExampleValue(String o) {
+    this.exampleValue = SpineDoc.staticSetExampleValue(siteRequest_, o);
+  }
+  public static String staticSetExampleValue(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc exampleValueInit() {
+    Wrap<String> exampleValueWrap = new Wrap<String>().var("exampleValue");
+    if(exampleValue == null) {
+      _exampleValue(exampleValueWrap);
+      Optional.ofNullable(exampleValueWrap.getO()).ifPresent(o -> {
+        setExampleValue(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchExampleValue(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrExampleValue(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqExampleValue(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchExampleValue(siteRequest_, SpineDoc.staticSetExampleValue(siteRequest_, o)).toString();
+  }
+
+  public String sqlExampleValue() {
+    return exampleValue;
+  }
+
+  public static String staticJsonExampleValue(String exampleValue) {
+    return exampleValue;
+  }
+
+	/////////////////
+  // exampleCode //
+	/////////////////
+
+
+  /**
+   *  The entity exampleCode
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String exampleCode;
+
+  /**
+   * <br> The entity exampleCode
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:exampleCode">Find the entity exampleCode in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _exampleCode(Wrap<String> w);
+
+  public String getExampleCode() {
+    return exampleCode;
+  }
+  public void setExampleCode(String o) {
+    this.exampleCode = SpineDoc.staticSetExampleCode(siteRequest_, o);
+  }
+  public static String staticSetExampleCode(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc exampleCodeInit() {
+    Wrap<String> exampleCodeWrap = new Wrap<String>().var("exampleCode");
+    if(exampleCode == null) {
+      _exampleCode(exampleCodeWrap);
+      Optional.ofNullable(exampleCodeWrap.getO()).ifPresent(o -> {
+        setExampleCode(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchExampleCode(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrExampleCode(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqExampleCode(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchExampleCode(siteRequest_, SpineDoc.staticSetExampleCode(siteRequest_, o)).toString();
+  }
+
+  public String sqlExampleCode() {
+    return exampleCode;
+  }
+
+  public static String staticJsonExampleCode(String exampleCode) {
+    return exampleCode;
+  }
+
+	//////////////
+  // copyCode //
+	//////////////
+
+
+  /**
+   *  The entity copyCode
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String copyCode;
+
+  /**
+   * <br> The entity copyCode
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:copyCode">Find the entity copyCode in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _copyCode(Wrap<String> w);
+
+  public String getCopyCode() {
+    return copyCode;
+  }
+  public void setCopyCode(String o) {
+    this.copyCode = SpineDoc.staticSetCopyCode(siteRequest_, o);
+  }
+  public static String staticSetCopyCode(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc copyCodeInit() {
+    Wrap<String> copyCodeWrap = new Wrap<String>().var("copyCode");
+    if(copyCode == null) {
+      _copyCode(copyCodeWrap);
+      Optional.ofNullable(copyCodeWrap.getO()).ifPresent(o -> {
+        setCopyCode(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchCopyCode(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrCopyCode(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqCopyCode(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchCopyCode(siteRequest_, SpineDoc.staticSetCopyCode(siteRequest_, o)).toString();
+  }
+
+  public String sqlCopyCode() {
+    return copyCode;
+  }
+
+  public static String staticJsonCopyCode(String copyCode) {
+    return copyCode;
+  }
+
 	///////////////
   // courseNum //
 	///////////////
@@ -1891,6 +2387,14 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       try {
         articleInit();
         importanceInit();
+        commentVarInit();
+        javaTypeInit();
+        javaClassInit();
+        sinceVersionInit();
+        supportStatusInit();
+        exampleValueInit();
+        exampleCodeInit();
+        copyCodeInit();
         courseNumInit();
         lessonNumInit();
         nameInit();
@@ -2023,6 +2527,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return oSpineDoc.article;
       case "importance":
         return oSpineDoc.importance;
+      case "commentVar":
+        return oSpineDoc.commentVar;
+      case "javaType":
+        return oSpineDoc.javaType;
+      case "javaClass":
+        return oSpineDoc.javaClass;
+      case "sinceVersion":
+        return oSpineDoc.sinceVersion;
+      case "supportStatus":
+        return oSpineDoc.supportStatus;
+      case "exampleValue":
+        return oSpineDoc.exampleValue;
+      case "exampleCode":
+        return oSpineDoc.exampleCode;
+      case "copyCode":
+        return oSpineDoc.copyCode;
       case "courseNum":
         return oSpineDoc.courseNum;
       case "lessonNum":
@@ -2114,6 +2634,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSetArticle(siteRequest_, v);
     case "importance":
       return SpineDoc.staticSetImportance(siteRequest_, v);
+    case "commentVar":
+      return SpineDoc.staticSetCommentVar(siteRequest_, v);
+    case "javaType":
+      return SpineDoc.staticSetJavaType(siteRequest_, v);
+    case "javaClass":
+      return SpineDoc.staticSetJavaClass(siteRequest_, v);
+    case "sinceVersion":
+      return SpineDoc.staticSetSinceVersion(siteRequest_, v);
+    case "supportStatus":
+      return SpineDoc.staticSetSupportStatus(siteRequest_, v);
+    case "exampleValue":
+      return SpineDoc.staticSetExampleValue(siteRequest_, v);
+    case "exampleCode":
+      return SpineDoc.staticSetExampleCode(siteRequest_, v);
+    case "copyCode":
+      return SpineDoc.staticSetCopyCode(siteRequest_, v);
     case "courseNum":
       return SpineDoc.staticSetCourseNum(siteRequest_, v);
     case "lessonNum":
@@ -2204,6 +2740,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchArticle(siteRequest_, (Boolean)o);
     case "importance":
       return SpineDoc.staticSearchImportance(siteRequest_, (BigDecimal)o);
+    case "commentVar":
+      return SpineDoc.staticSearchCommentVar(siteRequest_, (String)o);
+    case "javaType":
+      return SpineDoc.staticSearchJavaType(siteRequest_, (String)o);
+    case "javaClass":
+      return SpineDoc.staticSearchJavaClass(siteRequest_, (String)o);
+    case "sinceVersion":
+      return SpineDoc.staticSearchSinceVersion(siteRequest_, (String)o);
+    case "supportStatus":
+      return SpineDoc.staticSearchSupportStatus(siteRequest_, (String)o);
+    case "exampleValue":
+      return SpineDoc.staticSearchExampleValue(siteRequest_, (String)o);
+    case "exampleCode":
+      return SpineDoc.staticSearchExampleCode(siteRequest_, (String)o);
+    case "copyCode":
+      return SpineDoc.staticSearchCopyCode(siteRequest_, (String)o);
     case "courseNum":
       return SpineDoc.staticSearchCourseNum(siteRequest_, (Integer)o);
     case "lessonNum":
@@ -2264,6 +2816,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchStrArticle(siteRequest_, (Boolean)o);
     case "importance":
       return SpineDoc.staticSearchStrImportance(siteRequest_, (String)o);
+    case "commentVar":
+      return SpineDoc.staticSearchStrCommentVar(siteRequest_, (String)o);
+    case "javaType":
+      return SpineDoc.staticSearchStrJavaType(siteRequest_, (String)o);
+    case "javaClass":
+      return SpineDoc.staticSearchStrJavaClass(siteRequest_, (String)o);
+    case "sinceVersion":
+      return SpineDoc.staticSearchStrSinceVersion(siteRequest_, (String)o);
+    case "supportStatus":
+      return SpineDoc.staticSearchStrSupportStatus(siteRequest_, (String)o);
+    case "exampleValue":
+      return SpineDoc.staticSearchStrExampleValue(siteRequest_, (String)o);
+    case "exampleCode":
+      return SpineDoc.staticSearchStrExampleCode(siteRequest_, (String)o);
+    case "copyCode":
+      return SpineDoc.staticSearchStrCopyCode(siteRequest_, (String)o);
     case "courseNum":
       return SpineDoc.staticSearchStrCourseNum(siteRequest_, (Integer)o);
     case "lessonNum":
@@ -2324,6 +2892,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchFqArticle(siteRequest_, o);
     case "importance":
       return SpineDoc.staticSearchFqImportance(siteRequest_, o);
+    case "commentVar":
+      return SpineDoc.staticSearchFqCommentVar(siteRequest_, o);
+    case "javaType":
+      return SpineDoc.staticSearchFqJavaType(siteRequest_, o);
+    case "javaClass":
+      return SpineDoc.staticSearchFqJavaClass(siteRequest_, o);
+    case "sinceVersion":
+      return SpineDoc.staticSearchFqSinceVersion(siteRequest_, o);
+    case "supportStatus":
+      return SpineDoc.staticSearchFqSupportStatus(siteRequest_, o);
+    case "exampleValue":
+      return SpineDoc.staticSearchFqExampleValue(siteRequest_, o);
+    case "exampleCode":
+      return SpineDoc.staticSearchFqExampleCode(siteRequest_, o);
+    case "copyCode":
+      return SpineDoc.staticSearchFqCopyCode(siteRequest_, o);
     case "courseNum":
       return SpineDoc.staticSearchFqCourseNum(siteRequest_, o);
     case "lessonNum":
@@ -2401,6 +2985,54 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
           setImportance((BigDecimal)val);
         }
         saves.add("importance");
+        return val;
+      } else if("commentvar".equals(varLower)) {
+        if(val instanceof String) {
+          setCommentVar((String)val);
+        }
+        saves.add("commentVar");
+        return val;
+      } else if("javatype".equals(varLower)) {
+        if(val instanceof String) {
+          setJavaType((String)val);
+        }
+        saves.add("javaType");
+        return val;
+      } else if("javaclass".equals(varLower)) {
+        if(val instanceof String) {
+          setJavaClass((String)val);
+        }
+        saves.add("javaClass");
+        return val;
+      } else if("sinceversion".equals(varLower)) {
+        if(val instanceof String) {
+          setSinceVersion((String)val);
+        }
+        saves.add("sinceVersion");
+        return val;
+      } else if("supportstatus".equals(varLower)) {
+        if(val instanceof String) {
+          setSupportStatus((String)val);
+        }
+        saves.add("supportStatus");
+        return val;
+      } else if("examplevalue".equals(varLower)) {
+        if(val instanceof String) {
+          setExampleValue((String)val);
+        }
+        saves.add("exampleValue");
+        return val;
+      } else if("examplecode".equals(varLower)) {
+        if(val instanceof String) {
+          setExampleCode((String)val);
+        }
+        saves.add("exampleCode");
+        return val;
+      } else if("copycode".equals(varLower)) {
+        if(val instanceof String) {
+          setCopyCode((String)val);
+        }
+        saves.add("copyCode");
         return val;
       } else if("coursenum".equals(varLower)) {
         if(val instanceof Integer) {
@@ -2523,6 +3155,54 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         String importance = (String)doc.get("importance_docvalues_string");
         if(importance != null)
           oSpineDoc.setImportance(importance);
+      }
+
+      if(saves.contains("commentVar")) {
+        String commentVar = (String)doc.get("commentVar_docvalues_string");
+        if(commentVar != null)
+          oSpineDoc.setCommentVar(commentVar);
+      }
+
+      if(saves.contains("javaType")) {
+        String javaType = (String)doc.get("javaType_docvalues_string");
+        if(javaType != null)
+          oSpineDoc.setJavaType(javaType);
+      }
+
+      if(saves.contains("javaClass")) {
+        String javaClass = (String)doc.get("javaClass_docvalues_string");
+        if(javaClass != null)
+          oSpineDoc.setJavaClass(javaClass);
+      }
+
+      if(saves.contains("sinceVersion")) {
+        String sinceVersion = (String)doc.get("sinceVersion_docvalues_string");
+        if(sinceVersion != null)
+          oSpineDoc.setSinceVersion(sinceVersion);
+      }
+
+      if(saves.contains("supportStatus")) {
+        String supportStatus = (String)doc.get("supportStatus_docvalues_string");
+        if(supportStatus != null)
+          oSpineDoc.setSupportStatus(supportStatus);
+      }
+
+      if(saves.contains("exampleValue")) {
+        String exampleValue = (String)doc.get("exampleValue_docvalues_string");
+        if(exampleValue != null)
+          oSpineDoc.setExampleValue(exampleValue);
+      }
+
+      if(saves.contains("exampleCode")) {
+        String exampleCode = (String)doc.get("exampleCode_docvalues_string");
+        if(exampleCode != null)
+          oSpineDoc.setExampleCode(exampleCode);
+      }
+
+      if(saves.contains("copyCode")) {
+        String copyCode = (String)doc.get("copyCode_docvalues_string");
+        if(copyCode != null)
+          oSpineDoc.setCopyCode(copyCode);
       }
 
       if(saves.contains("courseNum")) {
@@ -2663,6 +3343,30 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       doc.put("importance_docvalues_string", importance.toPlainString());
       doc.put("importance_docvalues_double", importance.doubleValue());
     }
+    if(commentVar != null) {
+      doc.put("commentVar_docvalues_string", commentVar);
+    }
+    if(javaType != null) {
+      doc.put("javaType_docvalues_string", javaType);
+    }
+    if(javaClass != null) {
+      doc.put("javaClass_docvalues_string", javaClass);
+    }
+    if(sinceVersion != null) {
+      doc.put("sinceVersion_docvalues_string", sinceVersion);
+    }
+    if(supportStatus != null) {
+      doc.put("supportStatus_docvalues_string", supportStatus);
+    }
+    if(exampleValue != null) {
+      doc.put("exampleValue_docvalues_string", exampleValue);
+    }
+    if(exampleCode != null) {
+      doc.put("exampleCode_docvalues_string", exampleCode);
+    }
+    if(copyCode != null) {
+      doc.put("copyCode_docvalues_string", copyCode);
+    }
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);
     }
@@ -2738,6 +3442,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     switch(entityVar) {
       case "importance":
         return "importance_docvalues_string";
+      case "commentVar":
+        return "commentVar_docvalues_string";
+      case "javaType":
+        return "javaType_docvalues_string";
+      case "javaClass":
+        return "javaClass_docvalues_string";
+      case "sinceVersion":
+        return "sinceVersion_docvalues_string";
+      case "supportStatus":
+        return "supportStatus_docvalues_string";
+      case "exampleValue":
+        return "exampleValue_docvalues_string";
+      case "exampleCode":
+        return "exampleCode_docvalues_string";
+      case "copyCode":
+        return "copyCode_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
       case "lessonNum":
@@ -2789,6 +3509,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     switch(entityVar) {
       case "importance":
         return "importance_docvalues_string";
+      case "commentVar":
+        return "commentVar_docvalues_string";
+      case "javaType":
+        return "javaType_docvalues_string";
+      case "javaClass":
+        return "javaClass_docvalues_string";
+      case "sinceVersion":
+        return "sinceVersion_docvalues_string";
+      case "supportStatus":
+        return "supportStatus_docvalues_string";
+      case "exampleValue":
+        return "exampleValue_docvalues_string";
+      case "exampleCode":
+        return "exampleCode_docvalues_string";
+      case "copyCode":
+        return "copyCode_docvalues_string";
       case "courseNum":
         return "courseNum_docvalues_int";
       case "lessonNum":
@@ -2834,6 +3570,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     switch(searchVar) {
       case "importance_docvalues_string":
         return "importance";
+      case "commentVar_docvalues_string":
+        return "commentVar";
+      case "javaType_docvalues_string":
+        return "javaType";
+      case "javaClass_docvalues_string":
+        return "javaClass";
+      case "sinceVersion_docvalues_string":
+        return "sinceVersion";
+      case "supportStatus_docvalues_string":
+        return "supportStatus";
+      case "exampleValue_docvalues_string":
+        return "exampleValue";
+      case "exampleCode_docvalues_string":
+        return "exampleCode";
+      case "copyCode_docvalues_string":
+        return "copyCode";
       case "courseNum_docvalues_int":
         return "courseNum";
       case "lessonNum_docvalues_int":
@@ -2901,6 +3653,14 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     SiteRequest siteRequest = oSpineDoc.getSiteRequest_();
 
     oSpineDoc.setImportance(Optional.ofNullable(doc.get("importance_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setCommentVar(Optional.ofNullable(doc.get("commentVar_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setJavaType(Optional.ofNullable(doc.get("javaType_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setJavaClass(Optional.ofNullable(doc.get("javaClass_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setSinceVersion(Optional.ofNullable(doc.get("sinceVersion_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setSupportStatus(Optional.ofNullable(doc.get("supportStatus_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setExampleValue(Optional.ofNullable(doc.get("exampleValue_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setExampleCode(Optional.ofNullable(doc.get("exampleCode_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setCopyCode(Optional.ofNullable(doc.get("copyCode_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setLessonNum(Optional.ofNullable(doc.get("lessonNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -2939,6 +3699,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       SpineDoc original = (SpineDoc)o;
       if(!Objects.equals(importance, original.getImportance()) && importance != null && original.getImportance() != null && importance.compareTo(original.getImportance()) != 0)
         apiRequest.addVars("importance");
+      if(!Objects.equals(commentVar, original.getCommentVar()))
+        apiRequest.addVars("commentVar");
+      if(!Objects.equals(javaType, original.getJavaType()))
+        apiRequest.addVars("javaType");
+      if(!Objects.equals(javaClass, original.getJavaClass()))
+        apiRequest.addVars("javaClass");
+      if(!Objects.equals(sinceVersion, original.getSinceVersion()))
+        apiRequest.addVars("sinceVersion");
+      if(!Objects.equals(supportStatus, original.getSupportStatus()))
+        apiRequest.addVars("supportStatus");
+      if(!Objects.equals(exampleValue, original.getExampleValue()))
+        apiRequest.addVars("exampleValue");
+      if(!Objects.equals(exampleCode, original.getExampleCode()))
+        apiRequest.addVars("exampleCode");
+      if(!Objects.equals(copyCode, original.getCopyCode()))
+        apiRequest.addVars("copyCode");
       if(!Objects.equals(courseNum, original.getCourseNum()))
         apiRequest.addVars("courseNum");
       if(!Objects.equals(lessonNum, original.getLessonNum()))
@@ -2993,6 +3769,14 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     StringBuilder sb = new StringBuilder();
     sb.append(super.toString());
     sb.append(Optional.ofNullable(importance).map(v -> "importance: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(commentVar).map(v -> "commentVar: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(javaType).map(v -> "javaType: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(javaClass).map(v -> "javaClass: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(sinceVersion).map(v -> "sinceVersion: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(supportStatus).map(v -> "supportStatus: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(exampleValue).map(v -> "exampleValue: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(exampleCode).map(v -> "exampleCode: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(copyCode).map(v -> "copyCode: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(lessonNum).map(v -> "lessonNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
@@ -3028,6 +3812,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
   public static final String SET_article = "setArticle";
   public static final String VAR_importance = "importance";
   public static final String SET_importance = "setImportance";
+  public static final String VAR_commentVar = "commentVar";
+  public static final String SET_commentVar = "setCommentVar";
+  public static final String VAR_javaType = "javaType";
+  public static final String SET_javaType = "setJavaType";
+  public static final String VAR_javaClass = "javaClass";
+  public static final String SET_javaClass = "setJavaClass";
+  public static final String VAR_sinceVersion = "sinceVersion";
+  public static final String SET_sinceVersion = "setSinceVersion";
+  public static final String VAR_supportStatus = "supportStatus";
+  public static final String SET_supportStatus = "setSupportStatus";
+  public static final String VAR_exampleValue = "exampleValue";
+  public static final String SET_exampleValue = "setExampleValue";
+  public static final String VAR_exampleCode = "exampleCode";
+  public static final String SET_exampleCode = "setExampleCode";
+  public static final String VAR_copyCode = "copyCode";
+  public static final String SET_copyCode = "setCopyCode";
   public static final String VAR_courseNum = "courseNum";
   public static final String SET_courseNum = "setCourseNum";
   public static final String VAR_lessonNum = "lessonNum";
@@ -3090,6 +3890,14 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
   }
   public static List<String> varsFqSpineDoc(List<String> vars) {
     vars.add(VAR_importance);
+    vars.add(VAR_commentVar);
+    vars.add(VAR_javaType);
+    vars.add(VAR_javaClass);
+    vars.add(VAR_sinceVersion);
+    vars.add(VAR_supportStatus);
+    vars.add(VAR_exampleValue);
+    vars.add(VAR_exampleCode);
+    vars.add(VAR_copyCode);
     vars.add(VAR_courseNum);
     vars.add(VAR_lessonNum);
     vars.add(VAR_authorName);
@@ -3114,6 +3922,14 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
 
   public static final String DISPLAY_NAME_article = "";
   public static final String DISPLAY_NAME_importance = "importance";
+  public static final String DISPLAY_NAME_commentVar = "comment var";
+  public static final String DISPLAY_NAME_javaType = "Java type";
+  public static final String DISPLAY_NAME_javaClass = "Value type";
+  public static final String DISPLAY_NAME_sinceVersion = "since version";
+  public static final String DISPLAY_NAME_supportStatus = "support status";
+  public static final String DISPLAY_NAME_exampleValue = "example value";
+  public static final String DISPLAY_NAME_exampleCode = "example code";
+  public static final String DISPLAY_NAME_copyCode = "copy code";
   public static final String DISPLAY_NAME_courseNum = "course number";
   public static final String DISPLAY_NAME_lessonNum = "lesson number";
   public static final String DISPLAY_NAME_name = "title";
@@ -3183,6 +3999,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return patch ? SET_article : VAR_article;
     case VAR_importance:
       return patch ? SET_importance : VAR_importance;
+    case VAR_commentVar:
+      return patch ? SET_commentVar : VAR_commentVar;
+    case VAR_javaType:
+      return patch ? SET_javaType : VAR_javaType;
+    case VAR_javaClass:
+      return patch ? SET_javaClass : VAR_javaClass;
+    case VAR_sinceVersion:
+      return patch ? SET_sinceVersion : VAR_sinceVersion;
+    case VAR_supportStatus:
+      return patch ? SET_supportStatus : VAR_supportStatus;
+    case VAR_exampleValue:
+      return patch ? SET_exampleValue : VAR_exampleValue;
+    case VAR_exampleCode:
+      return patch ? SET_exampleCode : VAR_exampleCode;
+    case VAR_copyCode:
+      return patch ? SET_copyCode : VAR_copyCode;
     case VAR_courseNum:
       return patch ? SET_courseNum : VAR_courseNum;
     case VAR_lessonNum:
@@ -3245,6 +4077,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return DISPLAY_NAME_article;
     case VAR_importance:
       return DISPLAY_NAME_importance;
+    case VAR_commentVar:
+      return DISPLAY_NAME_commentVar;
+    case VAR_javaType:
+      return DISPLAY_NAME_javaType;
+    case VAR_javaClass:
+      return DISPLAY_NAME_javaClass;
+    case VAR_sinceVersion:
+      return DISPLAY_NAME_sinceVersion;
+    case VAR_supportStatus:
+      return DISPLAY_NAME_supportStatus;
+    case VAR_exampleValue:
+      return DISPLAY_NAME_exampleValue;
+    case VAR_exampleCode:
+      return DISPLAY_NAME_exampleCode;
+    case VAR_copyCode:
+      return DISPLAY_NAME_copyCode;
     case VAR_courseNum:
       return DISPLAY_NAME_courseNum;
     case VAR_lessonNum:
@@ -3304,6 +4152,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     switch(var) {
     case VAR_importance:
       return "The importance of this page. ";
+    case VAR_commentVar:
+      return "What comment var the doc refers to. ";
+    case VAR_javaType:
+      return "What Java type the doc refers to: class, method, field, consructor. ";
+    case VAR_javaClass:
+      return "What Java Class the value of this doc would be in Java. ";
+    case VAR_sinceVersion:
+      return "What version introduced the SPINE comment. ";
+    case VAR_supportStatus:
+      return "The support status of this SPINE comment. ";
+    case VAR_exampleValue:
+      return "The example value to show for this SPINE comment. ";
+    case VAR_exampleCode:
+      return "The example code to show for this SPINE comment. ";
+    case VAR_copyCode:
+      return "The code to copy for this SPINE comment. ";
     case VAR_courseNum:
       return "The course number for this page. ";
     case VAR_lessonNum:
@@ -3357,6 +4221,22 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return "Boolean";
     case VAR_importance:
       return "BigDecimal";
+    case VAR_commentVar:
+      return "String";
+    case VAR_javaType:
+      return "String";
+    case VAR_javaClass:
+      return "String";
+    case VAR_sinceVersion:
+      return "String";
+    case VAR_supportStatus:
+      return "String";
+    case VAR_exampleValue:
+      return "String";
+    case VAR_exampleCode:
+      return "String";
+    case VAR_copyCode:
+      return "String";
     case VAR_courseNum:
       return "Integer";
     case VAR_lessonNum:
