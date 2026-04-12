@@ -91,7 +91,7 @@ MAILING_LIST_EMAIL: computate@group.computate.org
 ################
 
 # The API version of this site. 
-API_VERSION: 1.0.0
+API_VERSION: 4.5.24.1
 # The Site OpenAPI title. 
 API_TITLE: "{{ SITE_DISPLAY_NAME }}"
 # The API contact email. 

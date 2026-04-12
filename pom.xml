@@ -4,7 +4,7 @@
 
   <groupId>org.computate</groupId>
   <artifactId>site</artifactId>
-  <version>1.0.0</version>
+  <version>4.5.24.1</version>
   <name>computate.org</name>
   <description>Cloud native web development on your own computer</description>
   <url>https://computate.org</url>
