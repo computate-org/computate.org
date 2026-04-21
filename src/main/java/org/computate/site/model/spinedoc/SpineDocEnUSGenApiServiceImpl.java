@@ -2539,8 +2539,8 @@ public class SpineDocEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
         }
       }
       if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-        searchList.sort("courseNum_docvalues_int", "asc");
-        searchList.sort("lessonNum_docvalues_int", "asc");
+        searchList.sort("javaType_docvalues_string", "asc");
+        searchList.sort("commentVar_docvalues_string", "asc");
         searchList.setDefaultSort(true);
       }
       String facetRange2 = facetRange;

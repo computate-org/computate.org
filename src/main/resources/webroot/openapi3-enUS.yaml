@@ -32386,6 +32386,22 @@ components:
                     type: boolean
                   importance:
                     type: string
+                  commentVar:
+                    type: string
+                  javaType:
+                    type: string
+                  javaClass:
+                    type: string
+                  sinceVersion:
+                    type: string
+                  supportStatus:
+                    type: string
+                  exampleValue:
+                    type: string
+                  exampleCode:
+                    type: string
+                  copyCode:
+                    type: string
                   courseNum:
                     type: string
                   lessonNum:
@@ -32465,6 +32481,62 @@ components:
             removeImportance:
               type: string
             removeAllImportance:
+              type: string
+            setCommentVar:
+              type: string
+              nullable: true
+            removeCommentVar:
+              type: string
+            removeAllCommentVar:
+              type: string
+            setJavaType:
+              type: string
+              nullable: true
+            removeJavaType:
+              type: string
+            removeAllJavaType:
+              type: string
+            setJavaClass:
+              type: string
+              nullable: true
+            removeJavaClass:
+              type: string
+            removeAllJavaClass:
+              type: string
+            setSinceVersion:
+              type: string
+              nullable: true
+            removeSinceVersion:
+              type: string
+            removeAllSinceVersion:
+              type: string
+            setSupportStatus:
+              type: string
+              nullable: true
+            removeSupportStatus:
+              type: string
+            removeAllSupportStatus:
+              type: string
+            setExampleValue:
+              type: string
+              nullable: true
+            removeExampleValue:
+              type: string
+            removeAllExampleValue:
+              type: string
+            setExampleCode:
+              type: string
+              nullable: true
+            removeExampleCode:
+              type: string
+            removeAllExampleCode:
+              type: string
+            setCopyCode:
+              type: string
+              nullable: true
+            removeCopyCode:
+              type: string
+            removeAllCopyCode:
               type: string
             setCourseNum:
               type: string
@@ -32695,6 +32767,62 @@ components:
               type: string
             removeAllImportance:
               type: string
+            setCommentVar:
+              type: string
+              nullable: true
+            removeCommentVar:
+              type: string
+            removeAllCommentVar:
+              type: string
+            setJavaType:
+              type: string
+              nullable: true
+            removeJavaType:
+              type: string
+            removeAllJavaType:
+              type: string
+            setJavaClass:
+              type: string
+              nullable: true
+            removeJavaClass:
+              type: string
+            removeAllJavaClass:
+              type: string
+            setSinceVersion:
+              type: string
+              nullable: true
+            removeSinceVersion:
+              type: string
+            removeAllSinceVersion:
+              type: string
+            setSupportStatus:
+              type: string
+              nullable: true
+            removeSupportStatus:
+              type: string
+            removeAllSupportStatus:
+              type: string
+            setExampleValue:
+              type: string
+              nullable: true
+            removeExampleValue:
+              type: string
+            removeAllExampleValue:
+              type: string
+            setExampleCode:
+              type: string
+              nullable: true
+            removeExampleCode:
+              type: string
+            removeAllExampleCode:
+              type: string
+            setCopyCode:
+              type: string
+              nullable: true
+            removeCopyCode:
+              type: string
+            removeAllCopyCode:
+              type: string
             setCourseNum:
               type: string
               nullable: true
@@ -32914,6 +33042,22 @@ components:
               type: boolean
             importance:
               type: string
+            commentVar:
+              type: string
+            javaType:
+              type: string
+            javaClass:
+              type: string
+            sinceVersion:
+              type: string
+            supportStatus:
+              type: string
+            exampleValue:
+              type: string
+            exampleCode:
+              type: string
+            copyCode:
+              type: string
             courseNum:
               type: string
             lessonNum:
@@ -32984,6 +33128,22 @@ components:
               type: boolean
             importance:
               type: string
+            commentVar:
+              type: string
+            javaType:
+              type: string
+            javaClass:
+              type: string
+            sinceVersion:
+              type: string
+            supportStatus:
+              type: string
+            exampleValue:
+              type: string
+            exampleCode:
+              type: string
+            copyCode:
+              type: string
             courseNum:
               type: string
             lessonNum:
@@ -33053,6 +33213,22 @@ components:
             article:
               type: boolean
             importance:
+              type: string
+            commentVar:
+              type: string
+            javaType:
+              type: string
+            javaClass:
+              type: string
+            sinceVersion:
+              type: string
+            supportStatus:
+              type: string
+            exampleValue:
+              type: string
+            exampleCode:
+              type: string
+            copyCode:
               type: string
             courseNum:
               type: string
@@ -33129,6 +33305,22 @@ components:
                     type: boolean
                   importance:
                     type: string
+                  commentVar:
+                    type: string
+                  javaType:
+                    type: string
+                  javaClass:
+                    type: string
+                  sinceVersion:
+                    type: string
+                  supportStatus:
+                    type: string
+                  exampleValue:
+                    type: string
+                  exampleCode:
+                    type: string
+                  copyCode:
+                    type: string
                   courseNum:
                     type: string
                   lessonNum:
@@ -33198,6 +33390,22 @@ components:
                   article:
                     type: boolean
                   importance:
+                    type: string
+                  commentVar:
+                    type: string
+                  javaType:
+                    type: string
+                  javaClass:
+                    type: string
+                  sinceVersion:
+                    type: string
+                  supportStatus:
+                    type: string
+                  exampleValue:
+                    type: string
+                  exampleCode:
+                    type: string
+                  copyCode:
                     type: string
                   courseNum:
                     type: string
@@ -33269,6 +33477,22 @@ components:
               type: boolean
             importance:
               type: string
+            commentVar:
+              type: string
+            javaType:
+              type: string
+            javaClass:
+              type: string
+            sinceVersion:
+              type: string
+            supportStatus:
+              type: string
+            exampleValue:
+              type: string
+            exampleCode:
+              type: string
+            copyCode:
+              type: string
             courseNum:
               type: string
             lessonNum:
@@ -33338,6 +33562,22 @@ components:
             article:
               type: boolean
             importance:
+              type: string
+            commentVar:
+              type: string
+            javaType:
+              type: string
+            javaClass:
+              type: string
+            sinceVersion:
+              type: string
+            supportStatus:
+              type: string
+            exampleValue:
+              type: string
+            exampleCode:
+              type: string
+            copyCode:
               type: string
             courseNum:
               type: string

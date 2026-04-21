@@ -2374,7 +2374,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
   //////////////
 
   public Future<SpineDocGen<DEV>> promiseDeepSpineDoc(SiteRequest siteRequest_) {
-    setSiteRequest_(siteRequest_);
+    if(this.siteRequest_ == null)
+      setSiteRequest_(siteRequest_);
     return promiseDeepSpineDoc();
   }
 

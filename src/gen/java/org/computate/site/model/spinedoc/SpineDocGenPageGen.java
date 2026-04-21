@@ -488,7 +488,8 @@ public abstract class SpineDocGenPageGen<DEV> extends PageLayout {
   //////////////
 
   public Future<SpineDocGenPageGen<DEV>> promiseDeepSpineDocGenPage(SiteRequest siteRequest_) {
-    setSiteRequest_(siteRequest_);
+    if(this.siteRequest_ == null)
+      setSiteRequest_(siteRequest_);
     return promiseDeepSpineDocGenPage();
   }
 

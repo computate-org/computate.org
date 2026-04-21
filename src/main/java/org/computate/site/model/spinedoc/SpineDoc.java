@@ -40,8 +40,8 @@ import io.vertx.core.json.JsonObject;
  * AName: a SPINE doc
  * PluralName: SPINE docs
  * Icon: <i class="fa-kit fa-spine"></i>
- * Sort.asc: courseNum
- * Sort.asc: lessonNum
+ * Sort.asc: javaType
+ * Sort.asc: commentVar
  * Rows: 100
  * 
  * PublicRead: true

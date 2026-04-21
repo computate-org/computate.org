@@ -34,10 +34,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
+import org.computate.vertx.search.list.SearchList;
+import org.computate.site.model.spinedoc.SpineDoc;
+import io.vertx.core.json.JsonArray;
+import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
-import io.vertx.core.json.JsonArray;
 
 /**
  * <ol>
@@ -147,12 +150,180 @@ import io.vertx.core.json.JsonArray;
 public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   protected static final Logger LOG = LoggerFactory.getLogger(SpineDocPage.class);
 
+	///////////////////////
+  // allSpineDocSearch //
+	///////////////////////
+
+
+  /**
+   *  The entity allSpineDocSearch
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<SpineDoc> allSpineDocSearch;
+
+  /**
+   * <br> The entity allSpineDocSearch
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDocPage&fq=entiteVar_enUS_indexed_string:allSpineDocSearch">Find the entity allSpineDocSearch in Solr</a>
+   * <br>
+   * @param promise is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _allSpineDocSearch(Promise<SearchList<SpineDoc>> promise);
+
+  public SearchList<SpineDoc> getAllSpineDocSearch() {
+    return allSpineDocSearch;
+  }
+
+  public void setAllSpineDocSearch(SearchList<SpineDoc> allSpineDocSearch) {
+    this.allSpineDocSearch = allSpineDocSearch;
+  }
+  public static SearchList<SpineDoc> staticSetAllSpineDocSearch(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected Future<SearchList<SpineDoc>> allSpineDocSearchPromise() {
+    Promise<SearchList<SpineDoc>> promise = Promise.promise();
+    Promise<SearchList<SpineDoc>> promise2 = Promise.promise();
+    _allSpineDocSearch(promise2);
+    promise2.future().onSuccess(o -> {
+      if(o != null && allSpineDocSearch == null) {
+        o.promiseDeepForClass(siteRequest_).onSuccess(a -> {
+          setAllSpineDocSearch(o);
+          promise.complete(o);
+        }).onFailure(ex -> {
+          promise.fail(ex);
+        });
+      } else {
+        promise.complete(o);
+      }
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
+
+	////////////////////
+  // classSpineDocs //
+	////////////////////
+
+
+  /**
+   *  The entity classSpineDocs
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray classSpineDocs = new JsonArray();
+
+  /**
+   * <br> The entity classSpineDocs
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDocPage&fq=entiteVar_enUS_indexed_string:classSpineDocs">Find the entity classSpineDocs in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _classSpineDocs(JsonArray l);
+
+  public JsonArray getClassSpineDocs() {
+    return classSpineDocs;
+  }
+
+  public void setClassSpineDocs(JsonArray classSpineDocs) {
+    this.classSpineDocs = classSpineDocs;
+  }
+  @JsonIgnore
+  public void setClassSpineDocs(String o) {
+    this.classSpineDocs = SpineDocPage.staticSetClassSpineDocs(siteRequest_, o);
+  }
+  public static JsonArray staticSetClassSpineDocs(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected SpineDocPage classSpineDocsInit() {
+    _classSpineDocs(classSpineDocs);
+    return (SpineDocPage)this;
+  }
+
+  public static String staticSearchClassSpineDocs(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
+
+  public static String staticSearchStrClassSpineDocs(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqClassSpineDocs(SiteRequest siteRequest_, String o) {
+    return SpineDocPage.staticSearchClassSpineDocs(siteRequest_, SpineDocPage.staticSetClassSpineDocs(siteRequest_, o)).toString();
+  }
+
+	/////////////////////
+  // methodSpineDocs //
+	/////////////////////
+
+
+  /**
+   *  The entity methodSpineDocs
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray methodSpineDocs = new JsonArray();
+
+  /**
+   * <br> The entity methodSpineDocs
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDocPage&fq=entiteVar_enUS_indexed_string:methodSpineDocs">Find the entity methodSpineDocs in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _methodSpineDocs(JsonArray l);
+
+  public JsonArray getMethodSpineDocs() {
+    return methodSpineDocs;
+  }
+
+  public void setMethodSpineDocs(JsonArray methodSpineDocs) {
+    this.methodSpineDocs = methodSpineDocs;
+  }
+  @JsonIgnore
+  public void setMethodSpineDocs(String o) {
+    this.methodSpineDocs = SpineDocPage.staticSetMethodSpineDocs(siteRequest_, o);
+  }
+  public static JsonArray staticSetMethodSpineDocs(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected SpineDocPage methodSpineDocsInit() {
+    _methodSpineDocs(methodSpineDocs);
+    return (SpineDocPage)this;
+  }
+
+  public static String staticSearchMethodSpineDocs(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
+
+  public static String staticSearchStrMethodSpineDocs(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqMethodSpineDocs(SiteRequest siteRequest_, String o) {
+    return SpineDocPage.staticSearchMethodSpineDocs(siteRequest_, SpineDocPage.staticSetMethodSpineDocs(siteRequest_, o)).toString();
+  }
+
   //////////////
   // initDeep //
   //////////////
 
   public Future<SpineDocPageGen<DEV>> promiseDeepSpineDocPage(SiteRequest siteRequest_) {
-    setSiteRequest_(siteRequest_);
+    if(this.siteRequest_ == null)
+      setSiteRequest_(siteRequest_);
     return promiseDeepSpineDocPage();
   }
 
@@ -181,6 +352,24 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
         promise2.fail(ex);
       }
       return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      allSpineDocSearchPromise().onSuccess(allSpineDocSearch -> {
+        promise2.complete();
+      }).onFailure(ex -> {
+        promise2.fail(ex);
+      });
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        classSpineDocsInit();
+        methodSpineDocsInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
     }).onSuccess(a -> {
       promise.complete();
     }).onFailure(ex -> {
@@ -199,6 +388,8 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
 
   public void siteRequestSpineDocPage(SiteRequest siteRequest_) {
       super.siteRequestSpineDocGenPage(siteRequest_);
+    if(allSpineDocSearch != null)
+      allSpineDocSearch.setSiteRequest_(siteRequest_);
   }
 
   public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -229,6 +420,12 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   public Object obtainSpineDocPage(String var) {
     SpineDocPage oSpineDocPage = (SpineDocPage)this;
     switch(var) {
+      case "allSpineDocSearch":
+        return oSpineDocPage.allSpineDocSearch;
+      case "classSpineDocs":
+        return oSpineDocPage.classSpineDocs;
+      case "methodSpineDocs":
+        return oSpineDocPage.methodSpineDocs;
       default:
         return super.obtainSpineDocGenPage(var);
     }
@@ -268,6 +465,10 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   }
   public static Object staticSetSpineDocPage(String entityVar, SiteRequest siteRequest_, String v, SpineDocPage o) {
     switch(entityVar) {
+    case "classSpineDocs":
+      return SpineDocPage.staticSetClassSpineDocs(siteRequest_, v);
+    case "methodSpineDocs":
+      return SpineDocPage.staticSetMethodSpineDocs(siteRequest_, v);
       default:
         return SpineDocGenPage.staticSetSpineDocGenPage(entityVar,  siteRequest_, v, o);
     }
@@ -282,6 +483,10 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   }
   public static Object staticSearchSpineDocPage(String entityVar, SiteRequest siteRequest_, Object o) {
     switch(entityVar) {
+    case "classSpineDocs":
+      return SpineDocPage.staticSearchClassSpineDocs(siteRequest_, (JsonArray)o);
+    case "methodSpineDocs":
+      return SpineDocPage.staticSearchMethodSpineDocs(siteRequest_, (JsonArray)o);
       default:
         return SpineDocGenPage.staticSearchSpineDocGenPage(entityVar,  siteRequest_, o);
     }
@@ -296,6 +501,10 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   }
   public static String staticSearchStrSpineDocPage(String entityVar, SiteRequest siteRequest_, Object o) {
     switch(entityVar) {
+    case "classSpineDocs":
+      return SpineDocPage.staticSearchStrClassSpineDocs(siteRequest_, (String)o);
+    case "methodSpineDocs":
+      return SpineDocPage.staticSearchStrMethodSpineDocs(siteRequest_, (String)o);
       default:
         return SpineDocGenPage.staticSearchStrSpineDocGenPage(entityVar,  siteRequest_, o);
     }
@@ -310,6 +519,10 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   }
   public static String staticSearchFqSpineDocPage(String entityVar, SiteRequest siteRequest_, String o) {
     switch(entityVar) {
+    case "classSpineDocs":
+      return SpineDocPage.staticSearchFqClassSpineDocs(siteRequest_, o);
+    case "methodSpineDocs":
+      return SpineDocPage.staticSearchFqMethodSpineDocs(siteRequest_, o);
       default:
         return SpineDocGenPage.staticSearchFqSpineDocGenPage(entityVar,  siteRequest_, o);
     }
@@ -328,13 +541,28 @@ public abstract class SpineDocPageGen<DEV> extends SpineDocGenPage {
   public static final String CLASS_SIMPLE_NAME = "SpineDocPage";
   public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.spinedoc.SpineDocPage";
   public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String VAR_allSpineDocSearch = "allSpineDocSearch";
+  public static final String SET_allSpineDocSearch = "setAllSpineDocSearch";
+  public static final String VAR_classSpineDocs = "classSpineDocs";
+  public static final String SET_classSpineDocs = "setClassSpineDocs";
+  public static final String VAR_methodSpineDocs = "methodSpineDocs";
+  public static final String SET_methodSpineDocs = "setMethodSpineDocs";
 
+  public static final String DISPLAY_NAME_allSpineDocSearch = "";
+  public static final String DISPLAY_NAME_classSpineDocs = "";
+  public static final String DISPLAY_NAME_methodSpineDocs = "";
 
   public static String displayNameForClass(String var) {
     return SpineDocPage.displayNameSpineDocPage(var);
   }
   public static String displayNameSpineDocPage(String var) {
     switch(var) {
+    case VAR_allSpineDocSearch:
+      return DISPLAY_NAME_allSpineDocSearch;
+    case VAR_classSpineDocs:
+      return DISPLAY_NAME_classSpineDocs;
+    case VAR_methodSpineDocs:
+      return DISPLAY_NAME_methodSpineDocs;
     default:
       return SpineDocGenPage.displayNameSpineDocGenPage(var);
     }
