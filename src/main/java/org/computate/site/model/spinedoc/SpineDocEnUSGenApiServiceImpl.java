@@ -2762,9 +2762,11 @@ public class SpineDocEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
       o.persistForClass(SpineDoc.VAR_name, SpineDoc.staticSetName(siteRequest2, (String)result.get(SpineDoc.VAR_name)));
       o.persistForClass(SpineDoc.VAR_download, SpineDoc.staticSetDownload(siteRequest2, (String)result.get(SpineDoc.VAR_download)));
       o.persistForClass(SpineDoc.VAR_description, SpineDoc.staticSetDescription(siteRequest2, (String)result.get(SpineDoc.VAR_description)));
+      o.persistForClass(SpineDoc.VAR_exampleClassSimpleName, SpineDoc.staticSetExampleClassSimpleName(siteRequest2, (String)result.get(SpineDoc.VAR_exampleClassSimpleName)));
+      o.persistForClass(SpineDoc.VAR_exampleClassGenericSimpleName, SpineDoc.staticSetExampleClassGenericSimpleName(siteRequest2, (String)result.get(SpineDoc.VAR_exampleClassGenericSimpleName)));
+      o.persistForClass(SpineDoc.VAR_solrId, SpineDoc.staticSetSolrId(siteRequest2, (String)result.get(SpineDoc.VAR_solrId)));
       o.persistForClass(SpineDoc.VAR_authorName, SpineDoc.staticSetAuthorName(siteRequest2, (String)result.get(SpineDoc.VAR_authorName)));
       o.persistForClass(SpineDoc.VAR_authorUrl, SpineDoc.staticSetAuthorUrl(siteRequest2, (String)result.get(SpineDoc.VAR_authorUrl)));
-      o.persistForClass(SpineDoc.VAR_solrId, SpineDoc.staticSetSolrId(siteRequest2, (String)result.get(SpineDoc.VAR_solrId)));
       o.persistForClass(SpineDoc.VAR_pageId, SpineDoc.staticSetPageId(siteRequest2, (String)result.get(SpineDoc.VAR_pageId)));
       o.persistForClass(SpineDoc.VAR_pageVideoUrl, SpineDoc.staticSetPageVideoUrl(siteRequest2, (String)result.get(SpineDoc.VAR_pageVideoUrl)));
       o.persistForClass(SpineDoc.VAR_pageImageUri, SpineDoc.staticSetPageImageUri(siteRequest2, (String)result.get(SpineDoc.VAR_pageImageUri)));

@@ -28407,6 +28407,28 @@ components:
                     type: array
                     items:
                       type: string
+                  dialogTemplate:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
     PATCHCompanyEventRequest:
       allOf:
         - type: object
@@ -28525,6 +28547,86 @@ components:
               type: array
               items:
                 type: string
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
+              type: string
     PATCHCompanyEventResponse:
       allOf:
         - type: object
@@ -28643,6 +28745,86 @@ components:
               type: array
               items:
                 type: string
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
+              type: string
     POSTCompanyEventRequest:
       allOf:
         - type: object
@@ -28677,6 +28859,28 @@ components:
               type: array
               items:
                 type: string
+            dialogTemplate:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
     POSTCompanyEventResponse:
       allOf:
         - type: object
@@ -28711,6 +28915,28 @@ components:
               type: array
               items:
                 type: string
+            dialogTemplate:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
     DELETEFilterCompanyEventResponse:
       allOf:
         - type: object
@@ -28745,6 +28971,28 @@ components:
               type: array
               items:
                 type: string
+            dialogTemplate:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
     PUTImportCompanyEventRequest:
       allOf:
         - type: object
@@ -28784,6 +29032,28 @@ components:
                     type: array
                     items:
                       type: string
+                  dialogTemplate:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
     PUTImportCompanyEventResponse:
       allOf:
         - type: object
@@ -28818,6 +29088,28 @@ components:
                     type: array
                     items:
                       type: string
+                  dialogTemplate:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
     GETCompanyEventResponse:
       allOf:
         - type: object
@@ -28852,6 +29144,28 @@ components:
               type: array
               items:
                 type: string
+            dialogTemplate:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
     DELETECompanyEventResponse:
       allOf:
         - type: object
@@ -28886,6 +29200,28 @@ components:
               type: array
               items:
                 type: string
+            dialogTemplate:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
     EditPageCompanyEventResponse:
       allOf:
         - type: string
@@ -32410,6 +32746,10 @@ components:
                     type: string
                   description:
                     type: string
+                  exampleClassSimpleName:
+                    type: string
+                  exampleClassGenericSimpleName:
+                    type: string
                   authorName:
                     type: string
                   authorUrl:
@@ -32417,6 +32757,8 @@ components:
                   pageId:
                     type: string
                   pageVideoUrl:
+                    type: string
+                  dialogTemplate:
                     type: string
                   pageImageUri:
                     type: string
@@ -32566,6 +32908,20 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setExampleClassSimpleName:
+              type: string
+              nullable: true
+            removeExampleClassSimpleName:
+              type: string
+            removeAllExampleClassSimpleName:
+              type: string
+            setExampleClassGenericSimpleName:
+              type: string
+              nullable: true
+            removeExampleClassGenericSimpleName:
+              type: string
+            removeAllExampleClassGenericSimpleName:
+              type: string
             setAuthorName:
               type: string
               nullable: true
@@ -32593,6 +32949,13 @@ components:
             removePageVideoUrl:
               type: string
             removeAllPageVideoUrl:
+              type: string
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
               type: string
             setPageImageUri:
               type: string
@@ -32851,6 +33214,20 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setExampleClassSimpleName:
+              type: string
+              nullable: true
+            removeExampleClassSimpleName:
+              type: string
+            removeAllExampleClassSimpleName:
+              type: string
+            setExampleClassGenericSimpleName:
+              type: string
+              nullable: true
+            removeExampleClassGenericSimpleName:
+              type: string
+            removeAllExampleClassGenericSimpleName:
+              type: string
             setAuthorName:
               type: string
               nullable: true
@@ -32878,6 +33255,13 @@ components:
             removePageVideoUrl:
               type: string
             removeAllPageVideoUrl:
+              type: string
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
               type: string
             setPageImageUri:
               type: string
@@ -33066,6 +33450,10 @@ components:
               type: string
             description:
               type: string
+            exampleClassSimpleName:
+              type: string
+            exampleClassGenericSimpleName:
+              type: string
             authorName:
               type: string
             authorUrl:
@@ -33073,6 +33461,8 @@ components:
             pageId:
               type: string
             pageVideoUrl:
+              type: string
+            dialogTemplate:
               type: string
             pageImageUri:
               type: string
@@ -33152,6 +33542,10 @@ components:
               type: string
             description:
               type: string
+            exampleClassSimpleName:
+              type: string
+            exampleClassGenericSimpleName:
+              type: string
             authorName:
               type: string
             authorUrl:
@@ -33159,6 +33553,8 @@ components:
             pageId:
               type: string
             pageVideoUrl:
+              type: string
+            dialogTemplate:
               type: string
             pageImageUri:
               type: string
@@ -33238,6 +33634,10 @@ components:
               type: string
             description:
               type: string
+            exampleClassSimpleName:
+              type: string
+            exampleClassGenericSimpleName:
+              type: string
             authorName:
               type: string
             authorUrl:
@@ -33245,6 +33645,8 @@ components:
             pageId:
               type: string
             pageVideoUrl:
+              type: string
+            dialogTemplate:
               type: string
             pageImageUri:
               type: string
@@ -33329,6 +33731,10 @@ components:
                     type: string
                   description:
                     type: string
+                  exampleClassSimpleName:
+                    type: string
+                  exampleClassGenericSimpleName:
+                    type: string
                   authorName:
                     type: string
                   authorUrl:
@@ -33336,6 +33742,8 @@ components:
                   pageId:
                     type: string
                   pageVideoUrl:
+                    type: string
+                  dialogTemplate:
                     type: string
                   pageImageUri:
                     type: string
@@ -33415,6 +33823,10 @@ components:
                     type: string
                   description:
                     type: string
+                  exampleClassSimpleName:
+                    type: string
+                  exampleClassGenericSimpleName:
+                    type: string
                   authorName:
                     type: string
                   authorUrl:
@@ -33422,6 +33834,8 @@ components:
                   pageId:
                     type: string
                   pageVideoUrl:
+                    type: string
+                  dialogTemplate:
                     type: string
                   pageImageUri:
                     type: string
@@ -33501,6 +33915,10 @@ components:
               type: string
             description:
               type: string
+            exampleClassSimpleName:
+              type: string
+            exampleClassGenericSimpleName:
+              type: string
             authorName:
               type: string
             authorUrl:
@@ -33508,6 +33926,8 @@ components:
             pageId:
               type: string
             pageVideoUrl:
+              type: string
+            dialogTemplate:
               type: string
             pageImageUri:
               type: string
@@ -33587,6 +34007,10 @@ components:
               type: string
             description:
               type: string
+            exampleClassSimpleName:
+              type: string
+            exampleClassGenericSimpleName:
+              type: string
             authorName:
               type: string
             authorUrl:
@@ -33594,6 +34018,8 @@ components:
             pageId:
               type: string
             pageVideoUrl:
+              type: string
+            dialogTemplate:
               type: string
             pageImageUri:
               type: string

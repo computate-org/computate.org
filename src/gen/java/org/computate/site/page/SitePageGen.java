@@ -1,5 +1,34 @@
 package org.computate.site.page;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.Normalizer;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.computate.search.tool.SearchTool;
+import org.computate.search.wrap.Wrap;
+import org.computate.site.config.ConfigKeys;
+import org.computate.site.model.BaseModel;
+import org.computate.site.result.BaseResult;
+import org.computate.site.request.SiteRequest;
+import org.computate.vertx.config.ComputateConfigKeys;
+import org.computate.vertx.search.list.SearchList;
+import io.vertx.core.Promise;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
@@ -24,6 +53,7 @@ import org.computate.search.serialize.ComputateZonedDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.search.serialize.ComputateBigDecimalDeserializer;
 import java.math.MathContext;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.text.NumberFormat;
@@ -73,46 +103,59 @@ import io.vertx.core.json.JsonObject;
  * The generated <code>class SitePageGen extends BaseResult</code> which means that SitePage extends SitePageGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
- * <h2>Api: true</h2>
- * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
+ * <h2>
+ *   Api: true
+ * </h2>
+ * <p>
+ *   This class contains a comment <kbd><b>Api: true</b></kbd>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: articles"</b>, which groups all of the OpenAPIs for SitePage objects under the tag "articles". 
+ * <p>This class contains a comment <kbd><b>ApiTag: articles</b></kbd>, which groups all of the OpenAPIs for SitePage objects under the tag "articles". 
  * </p>
  * <h2>ApiUri.enUS: /en-us/api/article</h2>
- * <p>This class contains a comment <b>"ApiUri: /en-us/api/article"</b>, which defines the base API URI for SitePage objects as "/en-us/api/article" in the OpenAPI spec. 
+ * <p>This class contains a comment <kbd><b>ApiUri: /en-us/api/article</b></kbd>, which defines the base API URI for SitePage objects as "/en-us/api/article" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
- * <p>This class contains a comment <b>"Indexed: true"</b>, which means this class will be indexed in the search engine. 
+ * <p>This class contains a comment <kbd><b>Indexed: true</b></kbd>, which means this class will be indexed in the search engine. 
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
  * </p>
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the SitePage class will inherit the helpful inherited class comments from the super class SitePageGen. 
  * </p>
- * <h2>Rows: 100</h2>
- * <p>This class contains a comment <b>"Rows: 100"</b>, which means the SitePage API will return a default of 100 records instead of 10 by default. 
- * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * <h2>
+ *   Rows: 100
+ * </h2>
+ * <p>This class contains a comment <kbd><b>Rows: 100</b></kbd>, which means the article API will return a default of 100 results instead of 10 by default. 
+ * Each API has built in pagination of the search results to ensure a user can query all the data a page at a time without running the application out of memory. 
  * </p>
- * <h2>Order: 15</h2>
- * <p>This class contains a comment <b>"Order: 15"</b>, which means this class will be sorted by the given number 15 ascending when code that relates to multiple classes at the same time is generated. 
+ * <p>This class contains a comment <kbd><b>Rows: 100</b></kbd>, which means the article API will return a default of 100 results instead of 10 by default. 
+ * Each API has built in pagination of the search results to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </p>
+ * <h2>
+ *   Order: 15
+ * </h2>
+ * <p>
+ *   This class contains a comment <kbd><b>Order: 15</b></kbd>, 
+ *   which means this class will be sorted by the given number 15 
+ *   ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
  * <h2>SqlOrder: 15</h2>
- * <p>This class contains a comment <b>"SqlOrder: 15"</b>, which means this class will be sorted by the given number 15 ascending when SQL code to create and drop the tables is generated. 
+ * <p>This class contains a comment <kbd><b>SqlOrder: 15</b></kbd>, which means this class will be sorted by the given number 15 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
- * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
+ * <p>This class contains a comment <kbd><b>Page: true</b></kbd>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.page.SitePagePage. 
  * </p>
  * <h2>SuperPage.enUS: PageLayout</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * <p>This class contains a comment <kbd><b>SuperPage.enUS: PageLayout</b></kbd>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
  * This means that the newly created class org.computate.site.page.SitePagePage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
- *   This class contains a comment <b>"Promise: true"</b>
+ *   This class contains a comment <kbd><b>Promise: true</b></kbd>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
  *   This means that the SitePage Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
@@ -134,7 +177,7 @@ import io.vertx.core.json.JsonObject;
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
  * <h2>AName.enUS: an article</h2>
- * <p>This class contains a comment <b>"AName.enUS: an article"</b>, which identifies the language context to describe a SitePage as "an article". 
+ * <p>This class contains a comment <kbd><b>AName.enUS: an article</b></kbd>, which identifies the language context to describe a SitePage as "an article". 
  * </p>
  * <p>
  * Delete the class SitePage in Solr: 
@@ -2529,7 +2572,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   //////////////
 
   public Future<SitePageGen<DEV>> promiseDeepSitePage(SiteRequest siteRequest_) {
-    setSiteRequest_(siteRequest_);
+    if(this.siteRequest_ == null)
+      setSiteRequest_(siteRequest_);
     return promiseDeepSitePage();
   }
 
@@ -4056,7 +4100,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     return "%s/en-us/view/article/%s";
   }
 
-  public static String varJsonForClass(String var, Boolean patch) {
+  public static String varJson(String var, Boolean patch) {
     return SitePage.varJsonSitePage(var, patch);
   }
   public static String varJsonSitePage(String var, Boolean patch) {

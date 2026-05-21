@@ -69,7 +69,7 @@ spec:
           value: "60"
         - name: NUMBER_EXECUTORS
           value: "2"
-        - name: GITHUB_ORG
+        - name: GIT_ORG
           value: computate-org
         - name: SITE_STATIC_NAME
           value: computate.org-static

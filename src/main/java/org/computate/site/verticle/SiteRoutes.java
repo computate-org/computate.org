@@ -249,7 +249,7 @@ public class SiteRoutes {
   public static Future<Void> grantGithubTeamAccess(String githubTeam, String githubUsername, JsonObject config, WebClient webClient) {
     Promise<Void> promise = Promise.promise();
     try {
-      String githubOrg = config.getString(ConfigKeys.GITHUB_ORG);
+      String githubOrg = config.getString(ConfigKeys.GIT_ORG);
       String githubUri = String.format("/orgs/%s/teams/%s/memberships/%s", BaseApiServiceImpl.urlEncode(githubOrg), BaseApiServiceImpl.urlEncode(githubTeam), BaseApiServiceImpl.urlEncode(githubUsername));
       webClient.put(443, "api.github.com", githubUri).ssl(true)
           .putHeader("Accept", "application/vnd.github+json")

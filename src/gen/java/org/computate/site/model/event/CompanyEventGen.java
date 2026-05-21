@@ -1,5 +1,24 @@
 package org.computate.site.model.event;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.computate.search.wrap.Wrap;
+import org.computate.site.config.ConfigKeys;
+import org.computate.site.result.BaseResult;
+import org.computate.vertx.config.ComputateConfigKeys;
+import io.vertx.pgclient.data.Point;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
@@ -24,6 +43,7 @@ import org.computate.search.serialize.ComputateZonedDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.search.serialize.ComputateBigDecimalDeserializer;
 import java.math.MathContext;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.text.NumberFormat;
@@ -61,6 +81,7 @@ import java.util.stream.Collectors;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.json.JsonArray;
+import java.lang.Integer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -73,9 +94,11 @@ import org.computate.search.response.solr.SolrResponse;
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
  * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyEventGen into the class CompanyEvent. 
- * </li><li>You can add a class comment "Rows: 100" if you wish the CompanyEvent API to return more or less than 10 records by default. 
- * In this case, the API will return 100 records from the API instead of 10 by default. 
- * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </li><li><p>
+ *   You can add a class comment <kbd><b>Rows: 100</b></kbd> if you wish for the event API to return more or less than 10 results by default. 
+ *   In this case, the API will return 100 results from the API instead of 10 by default. 
+ *   Each API has built in pagination of the search results to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </p>
  * </li><li>You can add a class comment "Model: true" if you wish to persist these CompanyEvent objects in a relational PostgreSQL database transactionally in the RESTful API. 
  * The code to persist and query the CompanyEventGen data in the database will then be automatically generated. 
  * </li>
@@ -95,43 +118,61 @@ import org.computate.search.response.solr.SolrResponse;
  * The generated <code>class CompanyEventGen extends BaseResult</code> which means that CompanyEvent extends CompanyEventGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
- * <h2>Api: true</h2>
- * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
+ * <h2>
+ *   Api: true
+ * </h2>
+ * <p>
+ *   This class contains a comment <kbd><b>Api: true</b></kbd>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: events"</b>, which groups all of the OpenAPIs for CompanyEvent objects under the tag "events". 
+ * <p>This class contains a comment <kbd><b>ApiTag: events</b></kbd>, which groups all of the OpenAPIs for CompanyEvent objects under the tag "events". 
  * </p>
  * <h2>ApiUri.enUS: /en-us/api/event</h2>
- * <p>This class contains a comment <b>"ApiUri: /en-us/api/event"</b>, which defines the base API URI for CompanyEvent objects as "/en-us/api/event" in the OpenAPI spec. 
+ * <p>This class contains a comment <kbd><b>ApiUri: /en-us/api/event</b></kbd>, which defines the base API URI for CompanyEvent objects as "/en-us/api/event" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
- * <p>This class contains a comment <b>"Indexed: true"</b>, which means this class will be indexed in the search engine. 
+ * <p>This class contains a comment <kbd><b>Indexed: true</b></kbd>, which means this class will be indexed in the search engine. 
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
  * </p>
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the CompanyEvent class will inherit the helpful inherited class comments from the super class CompanyEventGen. 
  * </p>
- * <h2>Rows: null</h2>
- * <h2>Order: 16</h2>
- * <p>This class contains a comment <b>"Order: 16"</b>, which means this class will be sorted by the given number 16 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>
+ *   Rows: 10
+ * </h2>
+ * <p>This class contains a comment <kbd><b>Rows: 10</b></kbd>, which means the event API will return a default of 10 results instead of 10 by default. 
+ * Each API has built in pagination of the search results to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </p>
+ * <p>
+ *   You can add a class comment <kbd><b>Rows: 100</b></kbd> if you wish for the event API to return more or less than 10 results by default. 
+ *   In this case, the API will return 100 results from the API instead of 10 by default. 
+ *   Each API has built in pagination of the search results to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </p>
+ * <h2>
+ *   Order: 16
+ * </h2>
+ * <p>
+ *   This class contains a comment <kbd><b>Order: 16</b></kbd>, 
+ *   which means this class will be sorted by the given number 16 
+ *   ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
  * <h2>SqlOrder: 16</h2>
- * <p>This class contains a comment <b>"SqlOrder: 16"</b>, which means this class will be sorted by the given number 16 ascending when SQL code to create and drop the tables is generated. 
+ * <p>This class contains a comment <kbd><b>SqlOrder: 16</b></kbd>, which means this class will be sorted by the given number 16 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
- * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
+ * <p>This class contains a comment <kbd><b>Page: true</b></kbd>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.event.CompanyEventPage. 
  * </p>
  * <h2>SuperPage.enUS: PageLayout</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * <p>This class contains a comment <kbd><b>SuperPage.enUS: PageLayout</b></kbd>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
  * This means that the newly created class org.computate.site.model.event.CompanyEventPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
- *   This class contains a comment <b>"Promise: true"</b>
+ *   This class contains a comment <kbd><b>Promise: true</b></kbd>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
  *   This means that the CompanyEvent Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
@@ -153,7 +194,7 @@ import org.computate.search.response.solr.SolrResponse;
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
  * <h2>AName.enUS: an event</h2>
- * <p>This class contains a comment <b>"AName.enUS: an event"</b>, which identifies the language context to describe a CompanyEvent as "an event". 
+ * <p>This class contains a comment <kbd><b>AName.enUS: an event</b></kbd>, which identifies the language context to describe a CompanyEvent as "an event". 
  * </p>
  * <p>
  * Delete the class CompanyEvent in Solr: 
@@ -177,15 +218,6 @@ import org.computate.search.response.solr.SolrResponse;
  **/
 public abstract class CompanyEventGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(CompanyEvent.class);
-
-  public static final String Description_frFR = "See the upcoming computate in-person and online events";
-  public static final String AName_frFR = "an event";
-  public static final String SingularName_frFR = "event";
-  public static final String PluralName_frFR = "events";
-  public static final String Title_frFR = "events";
-  public static final String ThePluralName_frFR = "les events";
-  public static final String NameAdjectiveSingular_frFR = "event";
-  public static final String NameAdjectivePlural_frFR = "events";
 
   public static final String Description_enUS = "See the upcoming computate in-person and online events";
   public static final String AName_enUS = "an event";
@@ -1162,12 +1194,650 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return CompanyEvent.staticSearchLocationLinks(siteRequest_, CompanyEvent.staticSetLocationLinks(siteRequest_, o)).toString();
   }
 
+	////////////////////
+  // dialogTemplate //
+	////////////////////
+
+
+  /**
+   *  The entity dialogTemplate
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String dialogTemplate;
+
+  /**
+   * <br> The entity dialogTemplate
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:dialogTemplate">Find the entity dialogTemplate in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _dialogTemplate(Wrap<String> w);
+
+  public String getDialogTemplate() {
+    return dialogTemplate;
+  }
+  public void setDialogTemplate(String o) {
+    this.dialogTemplate = CompanyEvent.staticSetDialogTemplate(siteRequest_, o);
+  }
+  public static String staticSetDialogTemplate(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent dialogTemplateInit() {
+    Wrap<String> dialogTemplateWrap = new Wrap<String>().var("dialogTemplate");
+    if(dialogTemplate == null) {
+      _dialogTemplate(dialogTemplateWrap);
+      Optional.ofNullable(dialogTemplateWrap.getO()).ifPresent(o -> {
+        setDialogTemplate(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchDialogTemplate(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrDialogTemplate(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqDialogTemplate(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchDialogTemplate(siteRequest_, CompanyEvent.staticSetDialogTemplate(siteRequest_, o)).toString();
+  }
+
+  public String sqlDialogTemplate() {
+    return dialogTemplate;
+  }
+
+  public static String staticJsonDialogTemplate(String dialogTemplate) {
+    return dialogTemplate;
+  }
+
+	//////////////////
+  // pageImageUri //
+	//////////////////
+
+
+  /**
+   *  The entity pageImageUri
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageImageUri;
+
+  /**
+   * <br> The entity pageImageUri
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageImageUri(Wrap<String> w);
+
+  public String getPageImageUri() {
+    return pageImageUri;
+  }
+  public void setPageImageUri(String o) {
+    this.pageImageUri = CompanyEvent.staticSetPageImageUri(siteRequest_, o);
+  }
+  public static String staticSetPageImageUri(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent pageImageUriInit() {
+    Wrap<String> pageImageUriWrap = new Wrap<String>().var("pageImageUri");
+    if(pageImageUri == null) {
+      _pageImageUri(pageImageUriWrap);
+      Optional.ofNullable(pageImageUriWrap.getO()).ifPresent(o -> {
+        setPageImageUri(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchPageImageUri(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageImageUri(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageImageUri(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchPageImageUri(siteRequest_, CompanyEvent.staticSetPageImageUri(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageImageUri() {
+    return pageImageUri;
+  }
+
+  public static String staticJsonPageImageUri(String pageImageUri) {
+    return pageImageUri;
+  }
+
+	////////////////////
+  // pageImageWidth //
+	////////////////////
+
+
+  /**
+   *  The entity pageImageWidth
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer pageImageWidth;
+
+  /**
+   * <br> The entity pageImageWidth
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageImageWidth(Wrap<Integer> w);
+
+  public Integer getPageImageWidth() {
+    return pageImageWidth;
+  }
+
+  public void setPageImageWidth(Integer pageImageWidth) {
+    this.pageImageWidth = pageImageWidth;
+  }
+  @JsonIgnore
+  public void setPageImageWidth(String o) {
+    this.pageImageWidth = CompanyEvent.staticSetPageImageWidth(siteRequest_, o);
+  }
+  public static Integer staticSetPageImageWidth(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected CompanyEvent pageImageWidthInit() {
+    Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().var("pageImageWidth");
+    if(pageImageWidth == null) {
+      _pageImageWidth(pageImageWidthWrap);
+      Optional.ofNullable(pageImageWidthWrap.getO()).ifPresent(o -> {
+        setPageImageWidth(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static Integer staticSearchPageImageWidth(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageImageWidth(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageImageWidth(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchPageImageWidth(siteRequest_, CompanyEvent.staticSetPageImageWidth(siteRequest_, o)).toString();
+  }
+
+	/////////////////////
+  // pageImageHeight //
+	/////////////////////
+
+
+  /**
+   *  The entity pageImageHeight
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer pageImageHeight;
+
+  /**
+   * <br> The entity pageImageHeight
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageImageHeight(Wrap<Integer> c);
+
+  public Integer getPageImageHeight() {
+    return pageImageHeight;
+  }
+
+  public void setPageImageHeight(Integer pageImageHeight) {
+    this.pageImageHeight = pageImageHeight;
+  }
+  @JsonIgnore
+  public void setPageImageHeight(String o) {
+    this.pageImageHeight = CompanyEvent.staticSetPageImageHeight(siteRequest_, o);
+  }
+  public static Integer staticSetPageImageHeight(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected CompanyEvent pageImageHeightInit() {
+    Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().var("pageImageHeight");
+    if(pageImageHeight == null) {
+      _pageImageHeight(pageImageHeightWrap);
+      Optional.ofNullable(pageImageHeightWrap.getO()).ifPresent(o -> {
+        setPageImageHeight(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static Integer staticSearchPageImageHeight(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageImageHeight(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageImageHeight(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchPageImageHeight(siteRequest_, CompanyEvent.staticSetPageImageHeight(siteRequest_, o)).toString();
+  }
+
+	///////////////////
+  // pageImageType //
+	///////////////////
+
+
+  /**
+   *  The entity pageImageType
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageImageType;
+
+  /**
+   * <br> The entity pageImageType
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageImageType(Wrap<String> c);
+
+  public String getPageImageType() {
+    return pageImageType;
+  }
+  public void setPageImageType(String o) {
+    this.pageImageType = CompanyEvent.staticSetPageImageType(siteRequest_, o);
+  }
+  public static String staticSetPageImageType(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent pageImageTypeInit() {
+    Wrap<String> pageImageTypeWrap = new Wrap<String>().var("pageImageType");
+    if(pageImageType == null) {
+      _pageImageType(pageImageTypeWrap);
+      Optional.ofNullable(pageImageTypeWrap.getO()).ifPresent(o -> {
+        setPageImageType(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchPageImageType(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageImageType(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageImageType(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchPageImageType(siteRequest_, CompanyEvent.staticSetPageImageType(siteRequest_, o)).toString();
+  }
+
+	//////////////////
+  // pageImageAlt //
+	//////////////////
+
+
+  /**
+   *  The entity pageImageAlt
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageImageAlt;
+
+  /**
+   * <br> The entity pageImageAlt
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageImageAlt(Wrap<String> c);
+
+  public String getPageImageAlt() {
+    return pageImageAlt;
+  }
+  public void setPageImageAlt(String o) {
+    this.pageImageAlt = CompanyEvent.staticSetPageImageAlt(siteRequest_, o);
+  }
+  public static String staticSetPageImageAlt(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent pageImageAltInit() {
+    Wrap<String> pageImageAltWrap = new Wrap<String>().var("pageImageAlt");
+    if(pageImageAlt == null) {
+      _pageImageAlt(pageImageAltWrap);
+      Optional.ofNullable(pageImageAltWrap.getO()).ifPresent(o -> {
+        setPageImageAlt(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchPageImageAlt(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPageImageAlt(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPageImageAlt(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchPageImageAlt(siteRequest_, CompanyEvent.staticSetPageImageAlt(siteRequest_, o)).toString();
+  }
+
+  public String sqlPageImageAlt() {
+    return pageImageAlt;
+  }
+
+  public static String staticJsonPageImageAlt(String pageImageAlt) {
+    return pageImageAlt;
+  }
+
+	//////////////////
+  // labelsString //
+	//////////////////
+
+
+  /**
+   *  The entity labelsString
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String labelsString;
+
+  /**
+   * <br> The entity labelsString
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _labelsString(Wrap<String> w);
+
+  public String getLabelsString() {
+    return labelsString;
+  }
+  public void setLabelsString(String o) {
+    this.labelsString = CompanyEvent.staticSetLabelsString(siteRequest_, o);
+  }
+  public static String staticSetLabelsString(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent labelsStringInit() {
+    Wrap<String> labelsStringWrap = new Wrap<String>().var("labelsString");
+    if(labelsString == null) {
+      _labelsString(labelsStringWrap);
+      Optional.ofNullable(labelsStringWrap.getO()).ifPresent(o -> {
+        setLabelsString(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchLabelsString(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrLabelsString(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqLabelsString(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchLabelsString(siteRequest_, CompanyEvent.staticSetLabelsString(siteRequest_, o)).toString();
+  }
+
+  public String sqlLabelsString() {
+    return labelsString;
+  }
+
+  public static String staticJsonLabelsString(String labelsString) {
+    return labelsString;
+  }
+
+	////////////
+  // labels //
+	////////////
+
+
+  /**
+   *  The entity labels
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+  @JsonInclude(Include.NON_NULL)
+  protected List<String> labels = new ArrayList<String>();
+
+  /**
+   * <br> The entity labels
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _labels(List<String> l);
+
+  public List<String> getLabels() {
+    return labels;
+  }
+
+  public void setLabels(List<String> labels) {
+    this.labels = labels;
+  }
+  @JsonIgnore
+  public void setLabels(String o) {
+    String l = CompanyEvent.staticSetLabels(siteRequest_, o);
+    if(l != null)
+      addLabels(l);
+  }
+  public static String staticSetLabels(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  public CompanyEvent addLabels(String...objects) {
+    for(String o : objects) {
+      addLabels(o);
+    }
+    return (CompanyEvent)this;
+  }
+  public CompanyEvent addLabels(String o) {
+    if(o != null)
+      this.labels.add(o);
+    return (CompanyEvent)this;
+  }
+  @JsonIgnore
+  public void setLabels(JsonArray objects) {
+    labels.clear();
+    if(objects == null)
+      return;
+    for(int i = 0; i < objects.size(); i++) {
+      String o = objects.getString(i);
+      addLabels(o);
+    }
+  }
+  protected CompanyEvent labelsInit() {
+    _labels(labels);
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchLabels(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrLabels(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqLabels(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchLabels(siteRequest_, CompanyEvent.staticSetLabels(siteRequest_, o)).toString();
+  }
+
+  public String[] sqlLabels() {
+    return labels.stream().map(v -> (String)v).toArray(String[]::new);
+  }
+
+  public static JsonArray staticJsonLabels(List<String> labels) {
+    JsonArray a = new JsonArray();
+    labels.stream().forEach(v -> a.add(v.toString()));
+    return a;
+  }
+
+	////////////////
+  // authorName //
+	////////////////
+
+
+  /**
+   *  The entity authorName
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String authorName;
+
+  /**
+   * <br> The entity authorName
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:authorName">Find the entity authorName in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _authorName(Wrap<String> w);
+
+  public String getAuthorName() {
+    return authorName;
+  }
+  public void setAuthorName(String o) {
+    this.authorName = CompanyEvent.staticSetAuthorName(siteRequest_, o);
+  }
+  public static String staticSetAuthorName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent authorNameInit() {
+    Wrap<String> authorNameWrap = new Wrap<String>().var("authorName");
+    if(authorName == null) {
+      _authorName(authorNameWrap);
+      Optional.ofNullable(authorNameWrap.getO()).ifPresent(o -> {
+        setAuthorName(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchAuthorName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrAuthorName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqAuthorName(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchAuthorName(siteRequest_, CompanyEvent.staticSetAuthorName(siteRequest_, o)).toString();
+  }
+
+  public String sqlAuthorName() {
+    return authorName;
+  }
+
+  public static String staticJsonAuthorName(String authorName) {
+    return authorName;
+  }
+
+	///////////////
+  // authorUrl //
+	///////////////
+
+
+  /**
+   *  The entity authorUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String authorUrl;
+
+  /**
+   * <br> The entity authorUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:authorUrl">Find the entity authorUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _authorUrl(Wrap<String> w);
+
+  public String getAuthorUrl() {
+    return authorUrl;
+  }
+  public void setAuthorUrl(String o) {
+    this.authorUrl = CompanyEvent.staticSetAuthorUrl(siteRequest_, o);
+  }
+  public static String staticSetAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyEvent authorUrlInit() {
+    Wrap<String> authorUrlWrap = new Wrap<String>().var("authorUrl");
+    if(authorUrl == null) {
+      _authorUrl(authorUrlWrap);
+      Optional.ofNullable(authorUrlWrap.getO()).ifPresent(o -> {
+        setAuthorUrl(o);
+      });
+    }
+    return (CompanyEvent)this;
+  }
+
+  public static String staticSearchAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqAuthorUrl(SiteRequest siteRequest_, String o) {
+    return CompanyEvent.staticSearchAuthorUrl(siteRequest_, CompanyEvent.staticSetAuthorUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlAuthorUrl() {
+    return authorUrl;
+  }
+
+  public static String staticJsonAuthorUrl(String authorUrl) {
+    return authorUrl;
+  }
+
   //////////////
   // initDeep //
   //////////////
 
   public Future<CompanyEventGen<DEV>> promiseDeepCompanyEvent(SiteRequest siteRequest_) {
-    setSiteRequest_(siteRequest_);
+    if(this.siteRequest_ == null)
+      setSiteRequest_(siteRequest_);
     return promiseDeepCompanyEvent();
   }
 
@@ -1203,6 +1873,16 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         locationColorsInit();
         locationTitlesInit();
         locationLinksInit();
+        dialogTemplateInit();
+        pageImageUriInit();
+        pageImageWidthInit();
+        pageImageHeightInit();
+        pageImageTypeInit();
+        pageImageAltInit();
+        labelsStringInit();
+        labelsInit();
+        authorNameInit();
+        authorUrlInit();
         promise2.complete();
       } catch(Exception ex) {
         promise2.fail(ex);
@@ -1280,6 +1960,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         return oCompanyEvent.locationTitles;
       case "locationLinks":
         return oCompanyEvent.locationLinks;
+      case "dialogTemplate":
+        return oCompanyEvent.dialogTemplate;
+      case "pageImageUri":
+        return oCompanyEvent.pageImageUri;
+      case "pageImageWidth":
+        return oCompanyEvent.pageImageWidth;
+      case "pageImageHeight":
+        return oCompanyEvent.pageImageHeight;
+      case "pageImageType":
+        return oCompanyEvent.pageImageType;
+      case "pageImageAlt":
+        return oCompanyEvent.pageImageAlt;
+      case "labelsString":
+        return oCompanyEvent.labelsString;
+      case "labels":
+        return oCompanyEvent.labels;
+      case "authorName":
+        return oCompanyEvent.authorName;
+      case "authorUrl":
+        return oCompanyEvent.authorUrl;
       default:
         return super.obtainBaseResult(var);
     }
@@ -1341,6 +2041,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return CompanyEvent.staticSetLocationTitles(siteRequest_, v);
     case "locationLinks":
       return CompanyEvent.staticSetLocationLinks(siteRequest_, v);
+    case "dialogTemplate":
+      return CompanyEvent.staticSetDialogTemplate(siteRequest_, v);
+    case "pageImageUri":
+      return CompanyEvent.staticSetPageImageUri(siteRequest_, v);
+    case "pageImageWidth":
+      return CompanyEvent.staticSetPageImageWidth(siteRequest_, v);
+    case "pageImageHeight":
+      return CompanyEvent.staticSetPageImageHeight(siteRequest_, v);
+    case "pageImageType":
+      return CompanyEvent.staticSetPageImageType(siteRequest_, v);
+    case "pageImageAlt":
+      return CompanyEvent.staticSetPageImageAlt(siteRequest_, v);
+    case "labelsString":
+      return CompanyEvent.staticSetLabelsString(siteRequest_, v);
+    case "labels":
+      return CompanyEvent.staticSetLabels(siteRequest_, v);
+    case "authorName":
+      return CompanyEvent.staticSetAuthorName(siteRequest_, v);
+    case "authorUrl":
+      return CompanyEvent.staticSetAuthorUrl(siteRequest_, v);
       default:
         return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
     }
@@ -1409,6 +2129,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return CompanyEvent.staticSearchLocationTitles(siteRequest_, (String)o);
     case "locationLinks":
       return CompanyEvent.staticSearchLocationLinks(siteRequest_, (String)o);
+    case "dialogTemplate":
+      return CompanyEvent.staticSearchDialogTemplate(siteRequest_, (String)o);
+    case "pageImageUri":
+      return CompanyEvent.staticSearchPageImageUri(siteRequest_, (String)o);
+    case "pageImageWidth":
+      return CompanyEvent.staticSearchPageImageWidth(siteRequest_, (Integer)o);
+    case "pageImageHeight":
+      return CompanyEvent.staticSearchPageImageHeight(siteRequest_, (Integer)o);
+    case "pageImageType":
+      return CompanyEvent.staticSearchPageImageType(siteRequest_, (String)o);
+    case "pageImageAlt":
+      return CompanyEvent.staticSearchPageImageAlt(siteRequest_, (String)o);
+    case "labelsString":
+      return CompanyEvent.staticSearchLabelsString(siteRequest_, (String)o);
+    case "labels":
+      return CompanyEvent.staticSearchLabels(siteRequest_, (String)o);
+    case "authorName":
+      return CompanyEvent.staticSearchAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return CompanyEvent.staticSearchAuthorUrl(siteRequest_, (String)o);
       default:
         return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
     }
@@ -1447,6 +2187,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return CompanyEvent.staticSearchStrLocationTitles(siteRequest_, (String)o);
     case "locationLinks":
       return CompanyEvent.staticSearchStrLocationLinks(siteRequest_, (String)o);
+    case "dialogTemplate":
+      return CompanyEvent.staticSearchStrDialogTemplate(siteRequest_, (String)o);
+    case "pageImageUri":
+      return CompanyEvent.staticSearchStrPageImageUri(siteRequest_, (String)o);
+    case "pageImageWidth":
+      return CompanyEvent.staticSearchStrPageImageWidth(siteRequest_, (Integer)o);
+    case "pageImageHeight":
+      return CompanyEvent.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
+    case "pageImageType":
+      return CompanyEvent.staticSearchStrPageImageType(siteRequest_, (String)o);
+    case "pageImageAlt":
+      return CompanyEvent.staticSearchStrPageImageAlt(siteRequest_, (String)o);
+    case "labelsString":
+      return CompanyEvent.staticSearchStrLabelsString(siteRequest_, (String)o);
+    case "labels":
+      return CompanyEvent.staticSearchStrLabels(siteRequest_, (String)o);
+    case "authorName":
+      return CompanyEvent.staticSearchStrAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return CompanyEvent.staticSearchStrAuthorUrl(siteRequest_, (String)o);
       default:
         return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
     }
@@ -1485,6 +2245,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return CompanyEvent.staticSearchFqLocationTitles(siteRequest_, o);
     case "locationLinks":
       return CompanyEvent.staticSearchFqLocationLinks(siteRequest_, o);
+    case "dialogTemplate":
+      return CompanyEvent.staticSearchFqDialogTemplate(siteRequest_, o);
+    case "pageImageUri":
+      return CompanyEvent.staticSearchFqPageImageUri(siteRequest_, o);
+    case "pageImageWidth":
+      return CompanyEvent.staticSearchFqPageImageWidth(siteRequest_, o);
+    case "pageImageHeight":
+      return CompanyEvent.staticSearchFqPageImageHeight(siteRequest_, o);
+    case "pageImageType":
+      return CompanyEvent.staticSearchFqPageImageType(siteRequest_, o);
+    case "pageImageAlt":
+      return CompanyEvent.staticSearchFqPageImageAlt(siteRequest_, o);
+    case "labelsString":
+      return CompanyEvent.staticSearchFqLabelsString(siteRequest_, o);
+    case "labels":
+      return CompanyEvent.staticSearchFqLabels(siteRequest_, o);
+    case "authorName":
+      return CompanyEvent.staticSearchFqAuthorName(siteRequest_, o);
+    case "authorUrl":
+      return CompanyEvent.staticSearchFqAuthorUrl(siteRequest_, o);
       default:
         return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
     }
@@ -1583,6 +2363,54 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         }
         saves.add("location");
         return val;
+      } else if("dialogtemplate".equals(varLower)) {
+        if(val instanceof String) {
+          setDialogTemplate((String)val);
+        }
+        saves.add("dialogTemplate");
+        return val;
+      } else if("pageimageuri".equals(varLower)) {
+        if(val instanceof String) {
+          setPageImageUri((String)val);
+        }
+        saves.add("pageImageUri");
+        return val;
+      } else if("pageimagealt".equals(varLower)) {
+        if(val instanceof String) {
+          setPageImageAlt((String)val);
+        }
+        saves.add("pageImageAlt");
+        return val;
+      } else if("labelsstring".equals(varLower)) {
+        if(val instanceof String) {
+          setLabelsString((String)val);
+        }
+        saves.add("labelsString");
+        return val;
+      } else if("labels".equals(varLower)) {
+        if(val instanceof List<?>) {
+          ((List<String>)val).stream().forEach(v -> addLabels(v));
+        } else if(val instanceof String[]) {
+          Arrays.asList((String[])val).stream().forEach(v -> addLabels((String)v));
+        } else if(val instanceof JsonArray) {
+          ((JsonArray)val).stream().forEach(v -> addLabels(staticSetLabels(siteRequest_, v.toString())));
+        }
+        if(!saves.contains("labels")) {
+          saves.add("labels");
+        }
+        return val;
+      } else if("authorname".equals(varLower)) {
+        if(val instanceof String) {
+          setAuthorName((String)val);
+        }
+        saves.add("authorName");
+        return val;
+      } else if("authorurl".equals(varLower)) {
+        if(val instanceof String) {
+          setAuthorUrl((String)val);
+        }
+        saves.add("authorUrl");
+        return val;
     } else {
       return super.persistBaseResult(var, val);
     }
@@ -1680,6 +2508,69 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
           });
         }
       }
+
+      if(saves.contains("dialogTemplate")) {
+        String dialogTemplate = (String)doc.get("dialogTemplate_docvalues_string");
+        if(dialogTemplate != null)
+          oCompanyEvent.setDialogTemplate(dialogTemplate);
+      }
+
+      if(saves.contains("pageImageUri")) {
+        String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
+        if(pageImageUri != null)
+          oCompanyEvent.setPageImageUri(pageImageUri);
+      }
+
+      if(saves.contains("pageImageWidth")) {
+        Integer pageImageWidth = (Integer)doc.get("pageImageWidth_docvalues_int");
+        if(pageImageWidth != null)
+          oCompanyEvent.setPageImageWidth(pageImageWidth);
+      }
+
+      if(saves.contains("pageImageHeight")) {
+        Integer pageImageHeight = (Integer)doc.get("pageImageHeight_docvalues_int");
+        if(pageImageHeight != null)
+          oCompanyEvent.setPageImageHeight(pageImageHeight);
+      }
+
+      if(saves.contains("pageImageType")) {
+        String pageImageType = (String)doc.get("pageImageType_docvalues_string");
+        if(pageImageType != null)
+          oCompanyEvent.setPageImageType(pageImageType);
+      }
+
+      if(saves.contains("pageImageAlt")) {
+        String pageImageAlt = (String)doc.get("pageImageAlt_docvalues_string");
+        if(pageImageAlt != null)
+          oCompanyEvent.setPageImageAlt(pageImageAlt);
+      }
+
+      if(saves.contains("labelsString")) {
+        String labelsString = (String)doc.get("labelsString_docvalues_string");
+        if(labelsString != null)
+          oCompanyEvent.setLabelsString(labelsString);
+      }
+
+      if(saves.contains("labels")) {
+        List<String> labels = (List<String>)doc.get("labels_docvalues_strings");
+        if(labels != null) {
+          labels.stream().forEach( v -> {
+            oCompanyEvent.labels.add(CompanyEvent.staticSetLabels(siteRequest_, v));
+          });
+        }
+      }
+
+      if(saves.contains("authorName")) {
+        String authorName = (String)doc.get("authorName_docvalues_string");
+        if(authorName != null)
+          oCompanyEvent.setAuthorName(authorName);
+      }
+
+      if(saves.contains("authorUrl")) {
+        String authorUrl = (String)doc.get("authorUrl_docvalues_string");
+        if(authorUrl != null)
+          oCompanyEvent.setAuthorUrl(authorUrl);
+      }
     }
 
     super.populateBaseResult(doc);
@@ -1735,6 +2626,40 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         l.add(CompanyEvent.staticSearchLocationLinks(siteRequest_, o));
       }
     }
+    if(dialogTemplate != null) {
+      doc.put("dialogTemplate_docvalues_string", dialogTemplate);
+    }
+    if(pageImageUri != null) {
+      doc.put("pageImageUri_docvalues_string", pageImageUri);
+    }
+    if(pageImageWidth != null) {
+      doc.put("pageImageWidth_docvalues_int", pageImageWidth);
+    }
+    if(pageImageHeight != null) {
+      doc.put("pageImageHeight_docvalues_int", pageImageHeight);
+    }
+    if(pageImageType != null) {
+      doc.put("pageImageType_docvalues_string", pageImageType);
+    }
+    if(pageImageAlt != null) {
+      doc.put("pageImageAlt_docvalues_string", pageImageAlt);
+    }
+    if(labelsString != null) {
+      doc.put("labelsString_docvalues_string", labelsString);
+    }
+    if(labels != null) {
+      JsonArray l = new JsonArray();
+      doc.put("labels_docvalues_strings", l);
+      for(String o : labels) {
+        l.add(CompanyEvent.staticSearchLabels(siteRequest_, o));
+      }
+    }
+    if(authorName != null) {
+      doc.put("authorName_docvalues_string", authorName);
+    }
+    if(authorUrl != null) {
+      doc.put("authorUrl_docvalues_string", authorUrl);
+    }
     super.indexBaseResult(doc);
 
 	}
@@ -1765,6 +2690,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         return "locationTitles_indexedstored_strings";
       case "locationLinks":
         return "locationLinks_indexedstored_strings";
+      case "dialogTemplate":
+        return "dialogTemplate_docvalues_string";
+      case "pageImageUri":
+        return "pageImageUri_docvalues_string";
+      case "pageImageWidth":
+        return "pageImageWidth_docvalues_int";
+      case "pageImageHeight":
+        return "pageImageHeight_docvalues_int";
+      case "pageImageType":
+        return "pageImageType_docvalues_string";
+      case "pageImageAlt":
+        return "pageImageAlt_docvalues_string";
+      case "labelsString":
+        return "labelsString_docvalues_string";
+      case "labels":
+        return "labels_docvalues_strings";
+      case "authorName":
+        return "authorName_docvalues_string";
+      case "authorUrl":
+        return "authorUrl_docvalues_string";
       default:
         return BaseResult.varStoredBaseResult(entityVar);
     }
@@ -1796,6 +2741,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         return "locationTitles_indexedstored_strings";
       case "locationLinks":
         return "locationLinks_indexedstored_strings";
+      case "dialogTemplate":
+        return "dialogTemplate_docvalues_string";
+      case "pageImageUri":
+        return "pageImageUri_docvalues_string";
+      case "pageImageWidth":
+        return "pageImageWidth_docvalues_int";
+      case "pageImageHeight":
+        return "pageImageHeight_docvalues_int";
+      case "pageImageType":
+        return "pageImageType_docvalues_string";
+      case "pageImageAlt":
+        return "pageImageAlt_docvalues_string";
+      case "labelsString":
+        return "labelsString_docvalues_string";
+      case "labels":
+        return "labels_docvalues_strings";
+      case "authorName":
+        return "authorName_docvalues_string";
+      case "authorUrl":
+        return "authorUrl_docvalues_string";
       default:
         return BaseResult.varIndexedBaseResult(entityVar);
     }
@@ -1827,6 +2792,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         return "locationTitles";
       case "locationLinks_indexedstored_strings":
         return "locationLinks";
+      case "dialogTemplate_docvalues_string":
+        return "dialogTemplate";
+      case "pageImageUri_docvalues_string":
+        return "pageImageUri";
+      case "pageImageWidth_docvalues_int":
+        return "pageImageWidth";
+      case "pageImageHeight_docvalues_int":
+        return "pageImageHeight";
+      case "pageImageType_docvalues_string":
+        return "pageImageType";
+      case "pageImageAlt_docvalues_string":
+        return "pageImageAlt";
+      case "labelsString_docvalues_string":
+        return "labelsString";
+      case "labels_docvalues_strings":
+        return "labels";
+      case "authorName_docvalues_string":
+        return "authorName";
+      case "authorUrl_docvalues_string":
+        return "authorUrl";
       default:
         return BaseResult.searchVarBaseResult(searchVar);
     }
@@ -1875,6 +2860,18 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     Optional.ofNullable((List<?>)doc.get("locationLinks_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
       oCompanyEvent.addLocationLinks(CompanyEvent.staticSetLocationLinks(siteRequest, v.toString()));
     });
+    oCompanyEvent.setDialogTemplate(Optional.ofNullable(doc.get("dialogTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
+    Optional.ofNullable((List<?>)doc.get("labels_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+      oCompanyEvent.addLabels(CompanyEvent.staticSetLabels(siteRequest, v.toString()));
+    });
+    oCompanyEvent.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyEvent.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 
     super.storeBaseResult(doc);
   }
@@ -1912,6 +2909,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
         apiRequest.addVars("locationTitles");
       if(!Objects.equals(locationLinks, original.getLocationLinks()))
         apiRequest.addVars("locationLinks");
+      if(!Objects.equals(dialogTemplate, original.getDialogTemplate()))
+        apiRequest.addVars("dialogTemplate");
+      if(!Objects.equals(pageImageUri, original.getPageImageUri()))
+        apiRequest.addVars("pageImageUri");
+      if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
+        apiRequest.addVars("pageImageWidth");
+      if(!Objects.equals(pageImageHeight, original.getPageImageHeight()))
+        apiRequest.addVars("pageImageHeight");
+      if(!Objects.equals(pageImageType, original.getPageImageType()))
+        apiRequest.addVars("pageImageType");
+      if(!Objects.equals(pageImageAlt, original.getPageImageAlt()))
+        apiRequest.addVars("pageImageAlt");
+      if(!Objects.equals(labelsString, original.getLabelsString()))
+        apiRequest.addVars("labelsString");
+      if(!Objects.equals(labels, original.getLabels()))
+        apiRequest.addVars("labels");
+      if(!Objects.equals(authorName, original.getAuthorName()))
+        apiRequest.addVars("authorName");
+      if(!Objects.equals(authorUrl, original.getAuthorUrl()))
+        apiRequest.addVars("authorUrl");
       super.apiRequestBaseResult();
     }
   }
@@ -1935,6 +2952,16 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(locationColors).map(v -> "locationColors: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(locationTitles).map(v -> "locationTitles: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(locationLinks).map(v -> "locationLinks: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(dialogTemplate).map(v -> "dialogTemplate: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(pageImageType).map(v -> "pageImageType: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageImageAlt).map(v -> "pageImageAlt: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(labelsString).map(v -> "labelsString: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(labels).map(v -> "labels: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     return sb.toString();
   }
 
@@ -1969,6 +2996,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   public static final String SET_locationTitles = "setLocationTitles";
   public static final String VAR_locationLinks = "locationLinks";
   public static final String SET_locationLinks = "setLocationLinks";
+  public static final String VAR_dialogTemplate = "dialogTemplate";
+  public static final String SET_dialogTemplate = "setDialogTemplate";
+  public static final String VAR_pageImageUri = "pageImageUri";
+  public static final String SET_pageImageUri = "setPageImageUri";
+  public static final String VAR_pageImageWidth = "pageImageWidth";
+  public static final String SET_pageImageWidth = "setPageImageWidth";
+  public static final String VAR_pageImageHeight = "pageImageHeight";
+  public static final String SET_pageImageHeight = "setPageImageHeight";
+  public static final String VAR_pageImageType = "pageImageType";
+  public static final String SET_pageImageType = "setPageImageType";
+  public static final String VAR_pageImageAlt = "pageImageAlt";
+  public static final String SET_pageImageAlt = "setPageImageAlt";
+  public static final String VAR_labelsString = "labelsString";
+  public static final String SET_labelsString = "setLabelsString";
+  public static final String VAR_labels = "labels";
+  public static final String SET_labels = "setLabels";
+  public static final String VAR_authorName = "authorName";
+  public static final String SET_authorName = "setAuthorName";
+  public static final String VAR_authorUrl = "authorUrl";
+  public static final String SET_authorUrl = "setAuthorUrl";
 
   public static List<String> varsQForClass() {
     return CompanyEvent.varsQCompanyEvent(new ArrayList<String>());
@@ -1991,6 +3038,9 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     vars.add(VAR_emailTemplate);
     vars.add(VAR_storeUrl);
     vars.add(VAR_location);
+    vars.add(VAR_pageImageUri);
+    vars.add(VAR_authorName);
+    vars.add(VAR_authorUrl);
     BaseResult.varsFqBaseResult(vars);
     return vars;
   }
@@ -2019,6 +3069,16 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_locationColors = "location colors";
   public static final String DISPLAY_NAME_locationTitles = "location titles";
   public static final String DISPLAY_NAME_locationLinks = "location links";
+  public static final String DISPLAY_NAME_dialogTemplate = "dialog template";
+  public static final String DISPLAY_NAME_pageImageUri = "image URI";
+  public static final String DISPLAY_NAME_pageImageWidth = "";
+  public static final String DISPLAY_NAME_pageImageHeight = "";
+  public static final String DISPLAY_NAME_pageImageType = "";
+  public static final String DISPLAY_NAME_pageImageAlt = "";
+  public static final String DISPLAY_NAME_labelsString = "labels string";
+  public static final String DISPLAY_NAME_labels = "labels";
+  public static final String DISPLAY_NAME_authorName = "author name";
+  public static final String DISPLAY_NAME_authorUrl = "author URL";
 
   @Override
   public String idForClass() {
@@ -2055,7 +3115,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return "%s/en-us/use/event/%s";
   }
 
-  public static String varJsonForClass(String var, Boolean patch) {
+  public static String varJson(String var, Boolean patch) {
     return CompanyEvent.varJsonCompanyEvent(var, patch);
   }
   public static String varJsonCompanyEvent(String var, Boolean patch) {
@@ -2084,6 +3144,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return patch ? SET_locationTitles : VAR_locationTitles;
     case VAR_locationLinks:
       return patch ? SET_locationLinks : VAR_locationLinks;
+    case VAR_dialogTemplate:
+      return patch ? SET_dialogTemplate : VAR_dialogTemplate;
+    case VAR_pageImageUri:
+      return patch ? SET_pageImageUri : VAR_pageImageUri;
+    case VAR_pageImageWidth:
+      return patch ? SET_pageImageWidth : VAR_pageImageWidth;
+    case VAR_pageImageHeight:
+      return patch ? SET_pageImageHeight : VAR_pageImageHeight;
+    case VAR_pageImageType:
+      return patch ? SET_pageImageType : VAR_pageImageType;
+    case VAR_pageImageAlt:
+      return patch ? SET_pageImageAlt : VAR_pageImageAlt;
+    case VAR_labelsString:
+      return patch ? SET_labelsString : VAR_labelsString;
+    case VAR_labels:
+      return patch ? SET_labels : VAR_labels;
+    case VAR_authorName:
+      return patch ? SET_authorName : VAR_authorName;
+    case VAR_authorUrl:
+      return patch ? SET_authorUrl : VAR_authorUrl;
     default:
       return BaseResult.varJsonBaseResult(var, patch);
     }
@@ -2118,6 +3198,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return DISPLAY_NAME_locationTitles;
     case VAR_locationLinks:
       return DISPLAY_NAME_locationLinks;
+    case VAR_dialogTemplate:
+      return DISPLAY_NAME_dialogTemplate;
+    case VAR_pageImageUri:
+      return DISPLAY_NAME_pageImageUri;
+    case VAR_pageImageWidth:
+      return DISPLAY_NAME_pageImageWidth;
+    case VAR_pageImageHeight:
+      return DISPLAY_NAME_pageImageHeight;
+    case VAR_pageImageType:
+      return DISPLAY_NAME_pageImageType;
+    case VAR_pageImageAlt:
+      return DISPLAY_NAME_pageImageAlt;
+    case VAR_labelsString:
+      return DISPLAY_NAME_labelsString;
+    case VAR_labels:
+      return DISPLAY_NAME_labels;
+    case VAR_authorName:
+      return DISPLAY_NAME_authorName;
+    case VAR_authorUrl:
+      return DISPLAY_NAME_authorUrl;
     default:
       return BaseResult.displayNameBaseResult(var);
     }
@@ -2149,6 +3249,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return "The titles of each location Paths. ";
     case VAR_locationLinks:
       return "The links of each location Paths. ";
+    case VAR_dialogTemplate:
+      return "The dialog template for this product. ";
+    case VAR_pageImageUri:
+      return "The page image URI";
+    case VAR_pageImageWidth:
+      return "The image width";
+    case VAR_pageImageHeight:
+      return "The image height";
+    case VAR_pageImageType:
+      return "The image type";
+    case VAR_pageImageAlt:
+      return "The image accessibility text. ";
+    case VAR_labelsString:
+      return "The labels String for this article comma-separated. ";
+    case VAR_labels:
+      return "The labels for this article. ";
+    case VAR_authorName:
+      return "The author name";
+    case VAR_authorUrl:
+      return "The author URL";
       default:
         return BaseResult.descriptionBaseResult(var);
     }
@@ -2180,6 +3300,26 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return "List";
     case VAR_locationLinks:
       return "List";
+    case VAR_dialogTemplate:
+      return "String";
+    case VAR_pageImageUri:
+      return "String";
+    case VAR_pageImageWidth:
+      return "Integer";
+    case VAR_pageImageHeight:
+      return "Integer";
+    case VAR_pageImageType:
+      return "String";
+    case VAR_pageImageAlt:
+      return "String";
+    case VAR_labelsString:
+      return "String";
+    case VAR_labels:
+      return "List";
+    case VAR_authorName:
+      return "String";
+    case VAR_authorUrl:
+      return "String";
       default:
         return BaseResult.classSimpleNameBaseResult(var);
     }
@@ -2214,6 +3354,12 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return 99;
     case VAR_location:
       return 3;
+    case VAR_pageImageUri:
+      return 4;
+    case VAR_authorName:
+      return 3;
+    case VAR_authorUrl:
+      return 3;
       default:
         return BaseResult.htmRowBaseResult(var);
     }
@@ -2235,6 +3381,12 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
       return 1;
     case VAR_location:
       return 1;
+    case VAR_pageImageUri:
+      return 1;
+    case VAR_authorName:
+      return 3;
+    case VAR_authorUrl:
+      return 3;
       default:
         return BaseResult.htmCellBaseResult(var);
     }

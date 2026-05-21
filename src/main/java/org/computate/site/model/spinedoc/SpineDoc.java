@@ -229,6 +229,28 @@ public class SpineDoc extends SpineDocGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
+   * DisplayName: example class simple name
+   * Description: The example class simple name of this page. 
+   */
+  protected void _exampleClassSimpleName(Wrap<String> w) {
+    w.o("SpineDoc");
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: example class simple name
+   * Description: The example class simple name of this page. 
+   */
+  protected void _exampleClassGenericSimpleName(Wrap<String> w) {
+    w.o("BaseResult");
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
    * HtmRow: 3
    * HtmCell: 3
    * Facet: true
@@ -276,6 +298,18 @@ public class SpineDoc extends SpineDocGen<BaseResult> {
    * Description: The video URL for this page. 
    */
   protected void _pageVideoUrl(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * DisplayName.enUS: dialog template
+   * DisplayName.frFR: modèle de dialogue
+   * Description.enUS: The dialog template for this product. 
+   * Description.frFR: Le modèle de dialogue pour ce produit.
+   */
+  protected void _dialogTemplate(Wrap<String> w) {
+    w.o(String.format("en-us/learn/spine-doc/%s.inc", pageId));
   }
 
   /**

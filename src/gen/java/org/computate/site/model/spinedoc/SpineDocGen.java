@@ -1,5 +1,34 @@
 package org.computate.site.model.spinedoc;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.Normalizer;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.computate.search.tool.SearchTool;
+import org.computate.search.wrap.Wrap;
+import org.computate.site.config.ConfigKeys;
+import org.computate.site.model.BaseModel;
+import org.computate.site.result.BaseResult;
+import org.computate.site.request.SiteRequest;
+import org.computate.vertx.config.ComputateConfigKeys;
+import org.computate.vertx.search.list.SearchList;
+import io.vertx.core.Promise;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
@@ -24,6 +53,7 @@ import org.computate.search.serialize.ComputateZonedDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.search.serialize.ComputateBigDecimalDeserializer;
 import java.math.MathContext;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.text.NumberFormat;
@@ -1136,6 +1166,130 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     return description;
   }
 
+	////////////////////////////
+  // exampleClassSimpleName //
+	////////////////////////////
+
+
+  /**
+   *  The entity exampleClassSimpleName
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String exampleClassSimpleName;
+
+  /**
+   * <br> The entity exampleClassSimpleName
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:exampleClassSimpleName">Find the entity exampleClassSimpleName in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _exampleClassSimpleName(Wrap<String> w);
+
+  public String getExampleClassSimpleName() {
+    return exampleClassSimpleName;
+  }
+  public void setExampleClassSimpleName(String o) {
+    this.exampleClassSimpleName = SpineDoc.staticSetExampleClassSimpleName(siteRequest_, o);
+  }
+  public static String staticSetExampleClassSimpleName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc exampleClassSimpleNameInit() {
+    Wrap<String> exampleClassSimpleNameWrap = new Wrap<String>().var("exampleClassSimpleName");
+    if(exampleClassSimpleName == null) {
+      _exampleClassSimpleName(exampleClassSimpleNameWrap);
+      Optional.ofNullable(exampleClassSimpleNameWrap.getO()).ifPresent(o -> {
+        setExampleClassSimpleName(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchExampleClassSimpleName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrExampleClassSimpleName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqExampleClassSimpleName(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchExampleClassSimpleName(siteRequest_, SpineDoc.staticSetExampleClassSimpleName(siteRequest_, o)).toString();
+  }
+
+  public String sqlExampleClassSimpleName() {
+    return exampleClassSimpleName;
+  }
+
+  public static String staticJsonExampleClassSimpleName(String exampleClassSimpleName) {
+    return exampleClassSimpleName;
+  }
+
+	///////////////////////////////////
+  // exampleClassGenericSimpleName //
+	///////////////////////////////////
+
+
+  /**
+   *  The entity exampleClassGenericSimpleName
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String exampleClassGenericSimpleName;
+
+  /**
+   * <br> The entity exampleClassGenericSimpleName
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:exampleClassGenericSimpleName">Find the entity exampleClassGenericSimpleName in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _exampleClassGenericSimpleName(Wrap<String> w);
+
+  public String getExampleClassGenericSimpleName() {
+    return exampleClassGenericSimpleName;
+  }
+  public void setExampleClassGenericSimpleName(String o) {
+    this.exampleClassGenericSimpleName = SpineDoc.staticSetExampleClassGenericSimpleName(siteRequest_, o);
+  }
+  public static String staticSetExampleClassGenericSimpleName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc exampleClassGenericSimpleNameInit() {
+    Wrap<String> exampleClassGenericSimpleNameWrap = new Wrap<String>().var("exampleClassGenericSimpleName");
+    if(exampleClassGenericSimpleName == null) {
+      _exampleClassGenericSimpleName(exampleClassGenericSimpleNameWrap);
+      Optional.ofNullable(exampleClassGenericSimpleNameWrap.getO()).ifPresent(o -> {
+        setExampleClassGenericSimpleName(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchExampleClassGenericSimpleName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrExampleClassGenericSimpleName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqExampleClassGenericSimpleName(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchExampleClassGenericSimpleName(siteRequest_, SpineDoc.staticSetExampleClassGenericSimpleName(siteRequest_, o)).toString();
+  }
+
+  public String sqlExampleClassGenericSimpleName() {
+    return exampleClassGenericSimpleName;
+  }
+
+  public static String staticJsonExampleClassGenericSimpleName(String exampleClassGenericSimpleName) {
+    return exampleClassGenericSimpleName;
+  }
+
 	////////////////
   // authorName //
 	////////////////
@@ -1382,6 +1536,60 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
 
   public static String staticJsonPageVideoUrl(String pageVideoUrl) {
     return pageVideoUrl;
+  }
+
+	////////////////////
+  // dialogTemplate //
+	////////////////////
+
+
+  /**
+   *  The entity dialogTemplate
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String dialogTemplate;
+
+  /**
+   * <br> The entity dialogTemplate
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.spinedoc.SpineDoc&fq=entiteVar_enUS_indexed_string:dialogTemplate">Find the entity dialogTemplate in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _dialogTemplate(Wrap<String> w);
+
+  public String getDialogTemplate() {
+    return dialogTemplate;
+  }
+  public void setDialogTemplate(String o) {
+    this.dialogTemplate = SpineDoc.staticSetDialogTemplate(siteRequest_, o);
+  }
+  public static String staticSetDialogTemplate(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SpineDoc dialogTemplateInit() {
+    Wrap<String> dialogTemplateWrap = new Wrap<String>().var("dialogTemplate");
+    if(dialogTemplate == null) {
+      _dialogTemplate(dialogTemplateWrap);
+      Optional.ofNullable(dialogTemplateWrap.getO()).ifPresent(o -> {
+        setDialogTemplate(o);
+      });
+    }
+    return (SpineDoc)this;
+  }
+
+  public static String staticSearchDialogTemplate(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrDialogTemplate(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqDialogTemplate(SiteRequest siteRequest_, String o) {
+    return SpineDoc.staticSearchDialogTemplate(siteRequest_, SpineDoc.staticSetDialogTemplate(siteRequest_, o)).toString();
   }
 
 	//////////////////
@@ -2413,10 +2621,13 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         lessonNumInit();
         nameInit();
         descriptionInit();
+        exampleClassSimpleNameInit();
+        exampleClassGenericSimpleNameInit();
         authorNameInit();
         authorUrlInit();
         pageIdInit();
         pageVideoUrlInit();
+        dialogTemplateInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -2565,6 +2776,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return oSpineDoc.name;
       case "description":
         return oSpineDoc.description;
+      case "exampleClassSimpleName":
+        return oSpineDoc.exampleClassSimpleName;
+      case "exampleClassGenericSimpleName":
+        return oSpineDoc.exampleClassGenericSimpleName;
       case "authorName":
         return oSpineDoc.authorName;
       case "authorUrl":
@@ -2573,6 +2788,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return oSpineDoc.pageId;
       case "pageVideoUrl":
         return oSpineDoc.pageVideoUrl;
+      case "dialogTemplate":
+        return oSpineDoc.dialogTemplate;
       case "pageImageUri":
         return oSpineDoc.pageImageUri;
       case "pageImageWidth":
@@ -2672,6 +2889,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSetName(siteRequest_, v);
     case "description":
       return SpineDoc.staticSetDescription(siteRequest_, v);
+    case "exampleClassSimpleName":
+      return SpineDoc.staticSetExampleClassSimpleName(siteRequest_, v);
+    case "exampleClassGenericSimpleName":
+      return SpineDoc.staticSetExampleClassGenericSimpleName(siteRequest_, v);
     case "authorName":
       return SpineDoc.staticSetAuthorName(siteRequest_, v);
     case "authorUrl":
@@ -2680,6 +2901,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSetPageId(siteRequest_, v);
     case "pageVideoUrl":
       return SpineDoc.staticSetPageVideoUrl(siteRequest_, v);
+    case "dialogTemplate":
+      return SpineDoc.staticSetDialogTemplate(siteRequest_, v);
     case "pageImageUri":
       return SpineDoc.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -2778,6 +3001,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchName(siteRequest_, (String)o);
     case "description":
       return SpineDoc.staticSearchDescription(siteRequest_, (String)o);
+    case "exampleClassSimpleName":
+      return SpineDoc.staticSearchExampleClassSimpleName(siteRequest_, (String)o);
+    case "exampleClassGenericSimpleName":
+      return SpineDoc.staticSearchExampleClassGenericSimpleName(siteRequest_, (String)o);
     case "authorName":
       return SpineDoc.staticSearchAuthorName(siteRequest_, (String)o);
     case "authorUrl":
@@ -2786,6 +3013,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchPageId(siteRequest_, (String)o);
     case "pageVideoUrl":
       return SpineDoc.staticSearchPageVideoUrl(siteRequest_, (String)o);
+    case "dialogTemplate":
+      return SpineDoc.staticSearchDialogTemplate(siteRequest_, (String)o);
     case "pageImageUri":
       return SpineDoc.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -2854,6 +3083,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchStrName(siteRequest_, (String)o);
     case "description":
       return SpineDoc.staticSearchStrDescription(siteRequest_, (String)o);
+    case "exampleClassSimpleName":
+      return SpineDoc.staticSearchStrExampleClassSimpleName(siteRequest_, (String)o);
+    case "exampleClassGenericSimpleName":
+      return SpineDoc.staticSearchStrExampleClassGenericSimpleName(siteRequest_, (String)o);
     case "authorName":
       return SpineDoc.staticSearchStrAuthorName(siteRequest_, (String)o);
     case "authorUrl":
@@ -2862,6 +3095,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchStrPageId(siteRequest_, (String)o);
     case "pageVideoUrl":
       return SpineDoc.staticSearchStrPageVideoUrl(siteRequest_, (String)o);
+    case "dialogTemplate":
+      return SpineDoc.staticSearchStrDialogTemplate(siteRequest_, (String)o);
     case "pageImageUri":
       return SpineDoc.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -2930,6 +3165,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchFqName(siteRequest_, o);
     case "description":
       return SpineDoc.staticSearchFqDescription(siteRequest_, o);
+    case "exampleClassSimpleName":
+      return SpineDoc.staticSearchFqExampleClassSimpleName(siteRequest_, o);
+    case "exampleClassGenericSimpleName":
+      return SpineDoc.staticSearchFqExampleClassGenericSimpleName(siteRequest_, o);
     case "authorName":
       return SpineDoc.staticSearchFqAuthorName(siteRequest_, o);
     case "authorUrl":
@@ -2938,6 +3177,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return SpineDoc.staticSearchFqPageId(siteRequest_, o);
     case "pageVideoUrl":
       return SpineDoc.staticSearchFqPageVideoUrl(siteRequest_, o);
+    case "dialogTemplate":
+      return SpineDoc.staticSearchFqDialogTemplate(siteRequest_, o);
     case "pageImageUri":
       return SpineDoc.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -3075,6 +3316,18 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
           setDescription((String)val);
         }
         saves.add("description");
+        return val;
+      } else if("exampleclasssimplename".equals(varLower)) {
+        if(val instanceof String) {
+          setExampleClassSimpleName((String)val);
+        }
+        saves.add("exampleClassSimpleName");
+        return val;
+      } else if("exampleclassgenericsimplename".equals(varLower)) {
+        if(val instanceof String) {
+          setExampleClassGenericSimpleName((String)val);
+        }
+        saves.add("exampleClassGenericSimpleName");
         return val;
       } else if("authorname".equals(varLower)) {
         if(val instanceof String) {
@@ -3243,6 +3496,18 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
           oSpineDoc.setDescription(description);
       }
 
+      if(saves.contains("exampleClassSimpleName")) {
+        String exampleClassSimpleName = (String)doc.get("exampleClassSimpleName_docvalues_string");
+        if(exampleClassSimpleName != null)
+          oSpineDoc.setExampleClassSimpleName(exampleClassSimpleName);
+      }
+
+      if(saves.contains("exampleClassGenericSimpleName")) {
+        String exampleClassGenericSimpleName = (String)doc.get("exampleClassGenericSimpleName_docvalues_string");
+        if(exampleClassGenericSimpleName != null)
+          oSpineDoc.setExampleClassGenericSimpleName(exampleClassGenericSimpleName);
+      }
+
       if(saves.contains("authorName")) {
         String authorName = (String)doc.get("authorName_docvalues_string");
         if(authorName != null)
@@ -3265,6 +3530,12 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         String pageVideoUrl = (String)doc.get("pageVideoUrl_docvalues_string");
         if(pageVideoUrl != null)
           oSpineDoc.setPageVideoUrl(pageVideoUrl);
+      }
+
+      if(saves.contains("dialogTemplate")) {
+        String dialogTemplate = (String)doc.get("dialogTemplate_docvalues_string");
+        if(dialogTemplate != null)
+          oSpineDoc.setDialogTemplate(dialogTemplate);
       }
 
       if(saves.contains("pageImageUri")) {
@@ -3393,6 +3664,12 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     if(description != null) {
       doc.put("description_docvalues_string", description);
     }
+    if(exampleClassSimpleName != null) {
+      doc.put("exampleClassSimpleName_docvalues_string", exampleClassSimpleName);
+    }
+    if(exampleClassGenericSimpleName != null) {
+      doc.put("exampleClassGenericSimpleName_docvalues_string", exampleClassGenericSimpleName);
+    }
     if(authorName != null) {
       doc.put("authorName_docvalues_string", authorName);
     }
@@ -3404,6 +3681,9 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     }
     if(pageVideoUrl != null) {
       doc.put("pageVideoUrl_docvalues_string", pageVideoUrl);
+    }
+    if(dialogTemplate != null) {
+      doc.put("dialogTemplate_docvalues_string", dialogTemplate);
     }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
@@ -3480,6 +3760,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return "name_docvalues_string";
       case "description":
         return "description_docvalues_string";
+      case "exampleClassSimpleName":
+        return "exampleClassSimpleName_docvalues_string";
+      case "exampleClassGenericSimpleName":
+        return "exampleClassGenericSimpleName_docvalues_string";
       case "authorName":
         return "authorName_docvalues_string";
       case "authorUrl":
@@ -3488,6 +3772,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return "pageId_docvalues_string";
       case "pageVideoUrl":
         return "pageVideoUrl_docvalues_string";
+      case "dialogTemplate":
+        return "dialogTemplate_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -3547,6 +3833,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return "name_docvalues_string";
       case "description":
         return "description_docvalues_string";
+      case "exampleClassSimpleName":
+        return "exampleClassSimpleName_docvalues_string";
+      case "exampleClassGenericSimpleName":
+        return "exampleClassGenericSimpleName_docvalues_string";
       case "authorName":
         return "authorName_docvalues_string";
       case "authorUrl":
@@ -3555,6 +3845,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return "pageId_docvalues_string";
       case "pageVideoUrl":
         return "pageVideoUrl_docvalues_string";
+      case "dialogTemplate":
+        return "dialogTemplate_docvalues_string";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -3608,6 +3900,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return "name";
       case "description_docvalues_string":
         return "description";
+      case "exampleClassSimpleName_docvalues_string":
+        return "exampleClassSimpleName";
+      case "exampleClassGenericSimpleName_docvalues_string":
+        return "exampleClassGenericSimpleName";
       case "authorName_docvalues_string":
         return "authorName";
       case "authorUrl_docvalues_string":
@@ -3616,6 +3912,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         return "pageId";
       case "pageVideoUrl_docvalues_string":
         return "pageVideoUrl";
+      case "dialogTemplate_docvalues_string":
+        return "dialogTemplate";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -3679,10 +3977,13 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     oSpineDoc.setLessonNum(Optional.ofNullable(doc.get("lessonNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setExampleClassSimpleName(Optional.ofNullable(doc.get("exampleClassSimpleName_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setExampleClassGenericSimpleName(Optional.ofNullable(doc.get("exampleClassGenericSimpleName_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setPageVideoUrl(Optional.ofNullable(doc.get("pageVideoUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oSpineDoc.setDialogTemplate(Optional.ofNullable(doc.get("dialogTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSpineDoc.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -3737,6 +4038,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         apiRequest.addVars("name");
       if(!Objects.equals(description, original.getDescription()))
         apiRequest.addVars("description");
+      if(!Objects.equals(exampleClassSimpleName, original.getExampleClassSimpleName()))
+        apiRequest.addVars("exampleClassSimpleName");
+      if(!Objects.equals(exampleClassGenericSimpleName, original.getExampleClassGenericSimpleName()))
+        apiRequest.addVars("exampleClassGenericSimpleName");
       if(!Objects.equals(authorName, original.getAuthorName()))
         apiRequest.addVars("authorName");
       if(!Objects.equals(authorUrl, original.getAuthorUrl()))
@@ -3745,6 +4050,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
         apiRequest.addVars("pageId");
       if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
         apiRequest.addVars("pageVideoUrl");
+      if(!Objects.equals(dialogTemplate, original.getDialogTemplate()))
+        apiRequest.addVars("dialogTemplate");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -3795,10 +4102,13 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(lessonNum).map(v -> "lessonNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(exampleClassSimpleName).map(v -> "exampleClassSimpleName: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(exampleClassGenericSimpleName).map(v -> "exampleClassGenericSimpleName: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageVideoUrl).map(v -> "pageVideoUrl: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(dialogTemplate).map(v -> "dialogTemplate: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -3850,6 +4160,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
   public static final String SET_name = "setName";
   public static final String VAR_description = "description";
   public static final String SET_description = "setDescription";
+  public static final String VAR_exampleClassSimpleName = "exampleClassSimpleName";
+  public static final String SET_exampleClassSimpleName = "setExampleClassSimpleName";
+  public static final String VAR_exampleClassGenericSimpleName = "exampleClassGenericSimpleName";
+  public static final String SET_exampleClassGenericSimpleName = "setExampleClassGenericSimpleName";
   public static final String VAR_authorName = "authorName";
   public static final String SET_authorName = "setAuthorName";
   public static final String VAR_authorUrl = "authorUrl";
@@ -3858,6 +4172,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
   public static final String SET_pageId = "setPageId";
   public static final String VAR_pageVideoUrl = "pageVideoUrl";
   public static final String SET_pageVideoUrl = "setPageVideoUrl";
+  public static final String VAR_dialogTemplate = "dialogTemplate";
+  public static final String SET_dialogTemplate = "setDialogTemplate";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -3948,10 +4264,13 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_lessonNum = "lesson number";
   public static final String DISPLAY_NAME_name = "title";
   public static final String DISPLAY_NAME_description = "description";
+  public static final String DISPLAY_NAME_exampleClassSimpleName = "example class simple name";
+  public static final String DISPLAY_NAME_exampleClassGenericSimpleName = "example class simple name";
   public static final String DISPLAY_NAME_authorName = "author name";
   public static final String DISPLAY_NAME_authorUrl = "author URL";
   public static final String DISPLAY_NAME_pageId = "Page ID";
   public static final String DISPLAY_NAME_pageVideoUrl = "video URL";
+  public static final String DISPLAY_NAME_dialogTemplate = "dialog template";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -4004,7 +4323,7 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     return "%s/en-us/learn/spine-doc/%s";
   }
 
-  public static String varJsonForClass(String var, Boolean patch) {
+  public static String varJson(String var, Boolean patch) {
     return SpineDoc.varJsonSpineDoc(var, patch);
   }
   public static String varJsonSpineDoc(String var, Boolean patch) {
@@ -4037,6 +4356,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return patch ? SET_name : VAR_name;
     case VAR_description:
       return patch ? SET_description : VAR_description;
+    case VAR_exampleClassSimpleName:
+      return patch ? SET_exampleClassSimpleName : VAR_exampleClassSimpleName;
+    case VAR_exampleClassGenericSimpleName:
+      return patch ? SET_exampleClassGenericSimpleName : VAR_exampleClassGenericSimpleName;
     case VAR_authorName:
       return patch ? SET_authorName : VAR_authorName;
     case VAR_authorUrl:
@@ -4045,6 +4368,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return patch ? SET_pageId : VAR_pageId;
     case VAR_pageVideoUrl:
       return patch ? SET_pageVideoUrl : VAR_pageVideoUrl;
+    case VAR_dialogTemplate:
+      return patch ? SET_dialogTemplate : VAR_dialogTemplate;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -4115,6 +4440,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return DISPLAY_NAME_name;
     case VAR_description:
       return DISPLAY_NAME_description;
+    case VAR_exampleClassSimpleName:
+      return DISPLAY_NAME_exampleClassSimpleName;
+    case VAR_exampleClassGenericSimpleName:
+      return DISPLAY_NAME_exampleClassGenericSimpleName;
     case VAR_authorName:
       return DISPLAY_NAME_authorName;
     case VAR_authorUrl:
@@ -4123,6 +4452,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return DISPLAY_NAME_pageId;
     case VAR_pageVideoUrl:
       return DISPLAY_NAME_pageVideoUrl;
+    case VAR_dialogTemplate:
+      return DISPLAY_NAME_dialogTemplate;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -4190,6 +4521,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return "The name of this page. ";
     case VAR_description:
       return "The description of this page. ";
+    case VAR_exampleClassSimpleName:
+      return "The example class simple name of this page. ";
+    case VAR_exampleClassGenericSimpleName:
+      return "The example class simple name of this page. ";
     case VAR_authorName:
       return "The author name";
     case VAR_authorUrl:
@@ -4198,6 +4533,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return "The ID for this page. ";
     case VAR_pageVideoUrl:
       return "The video URL for this page. ";
+    case VAR_dialogTemplate:
+      return "The dialog template for this product. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -4259,6 +4596,10 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
       return "String";
     case VAR_description:
       return "String";
+    case VAR_exampleClassSimpleName:
+      return "String";
+    case VAR_exampleClassGenericSimpleName:
+      return "String";
     case VAR_authorName:
       return "String";
     case VAR_authorUrl:
@@ -4266,6 +4607,8 @@ public abstract class SpineDocGen<DEV> extends BaseResult {
     case VAR_pageId:
       return "String";
     case VAR_pageVideoUrl:
+      return "String";
+    case VAR_dialogTemplate:
       return "String";
     case VAR_pageImageUri:
       return "String";

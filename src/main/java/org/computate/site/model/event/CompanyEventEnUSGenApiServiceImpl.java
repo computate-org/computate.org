@@ -1397,11 +1397,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void searchpageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/event"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/event"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1502,19 +1497,24 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           searchpageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageCompanyEvent failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageCompanyEvent failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageCompanyEvent failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1657,12 +1657,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void editpageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/event"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1763,19 +1757,24 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           editpageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageCompanyEvent failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageCompanyEvent failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageCompanyEvent failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1880,12 +1879,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void displaypageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/event"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1986,19 +1979,24 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           displaypageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateDisplayPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200DisplayPageCompanyEvent failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateDisplayPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200DisplayPageCompanyEvent failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200DisplayPageCompanyEvent failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2141,12 +2139,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void userpageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/event"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -2247,19 +2239,24 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           userpageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateUserPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200UserPageCompanyEvent failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateUserPageCompanyEvent(ctx, page, listCompanyEvent, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200UserPageCompanyEvent failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200UserPageCompanyEvent failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -3019,8 +3016,15 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       o.persistForClass(CompanyEvent.VAR_displayPage, CompanyEvent.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyEvent.VAR_displayPage)));
       o.persistForClass(CompanyEvent.VAR_editPage, CompanyEvent.staticSetEditPage(siteRequest2, (String)result.get(CompanyEvent.VAR_editPage)));
       o.persistForClass(CompanyEvent.VAR_userPage, CompanyEvent.staticSetUserPage(siteRequest2, (String)result.get(CompanyEvent.VAR_userPage)));
+      o.persistForClass(CompanyEvent.VAR_dialogTemplate, CompanyEvent.staticSetDialogTemplate(siteRequest2, (String)result.get(CompanyEvent.VAR_dialogTemplate)));
       o.persistForClass(CompanyEvent.VAR_download, CompanyEvent.staticSetDownload(siteRequest2, (String)result.get(CompanyEvent.VAR_download)));
+      o.persistForClass(CompanyEvent.VAR_pageImageUri, CompanyEvent.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyEvent.VAR_pageImageUri)));
       o.persistForClass(CompanyEvent.VAR_solrId, CompanyEvent.staticSetSolrId(siteRequest2, (String)result.get(CompanyEvent.VAR_solrId)));
+      o.persistForClass(CompanyEvent.VAR_pageImageAlt, CompanyEvent.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyEvent.VAR_pageImageAlt)));
+      o.persistForClass(CompanyEvent.VAR_labelsString, CompanyEvent.staticSetLabelsString(siteRequest2, (String)result.get(CompanyEvent.VAR_labelsString)));
+      o.persistForClass(CompanyEvent.VAR_labels, CompanyEvent.staticSetLabels(siteRequest2, (String)result.get(CompanyEvent.VAR_labels)));
+      o.persistForClass(CompanyEvent.VAR_authorName, CompanyEvent.staticSetAuthorName(siteRequest2, (String)result.get(CompanyEvent.VAR_authorName)));
+      o.persistForClass(CompanyEvent.VAR_authorUrl, CompanyEvent.staticSetAuthorUrl(siteRequest2, (String)result.get(CompanyEvent.VAR_authorUrl)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {

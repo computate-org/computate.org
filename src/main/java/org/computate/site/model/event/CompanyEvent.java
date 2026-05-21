@@ -1,11 +1,23 @@
 package org.computate.site.model.event;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.wrap.Wrap;
+import org.computate.site.config.ConfigKeys;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
 
@@ -202,5 +214,137 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    */
   protected void _locationLinks(List<String> l) {
     l.add(editPage);
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName.enUS: dialog template
+   * DisplayName.frFR: modèle de dialogue
+   * Description.enUS: The dialog template for this product. 
+   * Description.frFR: Le modèle de dialogue pour ce produit.
+   */
+  protected void _dialogTemplate(Wrap<String> w) {
+    w.o(String.format("en-us/shop/event/%s.inc", pageId));
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRow: 4
+   * HtmCell: 1
+   * Facet: true
+   * DisplayName.enUS: image URI
+   * DisplayName.frFR: URI de l'image
+   * Description.enUS: The page image URI
+   * Description.frFR: L'URI de l'image de la page
+   */
+  protected void _pageImageUri(Wrap<String> w) {
+  }
+  
+  /**
+   * DocValues: true
+   * Description.enUS: The image width
+   * Description.frFR: La largeur de l'image
+   */
+  protected void _pageImageWidth(Wrap<Integer> w) {
+    if(pageImageUri != null) {
+      Path path = Paths.get(siteRequest_.getConfig().getString(ConfigKeys.STATIC_PATH), pageImageUri);
+      File file = path.toFile();
+      if(file.exists()) {
+        try {
+          BufferedImage img = ImageIO.read(file);
+          w.o(img.getWidth());
+          setPageImageHeight(img.getHeight());
+          setPageImageType(Files.probeContentType(path));
+        } catch (Exception ex) {
+          ExceptionUtils.rethrow(ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * DocValues: true
+   * Description.enUS: The image height
+   * Description.frFR: La hauteur de l'image
+   */
+  protected void _pageImageHeight(Wrap<Integer> c) {
+  }
+
+  /**
+   * DocValues: true
+   * Description.enUS: The image type
+   * Description.frFR: Le type d'image
+   */
+  protected void _pageImageType(Wrap<String> c) {
+  }
+
+  /**
+   * Persist: true
+   * DocValues: true
+   * Description.enUS: The image accessibility text. 
+   * Description.frFR: Le texte d'accessibilité de l'image. 
+   */
+  protected void _pageImageAlt(Wrap<String> c) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName.enUS: labels string
+   * DisplayName.frFR: chaîne d'étiquettes
+   * Description.enUS: The labels String for this article comma-separated. 
+   * Description.frFR: La chaîne d'étiquettes pour cet article, séparées par des virgules. 
+   */
+  protected void _labelsString(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName.enUS: labels
+   * DisplayName.frFR: étiquettes
+   * Description.enUS: The labels for this article. 
+   * Description.frFR: Les étiquettes pour cet article. 
+   */
+  protected void _labels(List<String> l) {
+    if(labelsString != null) {
+      l.addAll(Arrays.asList(StringUtils.split(labelsString, ",")).stream().map(id -> id.trim()).collect(Collectors.toList()));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   * DisplayName.enUS: author name
+   * DisplayName.frFR: nom de l'auteur
+   * Description.enUS: The author name
+   * Description.frFR: Le nom de l'auteur
+   */
+  protected void _authorName(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   * DisplayName.enUS: author URL
+   * DisplayName.frFR: URL de l'auteur
+   * Description.enUS: The author URL
+   * Description.frFR: L'URL de l'auteur
+   */
+  protected void _authorUrl(Wrap<String> w) {
   }
 }
