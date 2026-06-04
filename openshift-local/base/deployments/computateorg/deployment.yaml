@@ -56,10 +56,10 @@ spec:
           image: docker.io/alpine/git
           args:
             - >-
-              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/dcm-developer.git /home/default/computate.org-static/webawesome/templates/en-us/dcm-developer; 
-              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/smart-aquaculture-developer.git /home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer; 
-              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/ai-telemetry-developer.git /home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer; 
-              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/computate-developer.git /home/default/computate.org-static/webawesome/templates/en-us/computate-developer; 
+              git clone https://computate.org:$GIT_DEVELOPERS_TOKEN@github.com/computate-org/dcm-developer.git /home/default/computate.org-static/webawesome/templates/en-us/dcm-developer; 
+              git clone https://computate.org:$GIT_DEVELOPERS_TOKEN@github.com/computate-org/smart-aquaculture-developer.git /home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer; 
+              git clone https://computate.org:$GIT_DEVELOPERS_TOKEN@github.com/computate-org/ai-telemetry-developer.git /home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer; 
+              git clone https://computate.org:$GIT_DEVELOPERS_TOKEN@github.com/computate-org/computate-developer.git /home/default/computate.org-static/webawesome/templates/en-us/computate-developer; 
       containers:
       - name: computateorg
         env:

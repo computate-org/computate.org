@@ -3,9 +3,39 @@ find \
   ~/.local/src/computate.org/vars.yaml \
   ~/.local/src/computate.org/README.md \
   ~/.local/src/computate.org/src/main/java/org/computate/site/verticle/SiteRoutes.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/learnskills/LearnSkills.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/learnskills/LearnSkillsPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/learnskills/LearnSkillsEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/deployspine/DeploySpine.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/deployspine/DeploySpinePage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/deployspine/DeploySpineEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/switchtolinux/SwitchToLinux.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/switchtolinux/SwitchToLinuxPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/switchtolinux/SwitchToLinuxEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgramming.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spinedoc/SpineDoc.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spinedoc/SpineDocPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spinedoc/SpineDocEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProduct.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinion.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartagriculture/SmartAgricultureDeveloper.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartagriculture/SmartAgricultureDeveloperPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartagriculture/SmartAgricultureDeveloperEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloper.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloper.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloper.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAbout.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutEnUSApiServiceImpl.java \
@@ -18,9 +48,6 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePagePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProduct.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEvent.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventEnUSApiServiceImpl.java \
@@ -36,17 +63,5 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsite.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsitePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsiteEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinion.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloper.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloper.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloper.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSApiServiceImpl.java \
       -type f -exec wc -l {} +
 echo hand written

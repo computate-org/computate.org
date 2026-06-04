@@ -67,6 +67,8 @@ data:
     CLUSTER_PUBLIC_PORT: "{{ (SITE_PORT | int) + 1 }}"
     # Zookeeper root path to avoid conflicts with other apps using Zookeeper for clustering. 
     ZOOKEEPER_ROOT_PATH: "{{ lookup('env', 'ZOOKEEPER_ROOT_PATH') | default(SITE_NAME + '-cloud', true) }}"
+    # Zookeeper root path to avoid conflicts with other apps using Zookeeper for clustering. 
+    ZOOKEEPER_RETRY_POLICY: "exponential_backoff"
     # Verify SSL connections. 
     SSL_VERIFY: "{{ lookup('env', 'SSL_VERIFY') | default('false', true) | bool }}"
     # The public search endpoint for searching public items in the site. 
@@ -88,7 +90,7 @@ data:
     ################
 
     # The API version of this site. 
-    API_VERSION: "1.0.0"
+    API_VERSION: "4.5.24.1"
     # The Site OpenAPI title. 
     API_TITLE: "computate.org"
     # The API contact email. 
@@ -103,7 +105,7 @@ data:
     # The Maven artifact ID of the project. 
     SITE_POM_ARTIFACT_ID: "computateorg"
     # The current Maven version of the project. 
-    SITE_POM_VERSION: "1.0.0"
+    SITE_POM_VERSION: "4.5.24.1"
     # The base Java Package for the project based on Maven group ID and artifact ID. 
     SITE_JAVA_PACKAGE: "org.computate.site"
     # The Java Package containing the project main verticle class. 
@@ -441,7 +443,11 @@ data:
     # Enable Kafka message integration. 
     ENABLE_KAFKA: false
     # The namespace in OpenShift where Kafka will run. 
-    KAFKA_NAMESPACE: "{{ KAFKA_NAMESPACE }}"
+    KAFKA_NAMESPACE: "kafka"
+    # The Kafka brokers hostname and port. 
+    KAFKA_BROKERS: "console-openshift-console.apps-crc.testing:32000"
+    # The Kafka group for receiving messages. 
+    KAFKA_GROUP: "dcm-site"
     # The Kafka SSL KeyStore secret name. 
     KAFKA_SSL_KEYSTORE_SECRET: "{{ SITE_SHORT_NAME }}-kafka"
     # The Kafka SSL TrustStore secret name. 
@@ -503,6 +509,7 @@ data:
     RABBITMQ_PASSWORD: "{{ lookup('env', 'RABBITMQ_PASSWORD') | default('password', true) }}"
     # The RabbitMQ virtual host. 
     RABBITMQ_VIRTUAL_HOST: "/"
+
     ################################
     # OpenShift Deployment Details #
     ################################
