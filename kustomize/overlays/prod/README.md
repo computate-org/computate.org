@@ -1,4 +1,31 @@
 
+## Install zookeeper
+
+```bash
+helm -n zookeeper upgrade --install zookeeper oci://registry-1.docker.io/bitnamicharts/zookeeper \
+  --set image.repository=bitnamilegacy/zookeeper \
+  --set global.security.allowInsecureImages=true \
+  --set image.tag=3.9.2-debian-12-r11 \
+  --set persistence.size=10Gi \
+  --set replicaCount=2
+```
+
+## Install solr
+
+```bash
+helm -n solr upgrade --install solr oci://registry-1.docker.io/bitnamicharts/solr \
+  --set image.repository=bitnamilegacy/solr \
+  --set global.security.allowInsecureImages=true \
+  --set image.tag=9.6.1-debian-12-r5 \
+  --set zookeeper.enabled=false \
+  --set externalZookeeper.servers={zookeeper-client.zookeeper.svc:2181} \
+  --set persistence.size=100Gi \
+  --set collectionShards=1 \
+  --set collectionReplicas=1 \
+  --set javaMem='-Xms2g -Xmx5g' \
+  --set replicaCount=2
+```
+
 ## Install keycloak
 
 ```bash
