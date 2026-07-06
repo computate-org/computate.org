@@ -1,3 +1,5 @@
+> [!IMPORTANT]
+> computate.org and related repositories have moved to [codeberg](https://codeberg.org/computateorg/computate.org).
 
 ## How to run the application as a Podman container
 
